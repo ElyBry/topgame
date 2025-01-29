@@ -9,6 +9,7 @@
     "dev": "lerna run dev",
     "test": "lerna run test",
     "lint": "lerna run lint",
+    "lint:client": "lerna run lint --scope=client",
     "format": "lerna run format",
     "preview": "lerna run preview"
   },
@@ -21,6 +22,14 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.3.9",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
     "lerna": "^5.4.3"
+  },
+  "packageManager": "yarn@4.6.0",
+  "dependencies": {
+    "eslint-plugin-prettier": "^5.2.3"
   }
 }
