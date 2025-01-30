@@ -30,3 +30,14 @@
 #       glob: 'packages/**/*.{ts,tsx,css}'
 #       run: lerna exec --parallel -- yarn prettier -w {staged_files}
 #       stage_fixed: true
+
+# pre-commit:
+#   parallel: true
+#   commands:
+#     lint:
+#       glob: '*.{ts,tsx}'
+#       run: yarn eslint {staged_files}
+#     prettier:
+#       glob: '*.{ts,tsx,css}'
+#       run: yarn prettier -w {staged_files}
+#       stage_fixed: true

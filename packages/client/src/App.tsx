@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import './App.css'
+import { SigninPage } from './pages'
 
 function App() {
   const fetchServerData = useCallback(async () => {
@@ -13,7 +14,7 @@ function App() {
     fetchServerData()
   }, [fetchServerData])
 
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return <SigninPage />
 }
 
 export default App
