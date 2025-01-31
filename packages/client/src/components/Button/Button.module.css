@@ -1,13 +1,50 @@
-.btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
+.button {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  background: var(--btn-ele-bg);
   border: none;
+  font: 500 1.3rem/1.3rem var(--inter-font);
+  color: var(--btn-color);
+  margin: 0 auto;
+  padding: 12px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background 0.4s ease;
 }
 
-.btn:hover {
-  background-color: red;
+.button:hover {
+  background: var(--btn-ele-bg-hover);
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button + .button {
+  margin-top: 14px;
+}
+
+.button_link {
+  display: inline-block;
+  width: auto;
+  background: transparent;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  color: var(--link-color);
+  padding: 0;
+}
+
+.button_link:hover {
+  color: var(--link-color-hover);
+  background: transparent;
+}
+
+.button_link:focus {
+  box-shadow: none;
+}
+
+.button_fieldset {
+  padding: 47px 0 0;
+  text-align: center;
 }

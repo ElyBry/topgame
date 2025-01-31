@@ -1,15 +1,26 @@
 .bg {
-  width: 50%;
+  width: 55%;
   height: 100%;
-  background: url(../i/chess-bg.png) 50% 50% no-repeat var(--text-color);
-  background-size: cover;
-  filter: blur(10px);
   position: fixed;
   top: 0;
   left: 0;
+  overflow: hidden;
 }
 
 .bg:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(./i/chess-bg.jpg) 50% 50% no-repeat var(--text-color);
+  background-size: cover;
+  filter: grayscale(80%) blur(10px) contrast(1.2);
+}
+
+.bg:after {
   content: '';
   position: absolute;
   top: 0;
@@ -30,6 +41,41 @@
   position: relative;
 }
 
+.header {
+  width: 950px;
+  margin: 0 auto;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 16px;
+}
+
+.logo {
+  display: block;
+  width: 80px;
+  height: 80px;
+  background: url(./i/logo-chess.jpg) 50% 50% no-repeat;
+  background-size: cover;
+  border-radius: 15px;
+  text-indent: -9999px;
+  outline: none;
+  overflow: hidden;
+}
+
+.game_name {
+  font-size: 2.2rem;
+  font-family: var(--lobster-font);
+  font-weight: 400;
+  font-style: normal;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
 .wrap {
   min-height: 100%;
   width: 950px;
@@ -40,7 +86,7 @@
   justify-content: flex-end;
 }
 
-.head {
+.title {
   font-size: 4rem;
   line-height: 100%;
   font-weight: 600;
