@@ -1,27 +1,27 @@
 :root {
     --inter-font: "Inter", "Helvetica", "Arial", sans-serif;
+    --lobster-font: "Lobster", serif;
     --body-bg: #fff;
-    --box-bg: #fff;
-    --spinner-shadow: rgba(255,255,255,.4);
-    --box-shadow: rgba(0,0,0,.14);
-    --left-col-bg: #fbfbfb;
-    --layout-border: #eaeaea;
-    --text-color: #1e1e1e;
-    --text-secondary-color: #999;
+    --btn-ele-bg: #0191ea;
+    --btn-ele-bg-hover: #0c71b0;
+    --btn-color: #fff;
     --link-color: #0065FD;
-    --form-ele-color: #3369f3;
-    --form-ele-bg: #efefef;
+    --link-color-hover: #00539D;
+    --text-color: #1e1e1e;
+    --error-color: #ff2f2f;
     --input-ele-bg: #efefef;
     --input-ele-border: rgba(0,0,0,.14);
-    --btn-ele-bg: linear-gradient(90deg, #0065FD -16.35%, #BC00FE 114.52%);
-    --btn-color: #fff;
-    --error-color: #ff2f2f;
-    --chat-list-active-color: #e4edfd;
-    --chat-message-bg: #f8f8f8;
-    --chat-time-bg: rgba(82,82,82,.5);
+    
+    /*--box-bg: #fff;
+    --spinner-shadow: rgba(255,255,255,.4);
+    --box-shadow: rgba(0,0,0,.14);
+    --layout-border: #eaeaea;
+    --text-secondary-color: #999;
+    --form-ele-color: #3369f3;
+    --form-ele-bg: #efefef;
     --modal-bg: rgba(0,0,0,.4);
     --avatar-hover-bg: rgba(0,0,0,.5);
     --logout-color: #f00;
     --scrollbar-color: rgba(0,0,0,.16) rgba(0,0,0,.04);
-    --choose-file-chosen-color: #8d8d8d
+    --choose-file-chosen-color: #8d8d8d;*/
 }

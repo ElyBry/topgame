@@ -1,0 +1,19 @@
+.input {
+  display: block;
+  border: 1px solid var(--input-ele-bg);
+  border-radius: 5px;
+  background: var(--input-ele-bg);
+  width: 100%;
+  height: 35px;
+  padding: 0 15px;
+  font: 1.3rem/1.3rem var(--inter-font);
+  color: var(--text-color);
+}
+.input:focus {
+  background-color: var(--box-bg);
+  border-color: var(--input-ele-border);
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}

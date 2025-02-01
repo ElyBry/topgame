@@ -20,6 +20,10 @@ a {
 	text-decoration: none;
 }
 
+a:hover {
+	color: var(--link-color-hover);
+  }
+
 .h-wrapper {
 	height: 100%;
 }
