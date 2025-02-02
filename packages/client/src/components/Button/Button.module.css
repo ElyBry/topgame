@@ -48,3 +48,13 @@
   padding: 47px 0 0;
   text-align: center;
 }
+
+.button_secondary {
+	background-color: transparent;
+	color: var(--text-color-secondary);
+	border-color: var(--border-color);
+}
+
+.button_secondary:hover {
+	background-color: var(--secondary-background-color);
+}

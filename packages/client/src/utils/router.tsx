@@ -9,6 +9,7 @@ import {
   SigninPage,
   SignupPage,
   TopicPage,
+	TopicNewPage
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
@@ -58,6 +59,10 @@ export const router: RouteObject[] = [
       {
         element: <TopicPage />,
         path: ROUTES.FORUM_MESSAGE,
+      },
+			{
+        element: <TopicNewPage />,
+        path: ROUTES.FORUM_NEW,
       },
     ],
   },

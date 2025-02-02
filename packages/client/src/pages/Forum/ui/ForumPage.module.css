@@ -1,0 +1,27 @@
+.forum_title {
+	font-size: 4rem;
+  line-height: 100%;
+  font-weight: 600;
+}
+
+.forum_top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 900px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.forum_button {
+	width: 200px;
+	margin: unset;
+}
+
+.forum_list {
+	max-width: 900px;
+	margin: 40px auto 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
