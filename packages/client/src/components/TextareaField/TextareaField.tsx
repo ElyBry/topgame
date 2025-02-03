@@ -7,13 +7,14 @@ interface TextareaFieldProps {
   error?: boolean;
   message?: string;
   placeholder: string;
+	modelValue?: string;
 }
 
-const TextareaField: React.FC<TextareaFieldProps> = ({ name, error, message, placeholder }) => {
+const TextareaField: React.FC<TextareaFieldProps> = ({ name, error, message, placeholder, modelValue }) => {
   return (
     <div className={styles.fieldset}>
       <label className={styles.input_wrapper}>
-        <Textarea  name={name} placeholder={placeholder} />
+        <Textarea  name={name} placeholder={placeholder} modelValue={modelValue}/>
       </label>
 
       {/* Отображаем ошибку, если она есть */}

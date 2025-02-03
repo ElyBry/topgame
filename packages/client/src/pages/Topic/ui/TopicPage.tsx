@@ -50,9 +50,13 @@ export const TopicPage = () => {
 			</li>
 		);
 
-		const handleSubmitForm = () => {
-			console.log('111')
-		}
+		const handleSubmit = (event) => {
+			event.preventDefault();
+
+			const formData = new FormData(event.target);
+			const formProps = Object.fromEntries(formData);
+			console.log(formProps);
+		};
 
   return (
 		<PageForumWrapper>
@@ -72,11 +76,11 @@ export const TopicPage = () => {
 					<ul className={styles.topic_view_block_comments_list}>{comments}</ul>
 				</div>
 			</div>
-			<form className={[styles.topic_view_block, styles.topic_view_block_reply].join(' ')}>
+			<form action="submit" className={[styles.topic_view_block, styles.topic_view_block_reply].join(' ')} onSubmit={handleSubmit}>
 				<div className={styles.topic_view_block_content}>
 					<p className={styles.topic_view_block_reply_label}>Ваш ответ</p>
 					<TextareaField
-						name="add_comment"
+						name="new_comment"
 						placeholder="Добавьте комментарий"
 						error={false}
 					/>
@@ -84,7 +88,6 @@ export const TopicPage = () => {
 							label="Отправить"
 							className={styles.topic_view_block_button}
 							type="submit"
-							onClick={handleSubmitForm}
 						/>
 				</div>
 			</form>

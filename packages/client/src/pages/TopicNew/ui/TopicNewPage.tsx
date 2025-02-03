@@ -22,10 +22,18 @@ export const TopicNewPage = () => {
 		navigate('/forum');
 	};
 
+	const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const formProps = Object.fromEntries(formData);
+    console.log(formProps);
+  };
+
   return (
 		<PageForumWrapper>
 			<h1 className={styles.topic_create_title}>Создание нового топика</h1>
-			<form className={styles.topic_create_form}>
+			<form action="submit" className={styles.topic_create_form} onSubmit={handleSubmit}>
 				<InputField
           type="text"
           name="title"

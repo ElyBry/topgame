@@ -8,13 +8,14 @@ interface InputFieldProps {
   error?: boolean;
   message?: string;
   placeholder: string;
+	modelValue?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ type, name, error, message, placeholder }) => {
+const InputField: React.FC<InputFieldProps> = ({ type, name, error, message, placeholder, modelValue }) => {
   return (
     <div className={styles.fieldset}>
       <label className={styles.input_wrapper}>
-        <Input type={type} name={name} placeholder={placeholder} />
+        <Input type={type} name={name} placeholder={placeholder} modelValue={modelValue} />
       </label>
 
       {/* Отображаем ошибку, если она есть */}
