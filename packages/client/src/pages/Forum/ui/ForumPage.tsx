@@ -16,7 +16,6 @@ export const ForumPage = () => {
 
 
   const navigate = useNavigate();
-
   const handleNavigateNew = () => {
     navigate('/forum/new');
   };
