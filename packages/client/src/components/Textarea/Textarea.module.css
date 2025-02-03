@@ -8,9 +8,9 @@
   padding: 10px 15px;
   font: 1.3rem/1.3rem var(--inter-font);
   color: var(--text-color);
-	height: 150px;
-	resize: none;
-	overflow: auto;
+  height: 150px;
+  resize: none;
+  overflow: auto;
 }
 .textarea:focus {
   background-color: var(--box-bg);

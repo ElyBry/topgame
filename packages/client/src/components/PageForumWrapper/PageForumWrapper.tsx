@@ -6,12 +6,12 @@ interface PageWrapperProps {
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
   return (
-		<div className={styles.forum_page}>
-			<div className={styles.forum_header}></div>
-			<div className={styles.forum_content}>
-				{children}
-			</div>
-		</div>
+    <div className={styles.forum_page}>
+      <div className={styles.forum_header}></div>
+      <div className={styles.forum_content}>
+        {children}
+      </div>
+    </div>
   );
 };
 

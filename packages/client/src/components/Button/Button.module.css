@@ -50,11 +50,11 @@
 }
 
 .button_secondary {
-	background-color: transparent;
-	color: var(--text-color-secondary);
-	border-color: var(--border-color);
+  background-color: transparent;
+  color: var(--text-color-secondary);
+  border-color: var(--border-color);
 }
 
 .button_secondary:hover {
-	background-color: var(--secondary-background-color);
+  background-color: var(--secondary-background-color);
 }

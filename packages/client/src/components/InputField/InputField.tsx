@@ -8,7 +8,7 @@ interface InputFieldProps {
   error?: boolean;
   message?: string;
   placeholder: string;
-	modelValue?: string;
+  modelValue?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({ type, name, error, message, placeholder, modelValue }) => {

@@ -8,21 +8,21 @@ import TextareaField from "../../../components/TextareaField/TextareaField";
 import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrapper";
 
 export const TopicNewPage = () => {
-	useEffect(() => {
-		const currentTitle = document.title;
+  useEffect(() => {
+    const currentTitle = document.title;
 
-		if (!currentTitle.includes("Создание топика")) {
-			document.title = `Создание топика - ${currentTitle}`;
-		}
-	}, []);
+    if (!currentTitle.includes("Создание топика")) {
+      document.title = `Создание топика - ${currentTitle}`;
+    }
+  }, []);
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const handleNavigateBack = () => {
-		navigate('/forum');
-	};
+  const handleNavigateBack = () => {
+    navigate('/forum');
+  };
 
-	const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -31,36 +31,36 @@ export const TopicNewPage = () => {
   };
 
   return (
-		<PageForumWrapper>
-			<h1 className={styles.topic_create_title}>Создание нового топика</h1>
-			<form action="submit" className={styles.topic_create_form} onSubmit={handleSubmit}>
-				<InputField
+    <PageForumWrapper>
+      <h1 className={styles.topic_create_title}>Создание нового топика</h1>
+      <form action="submit" className={styles.topic_create_form} onSubmit={handleSubmit}>
+        <InputField
           type="text"
           name="title"
           placeholder="Заголовок"
           error={false}
           message="Это поле обязательно для заполнения"
         />
-				<TextareaField
+        <TextareaField
           name="description"
           placeholder="Описание"
           error={false}
           message="Это поле обязательно для заполнения"
         />
-				<div className={styles.topic_create_form_buttons}>
-					<Button
+        <div className={styles.topic_create_form_buttons}>
+          <Button
             label="Отмена"
             type="button"
-						className={styleButton.button_secondary}
+            className={styleButton.button_secondary}
             onClick={handleNavigateBack}
           />
-					<Button
+          <Button
             label="Создать"
-						className={styles.topic_create_form_button}
+            className={styles.topic_create_form_button}
             type="submit"
           />
         </div>
-			</form>
-		</PageForumWrapper>
-	);
+      </form>
+    </PageForumWrapper>
+  );
 };
