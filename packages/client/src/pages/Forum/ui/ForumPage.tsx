@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TopicListItem from "../../../components/TopicListItem/TopicListItem";
 import Button from "../../../components/Button/Button";
 import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrapper";
+import topics from './mock.json'
 
 export const ForumPage = () => {
   useEffect(() => {
@@ -23,12 +24,6 @@ export const ForumPage = () => {
   const handleNavigateView = (id: number) => {
     navigate(`/forum/${id}`);
   };
-
-  const topics = [
-    { id: 1, author: 'Ivan', avatar: null, title: 'Name of the topic', commentsCount: 5, date: '12.05.2024', text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." },
-    { id: 2, author: 'Alex', avatar: null, title: 'Name of the topic', commentsCount: 5, date: '12.05.2024', text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." },
-    { id: 3, author: 'Eva', avatar: null, title: 'Name of the topic', commentsCount: 5, date: '12.05.2024', text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." },
-  ];
 
   const topicItems = topics.map(topic =>
     <li

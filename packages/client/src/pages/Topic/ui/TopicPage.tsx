@@ -5,6 +5,7 @@ import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrap
 import CommentListItem from "../../../components/CommentListItem/CommentListItem";
 import { useParams } from 'react-router-dom'
 import Button from "../../../components/Button/Button";
+import topic from './mock.json'
 
 export const TopicPage = () => {
   useEffect(() => {
@@ -16,30 +17,6 @@ export const TopicPage = () => {
   }, []);
 
   const { id } = useParams()
-
-  const topic = {
-    id: 1,
-    author: 'Ivan',
-    avatar: null,
-    title: 'Name of the topic',
-    date: '12.05.2024',
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    comments: [
-      {
-        id: 1,
-        author: 'Jame',
-        avatar: null,
-        date: '10.09.2024',
-        text: 'Yes, I am having the same issue:('
-      },
-      {
-        id: 2,
-        author: 'Nick',
-        date: '19.09.2024',
-        text: 'Hello! Was this issue ever solved for? Thank you!'
-      }
-    ]
-   };
 
     const comments = topic.comments.map(comment =>
       <li
