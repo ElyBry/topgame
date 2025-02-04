@@ -15,7 +15,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: url(./i/chess-bg.jpg) 50% 50% no-repeat var(--text-color);
+  background: url(./i/chess-bg.jpg) 80% 50% no-repeat var(--text-color);
   background-size: cover;
   filter: grayscale(80%) blur(10px) contrast(1.2);
 }
