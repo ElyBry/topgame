@@ -3,9 +3,15 @@ import styles from "./PageWrapper.module.css";
 interface PageWrapperProps {
   children: React.ReactNode;
   title: string;
+	onSubmit: (e: Event) => void;
 }
 
-const PageWrapper: React.FC<PageWrapperProps> = ({ children, title }) => {
+const PageWrapper: React.FC<PageWrapperProps> = ({ children, title, onSubmit }) => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		onSubmit && onSubmit(e)
+	}
+
   return (
     <>
       <div className={styles.bg}></div>
@@ -20,7 +26,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, title }) => {
         <div className={styles.wrap}>
           <div className={styles.form}>
             <h2 className={styles.title}>{title}</h2>
-            <form>
+            <form action="submit" onSubmit= {handleSubmit}>
               {children}
             </form>
           </div>
