@@ -6,11 +6,20 @@ interface SwitchProps {
     'name': string;
     'src'?: string | undefined;
   }[],
-  'style'?: string
+  'style'?: string,
+  'fnAfterClick'?: (index: number) => void
 }
 
-const Switch: React.FC<SwitchProps> = ({ data, style }) => {
-  const [activeSwitch, setActiveSwitch] = useState(0)
+const Switch: React.FC<SwitchProps> = ({ data, style, fnAfterClick }) => {
+  const [activeSwitch, setActiveSwitch] = useState(0);
+
+  function handleItem(index: number) {
+    setActiveSwitch(index);
+
+    if (fnAfterClick && typeof fnAfterClick === 'function') {
+      fnAfterClick(index);
+    }
+  }
 
   return (
     <div className={styles.switch}>
@@ -18,7 +27,7 @@ const Switch: React.FC<SwitchProps> = ({ data, style }) => {
         <div
           className={`${styles.switch_item}${style == 'width_auto' ? ` ${styles.switch_item_width_auto}` : ''}${index === activeSwitch ? ` ${styles.switch_item_active}` : ''}`}
           key={index}
-          onClick={() => setActiveSwitch(index)}
+          onClick={() => handleItem(index)}
         >
           {item.src && <img className={styles.switch_item_img} src={item.src} alt={item.name} />}
           <p className={styles.switch_item_text}>{item.name}</p>
