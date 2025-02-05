@@ -5,6 +5,7 @@ export const ROUTES = {
   PROFILE: '/profile',
   GAME: '/game',
   LEADERBOARD: '/leaderbord',
+  START_GAME: '/start-game',
   FORUM: '/forum',
   FORUM_MESSAGE: '/forum/:messageId',
   NOT_FOUND: '/not-found',

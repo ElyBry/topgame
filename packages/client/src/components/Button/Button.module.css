@@ -48,3 +48,12 @@
   padding: 47px 0 0;
   text-align: center;
 }
+
+.button_width_auto {
+  width: auto;
+}
+
+.button_left {
+  margin-left: 0;
+  margin-right: 0;
+}
