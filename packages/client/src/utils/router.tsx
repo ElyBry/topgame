@@ -7,7 +7,7 @@ import {
   NotFoundPage,
   ProfilePage,
   SigninPage,
-  SignupPage,
+  SignupPage, TestCore,
   TopicPage,
 } from '../pages'
 import { ROUTES } from './routes'
@@ -29,6 +29,10 @@ export const router: RouteObject[] = [
       {
         element: <NotFoundPage />,
         path: ROUTES.NOT_FOUND,
+      },
+      {
+        element: <TestCore />,
+        path: ROUTES.TEST_CORE,
       },
     ],
   },
