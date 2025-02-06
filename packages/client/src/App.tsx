@@ -1,9 +1,14 @@
-import { useCallback, useEffect } from 'react'
+import { useState } from 'react'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { router } from './utils/router'
+import { UserContextProvider } from './context/userContext'
+import { TUserInfoResponse } from './api/auth/userInfoApi'
+import { AppLayout } from './layouts/AppLayout'
 
 function App() {
+  const [userData, setUserData] = useState<TUserInfoResponse | null>(null)
+
   // const fetchServerData = useCallback(async () => {
   //   const url = `http://localhost:${__SERVER_PORT__}`
   //   const response = await fetch(url)
@@ -15,7 +20,17 @@ function App() {
   //   fetchServerData()
   // }, [fetchServerData])
 
-  return <RouterProvider router={createBrowserRouter(router)} />
+  return (
+    <UserContextProvider
+      value={{
+        userInfo: userData,
+        setUserInfo: setUserData,
+      }}>
+      <AppLayout>
+        <RouterProvider router={createBrowserRouter(router)} />
+      </AppLayout>
+    </UserContextProvider>
+  )
 }
 
 export default App

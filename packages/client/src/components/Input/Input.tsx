@@ -1,13 +1,26 @@
-import styles from "./Input.module.css";
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react'
+import styles from './Input.module.css'
 
-interface InputProps {
-  type: string;
-  name: string;
-  placeholder?: string;
+interface InputProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
+  type: string
+  name: string
+  placeholder?: string
 }
 
-const Input: React.FC<InputProps> = ({ type, name, placeholder }) => {
-  return <input className={styles.input} type={type} name={name} placeholder={placeholder} />;
-};
+const Input: FC<InputProps> = ({ type, name, placeholder, ...rest }) => {
+  return (
+    <input
+      {...rest}
+      className={styles.input}
+      type={type}
+      name={name}
+      placeholder={placeholder}
+    />
+  )
+}
 
-export default Input;
+export default Input
