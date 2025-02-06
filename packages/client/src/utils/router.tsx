@@ -7,7 +7,8 @@ import {
   NotFoundPage,
   ProfilePage,
   SigninPage,
-  SignupPage, TestCore,
+  SignupPage,
+    TestCore,
   TopicPage,
 } from '../pages'
 import { ROUTES } from './routes'
@@ -64,6 +65,10 @@ export const router: RouteObject[] = [
         path: ROUTES.FORUM_MESSAGE,
       },
     ],
+  },
+  {
+    element: <NotFoundPage />,
+    path: ROUTES.NOT_FOUND,
   },
   {
     path: '*',
