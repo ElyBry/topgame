@@ -8,10 +8,10 @@ export const PrivateLayout = () => {
   const context = useContext(UserContext)
 
   useEffect(() => {
-    if (!context?.userInfo) {
+    if (!context?.userInfo && !context?.loading) {
       navigate(ROUTES.SIGN_IN)
     }
-  }, [context?.userInfo, navigate])
+  }, [context?.loading, context?.userInfo, navigate])
 
   if (!context?.userInfo) {
     return null

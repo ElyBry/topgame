@@ -1,9 +1,4 @@
-import {
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { ReactNode, useContext, useEffect, useState } from 'react'
 import UserContext from '../../../context/userContext'
 import { getUserInfo } from '../../../api/auth/userInfoApi'
 
@@ -13,6 +8,7 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!context?.userInfo) {
+      context?.setLoading(true)
       setIsLoading(true)
       getUserInfo()
         .then(res => {
@@ -25,9 +21,11 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
         })
         .finally(() => {
           setIsLoading(false)
+          context?.setLoading(false)
         })
     }
-  }, [context])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!context?.userInfo && isLoading) {
     null

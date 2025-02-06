@@ -8,6 +8,7 @@ import { AppLayout } from './layouts/AppLayout'
 
 function App() {
   const [userData, setUserData] = useState<TUserInfoResponse | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   // const fetchServerData = useCallback(async () => {
   //   const url = `http://localhost:${__SERVER_PORT__}`
@@ -24,7 +25,9 @@ function App() {
     <UserContextProvider
       value={{
         userInfo: userData,
+        loading: isLoading,
         setUserInfo: setUserData,
+        setLoading: setIsLoading,
       }}>
       <AppLayout>
         <RouterProvider router={createBrowserRouter(router)} />
