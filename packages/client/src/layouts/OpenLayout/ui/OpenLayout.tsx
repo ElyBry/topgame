@@ -11,7 +11,8 @@ export const OpenLayout = () => {
     if (context?.userInfo) {
       navigate(ROUTES.MAIN)
     }
-  }, [context?.userInfo, navigate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate])
 
   return <Outlet />
 }
