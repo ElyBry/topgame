@@ -1,30 +1,39 @@
-import styles from "./InputField.module.css";
-import { Input } from '../Input';
-import { ErrorMessage } from '../ErrorMessage';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import styles from './InputField.module.css'
+import { Input } from '../Input'
+import { ErrorMessage } from '../ErrorMessage'
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react'
 
-interface InputFieldProps {
-  type: string;
-  name: string;
-  error?: boolean;
-  message?: string;
-  placeholder: string;
-	modelValue?: string;
-	onChange?: (e: Event) => void;
-	onBlur?: (e: Event) => void;
-	onFocus?: (e: Event) => void;
+interface InputFieldProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
+  type: string
+  name: string
+  error?: boolean
+  message?: string
+  placeholder: string
 }
 
-const InputField: React.FC<InputFieldProps> = ({ type, name, error, message, placeholder, modelValue, onBlur, onFocus, onChange }) => {
+const InputField: FC<InputFieldProps> = ({
+  type,
+  name,
+  error,
+  message,
+  placeholder,
+  ...rest
+}) => {
   return (
     <div className={styles.fieldset}>
       <label className={styles.input_wrapper}>
-        <Input type={type} name={name} placeholder={placeholder} modelValue={modelValue} onBlur={onBlur} onFocus={onFocus} onChange={onChange}/>
+        <Input {...rest} type={type} name={name} placeholder={placeholder} />
       </label>
 
       {/* Отображаем ошибку, если она есть */}
       {error && message && <ErrorMessage message={message} />}
     </div>
-  );
-};
+  )
+}
 
-export default InputField;
+export default InputField

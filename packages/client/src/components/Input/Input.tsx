@@ -1,25 +1,26 @@
-import styles from "./Input.module.css";
-import { useState } from 'react';
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react'
+import styles from './Input.module.css'
 
-interface InputProps {
-  type: string;
-  name: string;
-  placeholder?: string;
-  modelValue?: string;
-	onChange?: (e: Event) => void;
-	onBlur?: (e: Event) => void;
-	onFocus?: (e: Event) => void;
+interface InputProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
+  type: string
+  name: string
+  placeholder?: string
 }
 
-const Input: React.FC<InputProps> = ({ type, name, placeholder, modelValue, onBlur, onFocus, onChange }) => {
-	const [value, setValue] = useState(modelValue || '');
+const Input: FC<InputProps> = ({ type, name, placeholder, ...rest }) => {
+  return (
+    <input
+      {...rest}
+      className={styles.input}
+      type={type}
+      name={name}
+      placeholder={placeholder}
+    />
+  )
+}
 
-	const handleChange = (event) => {
-		setValue(event.target.value)
-		onChange && onChange(event)
-	}
-
-  return <input className={styles.input} type={type} name={name} placeholder={placeholder} value={value} onChange={handleChange} onBlur={onBlur} onFocus={onFocus}/>;
-};
-
-export default Input;
+export default Input
