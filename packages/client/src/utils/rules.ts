@@ -21,7 +21,7 @@ export const checkEmail = (str: string) => {
 }
 
 export const checkPassword = (str: string) => {
-  const rules = /(?=^[a-z0-9_-]{8,40})(?=.*\d)(?=.*[A-Z])/
+  const rules = /(?=^.{8,40}$)(?=.*\d)(?=.*[A-Z])/
 
   if (rules.test(str)) return ''
   return `Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра`
