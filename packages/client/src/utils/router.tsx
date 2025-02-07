@@ -9,6 +9,7 @@ import {
   SigninPage,
   SignupPage,
   TopicPage,
+	ServerErrorPage
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
@@ -60,6 +61,10 @@ export const router: RouteObject[] = [
   {
     element: <NotFoundPage />,
     path: ROUTES.NOT_FOUND,
+  },
+	{
+    element: <ServerErrorPage />,
+    path: ROUTES.SERVER_ERROR,
   },
   {
     path: '*',

@@ -8,4 +8,5 @@ export const ROUTES = {
   FORUM: '/forum',
   FORUM_MESSAGE: '/forum/:messageId',
   NOT_FOUND: '/not-found',
+  SERVER_ERROR: '/500',
 } as const
