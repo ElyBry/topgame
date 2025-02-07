@@ -3,14 +3,14 @@ import styles from './Switch.module.css'
 
 interface SwitchProps {
   data: {
-    'name': string;
-    'src'?: string | undefined;
+    name: string;
+    src?: string | undefined;
   }[],
-  'style'?: string,
-  'fnAfterClick'?: (index: number) => void
+  isWidthAuto?: boolean,
+  fnAfterClick?: (index: number) => void
 }
 
-const Switch: React.FC<SwitchProps> = ({ data, style, fnAfterClick }) => {
+const Switch: React.FC<SwitchProps> = ({ data, isWidthAuto, fnAfterClick }) => {
   const [activeSwitch, setActiveSwitch] = useState(0);
 
   function handleItem(index: number) {
@@ -25,7 +25,7 @@ const Switch: React.FC<SwitchProps> = ({ data, style, fnAfterClick }) => {
     <div className={styles.switch}>
       {data.map((item, index) => (
         <div
-          className={`${styles.switch_item}${style == 'width_auto' ? ` ${styles.switch_item_width_auto}` : ''}${index === activeSwitch ? ` ${styles.switch_item_active}` : ''}`}
+          className={`${styles.switch_item}${isWidthAuto ? ` ${styles.switch_item_width_auto}` : ''}${index === activeSwitch ? ` ${styles.switch_item_active}` : ''}`}
           key={index}
           onClick={() => handleItem(index)}
         >

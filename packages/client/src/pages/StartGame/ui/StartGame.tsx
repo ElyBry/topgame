@@ -8,7 +8,7 @@ import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 import { SETTING_GAME_DEFAULT, SETTING_GAME_SELECT } from '../../../utils/constants'
 
-export const StartGame = () => {
+export const StartGame: React.FC = () => {
   const [isSettingTime, setIsSettingTime] = useState(false);
   const [settingsGame, setSettingsGame] = useState(SETTING_GAME_DEFAULT);
 
@@ -34,11 +34,11 @@ export const StartGame = () => {
           <Switch data={SETTING_GAME_SELECT.color} fnAfterClick={switchColor} />
 
           <SubTitle text="Минут на партию" />
-          <Switch style="width_auto" data={SETTING_GAME_SELECT.timePlay} fnAfterClick={switchTime} />
+          <Switch isWidthAuto={true} data={SETTING_GAME_SELECT.timePlay} fnAfterClick={switchTime} />
 
           {isSettingTime && <>
             <SubTitle text="Добавление секунд на ход" />
-            <Switch style="width_auto" data={SETTING_GAME_SELECT.timePlayMove} fnAfterClick={switchTimeMove} />
+            <Switch isWidthAuto={true} data={SETTING_GAME_SELECT.timePlayMove} fnAfterClick={switchTimeMove} />
           </>}
 
           <Button
