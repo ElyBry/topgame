@@ -27,10 +27,6 @@ export const router: RouteObject[] = [
         element: <SignupPage />,
         path: ROUTES.SIGN_UP,
       },
-      {
-        element: <NotFoundPage />,
-        path: ROUTES.NOT_FOUND,
-      },
     ],
   },
   {
@@ -65,6 +61,10 @@ export const router: RouteObject[] = [
         path: ROUTES.FORUM_NEW,
       },
     ],
+  },
+  {
+    element: <NotFoundPage />,
+    path: ROUTES.NOT_FOUND,
   },
   {
     path: '*',
