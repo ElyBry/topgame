@@ -62,7 +62,7 @@ export const router: RouteObject[] = [
     element: <NotFoundPage />,
     path: ROUTES.NOT_FOUND,
   },
-	{
+  {
     element: <ServerErrorPage />,
     path: ROUTES.SERVER_ERROR,
   },
