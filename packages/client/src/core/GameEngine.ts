@@ -4,6 +4,7 @@ import {Player} from "./Player";
 import {Timer} from "./Timer";
 import {CanvasManager} from "./CanvasManager";
 import {Settings} from "./Settings";
+import {Sound} from "./Sound";
 
 export class GameEngine {
   private board: Board;
@@ -14,8 +15,9 @@ export class GameEngine {
   private timer: Timer;
   private isGameOver: boolean;
   private settings: Settings;
+  private sounds: Sound;
 
-  constructor(settings: Settings, canvas: HTMLCanvasElement, cellSize = 50, colorWhiteHex: string, colorBlackHex: string) {
+  constructor(settings: Settings, canvas: HTMLCanvasElement, cellSize = 50, colorWhiteHex: string, colorBlackHex: string, sounds: Sound) {
     this.board = new Board(settings.getWidth(), settings.getHeight(), cellSize);
     this.players = [new Player('Player 1', 'white'), new Player('Player 2', 'black')];
     this.currentPlayerIndex = 0;
@@ -24,6 +26,7 @@ export class GameEngine {
     this.timer = new Timer(settings.getMinutesPerParty(), settings.getCountSecondsPerMove());
     this.isGameOver = false;
     this.settings = settings;
+    this.sounds = sounds;
   }
 
   start() {
@@ -60,58 +63,26 @@ export class GameEngine {
   getCurrentPlayer(): Player {
     return this.players[this.currentPlayerIndex];
   }
-  hasLegalMoves(player: Player): boolean {
-    const board = this.getBoard();
-    const figures = board.getFigures();
-
-    for (const figure of figures) {
-      if (figure.color === player.color) {
-        for (let y = 0; y < this.settings.getHeight(); y++) {
-          for (let x = 0; x < this.settings.getWidth(); x++) {
-            if (figure.isValidMove(x, y, board)) {
-              const tempBoard = board.clone();
-              tempBoard.moveFigure(x, y, figure);
-              if (!tempBoard.isKingInCheck(player.color)) {
-                return true;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return false;
+  getSettings() {
+    return this.settings;
+  }
+  getSounds() {
+    return this.sounds;
+  }
+  updateCanvasSize(width: number, height: number, cellSize: number) {
+    this.canvasManager.updateSize(width, height, cellSize);
+    this.getBoard().updateSize(width, height, cellSize);
+    this.eventManager.updateSize(cellSize);
+  }
+  getCanvasManager() {
+    return this.canvasManager;
   }
 
   drawGame() {
     this.canvasManager.clear();
     this.canvasManager.drawBoard(this.board);
-    this.canvasManager.drawFigures(this.board.getFigures(), this.eventManager.getSelectedFigure(), this.board);
+    this.canvasManager.drawFigures(this.board.getFigures(), this.eventManager.getSelectedFigure());
   }
 
-  checkGameOver() {
-    const currentPlayer = this.players[this.currentPlayerIndex];
-    const board = this.getBoard();
-
-    // if (board.isKingInCheck(currentPlayer.color)) {
-    //   if (!this.hasLegalMoves(currentPlayer)) {
-    //     console.log(`Мат! Игрок ${currentPlayer.name} проиграл.`);
-    //     this.isGameOver = true;
-    //     return;
-    //   }
-    // } else {
-    //   if (!this.hasLegalMoves(currentPlayer)) {
-    //     console.log("Пат! Ничья.");
-    //     this.isGameOver = true;
-    //     return;
-    //   }
-    // }
-
-    // Проверка на недостаток материала
-    // if (this.isInsufficientMaterial()) {
-    //   console.log("Недостаточно материала для мата. Ничья.");
-    //   this.isGameOver = true;
-    //   return;
-    // }
-  }
+  checkGameOver() {}
 }

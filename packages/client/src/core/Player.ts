@@ -14,7 +14,7 @@ export class Player {
   makeMove(startX: number, startY: number, endX: number, endY: number, board: Board): boolean {
     const figure = board.getFigure(startX, startY);
     if (figure && figure.color === this.color && figure.isValidMove(endX, endY, board)) {
-      figure.move(endX, endY, board);
+      // figure.move(endX, endY, board);
       return true;
     }
     return false;

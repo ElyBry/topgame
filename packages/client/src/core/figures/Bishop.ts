@@ -3,7 +3,7 @@ import {Figure} from "../Figure";
 
 export class Bishop extends Figure {
   constructor(color: string, x: number, y: number, cellSize: number) {
-    super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Bishop.png`);
+    super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Bishop.svg`);
   }
   isValidMove(x: number, y: number, board: Board): boolean {
     const dx = Math.abs(x - this.x);

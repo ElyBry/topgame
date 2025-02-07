@@ -28,10 +28,6 @@ export const router: RouteObject[] = [
         path: ROUTES.SIGN_UP,
       },
       {
-        element: <NotFoundPage />,
-        path: ROUTES.NOT_FOUND,
-      },
-      {
         element: <TestCore />,
         path: ROUTES.TEST_CORE,
       },

@@ -3,7 +3,7 @@ import {Figure} from "../Figure";
 
 export class Pawn extends Figure {
   constructor(color: string, x: number, y: number, cellSize: number) {
-    super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Pawn.png`);
+    super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Pawn.svg`);
   }
   isValidMove(x: number, y: number, board: Board): boolean {
     const direction = this.color === 'white' ? -1 : 1;
@@ -23,13 +23,5 @@ export class Pawn extends Figure {
     }
 
     return false;
-  }
-  getPossibleMoves(board: Board): {x: number, y: number}[] {
-    const moves = [];
-    const forward = this.color === 'white' ? -1 : 1;
-    if (board.getFigure(this.x, this.y + forward) === null) {
-      moves.push({ x: this.x, y: this.y + forward });
-    }
-    return moves;
   }
 }

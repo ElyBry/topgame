@@ -6,6 +6,7 @@ export abstract class Figure {
   y: number;
   cellSize = 5;
   image: HTMLImageElement;
+  inAnim: boolean = false;
 
   constructor(color: string, y: number, x: number, cellSize: number, imageSrc: string) {
     this.color = color;
@@ -39,8 +40,11 @@ export abstract class Figure {
     );
   }
   getPossibleMoves(board: Board) {}
-  draw(ctx: CanvasRenderingContext2D, isSelected: boolean = false) {
-    ctx.drawImage(this.image, this.x * this.cellSize, this.y * this.cellSize, this.cellSize, this.cellSize);
+  draw(ctx: CanvasRenderingContext2D, isSelected: boolean = false, posX?: number, posY?: number) {
+    const x = posX !== undefined ? posX : this.x * this.cellSize;
+    const y = posY !== undefined ? posY : this.y * this.cellSize;
+
+    ctx.drawImage(this.image, x, y, this.cellSize, this.cellSize);
 
     if (isSelected) {
       this.drawHighlight(ctx);

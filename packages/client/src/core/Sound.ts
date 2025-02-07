@@ -4,13 +4,14 @@ export class Sound {
   private captureSound: HTMLAudioElement;
   private loseSound: HTMLAudioElement;
   private checkSound: HTMLAudioElement;
+  dir = 'audio/';
 
   constructor() {
-    this.moveSound = new Audio('move.mp3'); // движение
-    this.captureSound = new Audio('capture.mp3'); // взятие фигуры
-    this.winSound = new Audio('win.mp3'); //  победа
-    this.loseSound = new Audio('lose.mp3'); // проигрыш
-    this.checkSound = new Audio('check.mp3'); // шах
+    this.moveSound = new Audio(this.dir + 'move.mp3'); // движение
+    this.captureSound = new Audio(this.dir + 'capture.mp3'); // взятие фигуры
+    this.winSound = new Audio(this.dir + 'win.mp3'); //  победа
+    this.loseSound = new Audio(this.dir + 'lose.mp3'); // проигрыш
+    this.checkSound = new Audio(this.dir + 'check.mp3'); // шах
   }
 
   playCaptureSound() {

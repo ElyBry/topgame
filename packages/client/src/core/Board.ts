@@ -49,17 +49,6 @@ export class Board {
     }
   }
 
-  clone(): Board {
-    const clonedCells = this.cells.map(row =>
-      row.map(cell =>
-        cell ? cell.clone() : null
-      )
-    );
-    const clonedBoard = new Board(this.width, this.height, this.cellSize);
-    clonedBoard.cells = clonedCells; // Копируем закопированные ячейки в новый экземпляр
-    return clonedBoard;
-  }
-
   isKingInCheck(color: string): boolean {
     const king = this.findKing(color);
     if (!king) {
@@ -76,6 +65,12 @@ export class Board {
     }
 
     return false;
+  }
+
+  updateSize(width: number, height: number, cellSize: number) {
+    this.width = width;
+    this.height = height;
+    this.cellSize = cellSize;
   }
 
   findKing(color: string): Figure | null {

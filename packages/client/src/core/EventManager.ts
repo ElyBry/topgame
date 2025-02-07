@@ -25,13 +25,21 @@ export class EventManager {
     const x = Math.floor((event.clientX - rect.left) / this.cellSize);
     const y = Math.floor((event.clientY - rect.top) / this.cellSize);
 
+    console.log(x, y)
+
     const board = this.gameEngine.getBoard();
     const figure = board.getFigure(x, y);
 
     if (this.selectedFigure) {
       const move = new Move(this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y);
       const currentPlayer = this.gameEngine.getCurrentPlayer();
+      // Если цвет фигур совпадает, то убираем селект на фигуре(есть вид шахмат с возможностью убивать свои фигуры)
+      if (this.selectedFigure.color === board.getFigure(x,y)?.color) {
+        this.selectedFigure = null;
+        return;
+      }
       if (currentPlayer.makeMove(this.selectedFigure.x, this.selectedFigure.y, x, y, board)) {
+        this.gameEngine.getCanvasManager().animateFigureMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y, 300);
         this.lastMove = move;
         this.gameEngine.updateGameLogic();
       }
@@ -54,5 +62,9 @@ export class EventManager {
   }
   clearMove():void {
     this.lastMove = null;
+  }
+
+  updateSize(cellSize: number) {
+    this.cellSize = cellSize;
   }
 }
