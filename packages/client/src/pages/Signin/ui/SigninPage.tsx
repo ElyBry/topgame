@@ -8,9 +8,14 @@ import { login } from '../../../api/auth/authApi'
 import { getUserInfo } from '../../../api/auth/userInfoApi'
 import { ROUTES } from '../../../utils/routes'
 import UserContext from '../../../context/userContext'
-import { validateField } from "../../../utils/validate";
+import { validateField } from '../../../utils/validate'
 
 type TFormState = {
+  login: string
+  password: string
+}
+
+type TFormErrors = {
   login: string
   password: string
 }
@@ -25,9 +30,14 @@ export const SigninPage = () => {
     login: '',
     password: '',
   })
+  const [formErrors, setFormErrors] = useState<TFormErrors>({
+    login: '',
+    password: '',
+  })
 
-	const [fields, setFields] = useState({});
-  const [errors, setErrors] = useState({});
+  const isButtonDisabled = () =>
+    Object.values(formErrors).some(value => !!value) ||
+    !Object.values(formState).every(value => !!value)
 
   const context = useContext(UserContext)
 
@@ -53,13 +63,24 @@ export const SigninPage = () => {
     }))
   }
 
+  const handleValidateField = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target
+    if (!value) return
+
+    const error = validateField(name, value)
+
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: error,
+    }))
+  }
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
 
-		if (!handleValidation()) return;
+    if (!handleValidation()) return
 
     if (formState.login.length && formState.password.length) {
-
       const result = await login(formState)
 
       if (result) {
@@ -73,69 +94,49 @@ export const SigninPage = () => {
     }
   }
 
+  const handleValidation = () => {
+    const formFields = { ...formState }
+    let formIsValid = true
 
-		const handleValidation = () => {
-      const formFields = {...fields};
-      const formErrors = {};
-      let formIsValid = true;
+    const errorLogin = validateField('login', formFields['login'])
+    const errorPassword = validateField('password', formFields['password'])
 
-			const errorLogin = validateField("login", formFields["login"])
-			const errorPassword = validateField("password", formFields["password"])
-
-      if(errorLogin){
-        formIsValid = false;
-        formErrors["login"] = errorLogin;
-      }
-
-      if(errorPassword){
-        formIsValid = false;
-        formErrors["password"] = errorPassword;
-      }
-
-
-      // setErrors(formErrors)
-			setFields({
-        login: formErrors.login,
-        password: formErrors.password,
-      })
-
-      return formIsValid;
+    if (errorLogin || errorPassword) {
+      formIsValid = false
     }
 
-    const handleChange = (field, value) => {
-      setFields({
-        ...fields,
-        [field]: value
-      })
-    }
+    setFormErrors(prev => ({
+      ...prev,
+      login: errorLogin,
+      password: errorPassword,
+    }))
+
+    return formIsValid
+  }
 
   return (
     <PageWrapper title="Вход">
       <form onSubmit={handleSubmit}>
         <InputField
           onChange={handleFormChange}
+          onBlur={handleValidateField}
           type="text"
           name="login"
           placeholder="Логин"
-          error={false}
-          message={errors["login"]}
-					onChange={e => handleChange('login', e.target.value)}
+          error={!!formErrors['login']}
+          message={formErrors['login']}
         />
         <InputField
           onChange={handleFormChange}
+          onBlur={handleValidateField}
           type="password"
           name="password"
           placeholder="Пароль"
-          error={false}
-          message={errors["password"]}
-					onChange={e => handleChange('password', e.target.value)}
+          error={!!formErrors['password']}
+          message={formErrors['password']}
         />
         <div className={styles.button_fieldset}>
-          <Button
-            label="Войти"
-            type="submit"
-            disabled={!formState.login.length || !formState.password.length}
-          />
+          <Button label="Войти" type="submit" disabled={isButtonDisabled()} />
           <Button
             label="Нет аккаунта?"
             className={styles.button_link}
