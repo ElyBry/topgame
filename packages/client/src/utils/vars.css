@@ -11,7 +11,12 @@
     --error-color: #ff2f2f;
     --input-ele-bg: #efefef;
     --input-ele-border: rgba(0,0,0,.14);
-    
+    --border-color: #eaeaea;
+    --secondary-background-color: #efefef;
+    --text-color-secondary: #999;
+
+    --border-radius: 8px;
+
     /*--box-bg: #fff;
     --spinner-shadow: rgba(255,255,255,.4);
     --box-shadow: rgba(0,0,0,.14);

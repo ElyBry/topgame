@@ -3,3 +3,8 @@ export { PageWrapper } from "./PageWrapper";
 export { Input } from "./Input";
 export { InputField } from "./InputField";
 export { ErrorMessage } from "./ErrorMessage";
+export { TopicListItem } from "./TopicListItem";
+export { Textarea } from "./Textarea";
+export { TextareaField } from "./TextareaField";
+export { PageForumWrapper } from "./PageForumWrapper";
+export { CommentListItem } from "./CommentListItem";
