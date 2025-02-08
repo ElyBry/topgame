@@ -2,6 +2,7 @@ import {Board} from "../Board";
 import {Figure} from "../Figure";
 
 export class Pawn extends Figure {
+  didDoubleMove = false;
   constructor(color: string, x: number, y: number, cellSize: number) {
     super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Pawn.svg`);
   }
@@ -17,11 +18,25 @@ export class Pawn extends Figure {
       return board.getFigure(x, y) === null && board.getFigure(x, y - direction) === null;
     }
 
-    // Пешка может бить по диагонали
+    // Возможность взятия на проходе
     if (Math.abs(dx) === 1 && dy === direction) {
-      return board.getFigure(x, y) !== null && board.getFigure(x, y)!.color !== this.color; // Проверяем на чужой цвет
+      const enemyPawnY = y - direction;
+      const enemyPawn = board.getFigure(x, enemyPawnY);
+      if (enemyPawn instanceof Pawn && enemyPawn.color !== this.color && enemyPawn.didDoubleMove) {
+        return true;
+      }
     }
 
+    // Пешка может бить по диагонали
+    if (Math.abs(dx) === 1 && dy === direction) {
+      return board.getFigure(x, y) !== null && board.getFigure(x, y)!.color !== this.color;
+    }
     return false;
+  }
+
+  move(x: number, y: number, board: Board) {
+    const dy = y - this.y;
+    this.didDoubleMove = Math.abs(dy) === 2;
+    super.move(x, y, board);
   }
 }

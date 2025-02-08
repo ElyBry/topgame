@@ -1,6 +1,9 @@
 import {GameEngine} from "./GameEngine";
 import {Figure} from "./Figure";
 import {Move} from "./Move";
+import {King} from "./figures/King";
+import {Rook} from "./figures/Rook";
+import {Pawn} from "./figures/Pawn";
 
 export class EventManager {
   private gameEngine: GameEngine;
@@ -25,8 +28,6 @@ export class EventManager {
     const x = Math.floor((event.clientX - rect.left) / this.cellSize);
     const y = Math.floor((event.clientY - rect.top) / this.cellSize);
 
-    console.log(x, y)
-
     const board = this.gameEngine.getBoard();
     const figure = board.getFigure(x, y);
 
@@ -34,12 +35,63 @@ export class EventManager {
       const move = new Move(this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y);
       const currentPlayer = this.gameEngine.getCurrentPlayer();
       // Если цвет фигур совпадает, то убираем селект на фигуре(есть вид шахмат с возможностью убивать свои фигуры)
-      if (this.selectedFigure.color === board.getFigure(x,y)?.color) {
+      if (this.selectedFigure.color === board.getFigure(x,y)?.color && !(this.selectedFigure instanceof King && board.getFigure(x, y) instanceof Rook)) {
         this.selectedFigure = null;
         return;
       }
       if (currentPlayer.makeMove(this.selectedFigure.x, this.selectedFigure.y, x, y, board)) {
-        this.gameEngine.getCanvasManager().animateFigureMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y, 300);
+        if (this.selectedFigure instanceof King && board.getFigure(x, y) instanceof Rook && this.selectedFigure.color === board.getFigure(x,y)?.color) {
+          // Рокировка
+          const rook = board.getFigure(x, y) as Rook;
+          const isLongCastling = x < this.selectedFigure.x;
+          const isShortCastling = x > this.selectedFigure.x;
+          const startX = this.selectedFigure.x;
+          const endX = x;
+          let kingNewX: number;
+          let rookNewX: number;
+
+          if (isLongCastling) {
+            kingNewX = startX - 2;
+            rookNewX = startX - 1;
+          } else if (isShortCastling) {
+            kingNewX = startX + 2;
+            rookNewX = startX + 1;
+          } else {
+            console.log("Некорректное направление рокировки.");
+            return;
+          }
+
+          this.gameEngine.getCanvasManager().animateTwoFiguresMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, kingNewX, y, rook, rook.x, rook.y, rookNewX, y, 300);
+        } else if (this.selectedFigure instanceof Pawn && (y === 0 || y === 7)) {
+          this.gameEngine.getCanvasManager().animateFigureMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y, 300, (figure) => {
+            figure.move(x, y, board);
+            board.promotePawn(figure, x, y);
+          });
+        } else if (this.selectedFigure instanceof Pawn) {
+          const direction = this.selectedFigure.color === 'white' ? -1 : 1;
+          const enemyPawnY = y - direction;
+          const enemyPawn = board.getFigure(x, enemyPawnY);
+
+          if (Math.abs(x - this.selectedFigure.x) === 1 && y - this.selectedFigure.y === direction && enemyPawn instanceof Pawn && enemyPawn.color !== this.selectedFigure.color && enemyPawn.didDoubleMove) {
+            this.gameEngine.getCanvasManager().animateFigureMovement(
+              board,
+              this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y,
+              300,
+              (figure) => {
+                board.setFigure(x, enemyPawnY, null);
+                figure.move(x, y, board);
+              }
+            );
+          } else {
+            this.gameEngine.getCanvasManager().animateFigureMovement(
+              board,
+              this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y,
+              300
+            );
+          }
+        } else {
+          this.gameEngine.getCanvasManager().animateFigureMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y, 300);
+        }
         this.lastMove = move;
         this.gameEngine.updateGameLogic();
       }

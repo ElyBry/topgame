@@ -20,12 +20,10 @@ export abstract class Figure {
   abstract isValidMove(x: number, y: number, board: Board): boolean;
 
   move(x: number, y: number, board: Board) {
-    if (this.isValidMove(x, y, board)) {
-      board.setFigure(this.x, this.y, null);
-      this.x = x;
-      this.y = y;
-      board.setFigure(x, y, this);
-    }
+    board.setFigure(this.x, this.y, null);
+    this.x = x;
+    this.y = y;
+    board.setFigure(x, y, this);
   }
 
   drawHighlight(ctx: CanvasRenderingContext2D) {

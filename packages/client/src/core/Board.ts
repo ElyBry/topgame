@@ -87,7 +87,6 @@ export class Board {
     if (x > this.width || y > this.height) {
       return null;
     }
-
     return this.cells[y][x];
   }
 
@@ -105,12 +104,86 @@ export class Board {
     return figure.isValidMove(x, y, this);
   }
 
+  isUnderAttack(x: number, y: number, color: string) {
+    const opponentColor = color === 'white' ? 'black' : 'white';
+
+    const opponentFigures = this.getFiguresByColor(opponentColor);
+    for (const figure of opponentFigures) {
+      if (figure.isValidMove(x, y, this)) {
+        if (figure instanceof Knight) {
+          return true;
+        }
+        return this.isPathClear(figure.x, figure.y, x, y);
+      }
+    }
+
+    return false;
+  }
+
   getFigures(): Figure[] {
     return this.cells.flat().filter(figure => figure !== null) as Figure[];
+  }
+
+  getFiguresByColor(color: string): Figure[] {
+    return this.cells.flat().filter((figure: Figure | null) =>
+    {
+      return figure?.color === color;
+    }) as Figure[];
   }
 
   resetBoard() {
     this.cells = Array.from({ length: this.height }, () => Array.from({ length: this.width }, () => null));
     this.init();
+  }
+
+  promotePawn(pawn: Figure, x: number, y: number) {
+    const selectedPiece = this.showPromotionDialog();
+
+    if (selectedPiece) {
+      let newPiece: Figure;
+      switch (selectedPiece) {
+        case 'queen':
+          newPiece = new Queen(pawn.color, y, x, this.cellSize);
+          break;
+        case 'rook':
+          newPiece = new Rook(pawn.color, y, x, this.cellSize);
+          break;
+        case 'bishop':
+          newPiece = new Bishop(pawn.color, y, x, this.cellSize);
+          break;
+        case 'knight':
+          newPiece = new Knight(pawn.color, y, x, this.cellSize);
+          break;
+        default:
+          newPiece = new Queen(pawn.color, y, x, this.cellSize);
+      }
+
+      this.setFigure(x, y, newPiece);
+    }
+  }
+
+  isPathClear(startX: number, startY: number, endX: number, endY: number): boolean {
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const steps = Math.max(Math.abs(dx), Math.abs(dy));
+
+    const stepX = dx === 0 ? 0 : dx / Math.abs(dx);
+    const stepY = dy === 0 ? 0 : dy / Math.abs(dy);
+
+    for (let i = 1; i < steps; i++) {
+      const checkX = startX + i * stepX;
+      const checkY = startY + i * stepY;
+
+      if (this.getFigure(checkX, checkY) !== null) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private showPromotionDialog() {
+    const selectedPiece = window.prompt("Выберите фигуру (queen, rook, bishop, knight):", "queen");
+    return selectedPiece?.toLowerCase() || null;
   }
 }

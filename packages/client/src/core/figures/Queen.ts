@@ -8,6 +8,9 @@ export class Queen extends Figure {
   isValidMove(x: number, y: number, board: Board): boolean {
     const dx = Math.abs(x - this.x);
     const dy = Math.abs(y - this.y);
-    return (dx === dy || this.x === x || this.y === y); // Диагональ, вертикаль и горизонталь
+    if (dx === dy || this.x === x || this.y === y) {
+      return board.isPathClear(this.x, this.y, x, y);
+    } // Диагональ, вертикаль и горизонталь
+    return false;
   }
 }
