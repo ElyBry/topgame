@@ -11,6 +11,7 @@ export class EventManager {
   private selectedFigure: Figure | null = null;
   private cellSize: number;
   private lastMove: Move | null = null;
+  private moveIs = false;
 
   constructor(gameEngine: GameEngine, canvas: HTMLCanvasElement, cellSize: number) {
     this.gameEngine = gameEngine;
@@ -72,16 +73,22 @@ export class EventManager {
           const enemyPawnY = y - direction;
           const enemyPawn = board.getFigure(x, enemyPawnY);
 
-          if (Math.abs(x - this.selectedFigure.x) === 1 && y - this.selectedFigure.y === direction && enemyPawn instanceof Pawn && enemyPawn.color !== this.selectedFigure.color && enemyPawn.didDoubleMove) {
-            this.gameEngine.getCanvasManager().animateFigureMovement(
-              board,
-              this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y,
-              300,
-              (figure) => {
-                board.setFigure(x, enemyPawnY, null);
-                figure.move(x, y, board);
-              }
-            );
+          if (Math.abs(x - this.selectedFigure.x) === 1 && y - this.selectedFigure.y === direction && enemyPawn instanceof Pawn
+            && enemyPawn.color !== this.selectedFigure.color && enemyPawn.didDoubleMove) {
+            if (this.lastMove?.figure === enemyPawn) {
+              this.gameEngine.getCanvasManager().animateFigureMovement(
+                board,
+                this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y,
+                300,
+                (figure) => {
+                  board.setFigure(x, enemyPawnY, null);
+                  figure.move(x, y, board);
+                }
+              );
+            } else {
+              this.selectedFigure = null;
+              return;
+            }
           } else {
             this.gameEngine.getCanvasManager().animateFigureMovement(
               board,
@@ -93,6 +100,7 @@ export class EventManager {
           this.gameEngine.getCanvasManager().animateFigureMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y, 300);
         }
         this.lastMove = move;
+        this.moveIs = true;
         this.gameEngine.updateGameLogic();
       }
 
@@ -109,7 +117,12 @@ export class EventManager {
   getSelectedFigure() {
     return this.selectedFigure;
   }
-  getMove(): Move | null {
+  nextMove() {
+    const currentMove = this.moveIs;
+    this.moveIs = false;
+    return currentMove;
+  }
+  getLastMove(): Move | null {
     return this.lastMove;
   }
   clearMove():void {

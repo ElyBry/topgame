@@ -47,16 +47,16 @@ export class GameEngine {
   updateGameLogic() {
     const currentPlayer = this.players[this.currentPlayerIndex];
     if (currentPlayer.isTurn) {
-      const move = this.eventManager.getMove();
-      if (move) {
+      const isMove = this.eventManager.nextMove();
+      if (isMove) {
         currentPlayer.endTurn();
-        this.eventManager.clearMove();
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
         this.players[this.currentPlayerIndex].isTurn = true;
         this.checkGameOver();
       }
     }
   }
+
   getBoard(): Board {
     return this.board;
   }
