@@ -1,11 +1,11 @@
 import styles from "./Modal.module.css";
+import { PropsWithChildren } from "react";
 
 interface ModalProps {
   title: string;
-  children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ title, children }) => {
+const Modal: React.FC<PropsWithChildren<ModalProps>> = ({ title, children }) => {
   return (
     <div className={styles.modal_wrap}>
       <div className={styles.modal_popup}>

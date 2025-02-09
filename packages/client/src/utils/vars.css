@@ -18,9 +18,8 @@
     --border-color: #eaeaea;
     --secondary-background-color: #efefef;
     --text-color-secondary: #999;
-
     --border-radius: 8px;
---avatar-ele-bg: #efefef;
+    --avatar-ele-bg: #efefef;
     --avatar-hover-bg: rgba(0,0,0,.5);
     --modal-bg: rgba(0,0,0,.4);
     --box-bg: #fff;
@@ -32,4 +31,5 @@
     --attach-file-color: #8d8d8d;
     --loader-bg: rgba(0, 0, 0, 0.1);
     --loader-color: #0099ff;
+    --footer-bg: #1e1e1e;
 }

@@ -14,6 +14,19 @@ import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
 
 export const ProfilePage = () => {
+
+  useEffect(() => {
+    const currentTitle = document.title
+
+    if (!currentTitle.includes('Профиль')) {
+      document.title = `Профиль - ${currentTitle}`
+    }
+
+    return () => {
+      document.title = currentTitle;
+    };
+  }, []);
+
   const [activeSection, setActiveSection] = useState<"current" | "edit" | "password">("current");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);

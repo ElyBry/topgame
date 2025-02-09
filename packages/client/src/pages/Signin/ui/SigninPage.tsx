@@ -115,7 +115,7 @@ export const SigninPage = () => {
   }
 
   return (
-    <PageWrapper title="Вход">
+    <PageWrapper title="Вход" showNav={false}>
       <form onSubmit={handleSubmit}>
         <InputField
           onChange={handleFormChange}

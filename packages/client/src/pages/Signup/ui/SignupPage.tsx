@@ -136,7 +136,7 @@ export const SignupPage = () => {
   }
 
   return (
-    <PageWrapper title="Регистрация">
+    <PageWrapper title="Регистрация" showNav={false}>
       <form onSubmit={handleSubmit}>
         <InputField
           onChange={handleFormChange}
