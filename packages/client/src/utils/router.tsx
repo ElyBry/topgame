@@ -8,6 +8,7 @@ import {
   ProfilePage,
   SigninPage,
   SignupPage,
+    TestCore,
   TopicPage,
   TopicNewPage,
   StartGame
@@ -27,6 +28,10 @@ export const router: RouteObject[] = [
       {
         element: <SignupPage />,
         path: ROUTES.SIGN_UP,
+      },
+      {
+        element: <TestCore />,
+        path: ROUTES.TEST_CORE,
       },
     ],
   },
