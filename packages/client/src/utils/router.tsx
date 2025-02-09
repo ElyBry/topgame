@@ -9,7 +9,8 @@ import {
   SigninPage,
   SignupPage,
   TopicPage,
-  TopicNewPage
+  TopicNewPage,
+  StartGame
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
@@ -47,6 +48,10 @@ export const router: RouteObject[] = [
       {
         element: <LeaderboardPage />,
         path: ROUTES.LEADERBOARD,
+      },
+      {
+        element: <StartGame />,
+        path: ROUTES.START_GAME,
       },
       {
         element: <ForumPage />,

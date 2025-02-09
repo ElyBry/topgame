@@ -1,4 +1,5 @@
-import styles from './PageWrapper.module.css'
+import styles from "./PageWrapper.module.css";
+import Header from "../Header/Header";
 
 interface PageWrapperProps {
   children: React.ReactNode;

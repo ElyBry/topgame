@@ -63,3 +63,12 @@
 .button_secondary:hover {
   background-color: var(--secondary-background-color);
 }
+
+.button_width_auto {
+  width: auto;
+}
+
+.button_left {
+  margin-left: 0;
+  margin-right: 0;
+}
