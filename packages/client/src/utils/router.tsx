@@ -10,6 +10,8 @@ import {
   SignupPage,
     TestCore,
   TopicPage,
+  TopicNewPage,
+  StartGame
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
@@ -53,12 +55,20 @@ export const router: RouteObject[] = [
         path: ROUTES.LEADERBOARD,
       },
       {
+        element: <StartGame />,
+        path: ROUTES.START_GAME,
+      },
+      {
         element: <ForumPage />,
         path: ROUTES.FORUM,
       },
       {
         element: <TopicPage />,
         path: ROUTES.FORUM_MESSAGE,
+      },
+      {
+        element: <TopicNewPage />,
+        path: ROUTES.FORUM_NEW,
       },
     ],
   },

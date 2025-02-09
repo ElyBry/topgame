@@ -4,24 +4,32 @@
     --body-bg: #fff;
     --btn-ele-bg: #0191ea;
     --btn-ele-bg-hover: #0c71b0;
+    --btn-ele-bg-disabled: #999;
     --btn-color: #fff;
+    --logout-btn-bg: #ff2f2f;
+    --logout-btn-bg-hover: #e62929;
     --link-color: #0065FD;
     --link-color-hover: #00539D;
     --text-color: #1e1e1e;
+    --text-secondary-color: #999;
     --error-color: #ff2f2f;
     --input-ele-bg: #efefef;
     --input-ele-border: rgba(0,0,0,.14);
-    
-    /*--box-bg: #fff;
-    --spinner-shadow: rgba(255,255,255,.4);
-    --box-shadow: rgba(0,0,0,.14);
-    --layout-border: #eaeaea;
-    --text-secondary-color: #999;
-    --form-ele-color: #3369f3;
-    --form-ele-bg: #efefef;
-    --modal-bg: rgba(0,0,0,.4);
+    --border-color: #eaeaea;
+    --secondary-background-color: #efefef;
+    --text-color-secondary: #999;
+
+    --border-radius: 8px;
+--avatar-ele-bg: #efefef;
     --avatar-hover-bg: rgba(0,0,0,.5);
-    --logout-color: #f00;
-    --scrollbar-color: rgba(0,0,0,.16) rgba(0,0,0,.04);
-    --choose-file-chosen-color: #8d8d8d;*/
+    --modal-bg: rgba(0,0,0,.4);
+    --box-bg: #fff;
+    --box-shadow: rgba(0,0,0,.14);
+    --nav-bg: #efefef;
+    --nav-active-bg: #0191ea;
+    --nav-active-hover-color: #efefef;
+    --layout-border: #eaeaea;
+    --attach-file-color: #8d8d8d;
+    --loader-bg: rgba(0, 0, 0, 0.1);
+    --loader-color: #0099ff;
 }

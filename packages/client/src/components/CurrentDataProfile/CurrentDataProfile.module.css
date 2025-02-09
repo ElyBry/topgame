@@ -1,0 +1,19 @@
+.current {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--layout-border);
+  margin: 16px 0 0;
+  font-size: 1.3rem;
+}
+
+.current_label {
+  color: var(--text-color);
+  margin-left: 16px;
+}
+
+.current_data {
+  color: var(--text-secondary-color);
+  margin-right: 16px;
+}
