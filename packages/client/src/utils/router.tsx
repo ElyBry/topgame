@@ -8,8 +8,11 @@ import {
   ProfilePage,
   SigninPage,
   SignupPage,
+    TestCore,
   TopicPage,
 	ServerErrorPage
+  TopicNewPage,
+  StartGame
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
@@ -26,6 +29,10 @@ export const router: RouteObject[] = [
       {
         element: <SignupPage />,
         path: ROUTES.SIGN_UP,
+      },
+      {
+        element: <TestCore />,
+        path: ROUTES.TEST_CORE,
       },
     ],
   },
@@ -49,12 +56,20 @@ export const router: RouteObject[] = [
         path: ROUTES.LEADERBOARD,
       },
       {
+        element: <StartGame />,
+        path: ROUTES.START_GAME,
+      },
+      {
         element: <ForumPage />,
         path: ROUTES.FORUM,
       },
       {
         element: <TopicPage />,
         path: ROUTES.FORUM_MESSAGE,
+      },
+      {
+        element: <TopicNewPage />,
+        path: ROUTES.FORUM_NEW,
       },
     ],
   },
