@@ -131,7 +131,7 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <PageWrapper layout="alternative" showNav={true}>
+      <PageWrapper layout="alternative" showNav={true} lightColor={true}>
         <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
         <NameProfile name={userData.login} />
 

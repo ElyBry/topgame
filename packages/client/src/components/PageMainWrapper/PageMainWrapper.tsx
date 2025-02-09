@@ -4,13 +4,14 @@ import Header from "../Header/Header";
 interface PageMainWrapperProps {
   children: React.ReactNode;
   showNav: boolean;
+  lightColor: boolean;
 }
 
-const PageMainWrapper: React.FC<PageMainWrapperProps> = ({ children, showNav }) => {
+const PageMainWrapper: React.FC<PageMainWrapperProps> = ({ children, showNav, lightColor }) => {
   return (
     <>
     <main className={`${styles.main}`}>
-      <Header showNav={showNav} />
+      <Header showNav={showNav} lightColor={lightColor} />
       <div className={styles.wrap}>
         {children}
         <div className={styles.footer}>

@@ -5,15 +5,16 @@ interface PageWrapperProps {
   children: React.ReactNode;
   title?: string;
   layout?: "default" | "alternative";
-  showNav?: boolean;
+  showNav: boolean;
+  lightColor: boolean;
 }
 
-const PageWrapper: React.FC<PageWrapperProps> = ({ children, title, layout = "default", showNav }) => {
+const PageWrapper: React.FC<PageWrapperProps> = ({ children, title, layout = "default", showNav, lightColor }) => {
   return (
     <>
     <main className={`${styles.main} ${layout === "alternative" ? styles.alt_layout : ""}`}>
       <div className={styles.bg}></div>
-      <Header showNav={showNav} />
+      <Header showNav={showNav} lightColor={lightColor} />
       <div className={styles.wrap}>
         <div className={styles.form}>
           {title && <h2 className={styles.title}>{title}</h2>}
