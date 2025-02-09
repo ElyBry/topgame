@@ -1,7 +1,7 @@
 .button {
   display: block;
   width: 100%;
-  max-width: 100%;
+  max-width: 340px;
   background: var(--btn-ele-bg);
   border: none;
   font: 500 1.3rem/1.3rem var(--inter-font);
@@ -23,6 +23,10 @@
 
 .button + .button {
   margin-top: 14px;
+}
+
+.button:disabled {
+  background: var(--btn-ele-bg-disabled);
 }
 
 .button_link {
@@ -47,6 +51,17 @@
 .button_fieldset {
   padding: 47px 0 0;
   text-align: center;
+  min-height: 112px;
+}
+
+.button_secondary {
+  background-color: transparent;
+  color: var(--text-color-secondary);
+  border-color: var(--border-color);
+}
+
+.button_secondary:hover {
+  background-color: var(--secondary-background-color);
 }
 
 .button_width_auto {

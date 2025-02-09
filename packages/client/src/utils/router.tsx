@@ -9,6 +9,7 @@ import {
   SigninPage,
   SignupPage,
   TopicPage,
+  TopicNewPage,
   StartGame
 } from '../pages'
 import { ROUTES } from './routes'
@@ -26,10 +27,6 @@ export const router: RouteObject[] = [
       {
         element: <SignupPage />,
         path: ROUTES.SIGN_UP,
-      },
-      {
-        element: <NotFoundPage />,
-        path: ROUTES.NOT_FOUND,
       },
     ],
   },
@@ -64,7 +61,15 @@ export const router: RouteObject[] = [
         element: <TopicPage />,
         path: ROUTES.FORUM_MESSAGE,
       },
+      {
+        element: <TopicNewPage />,
+        path: ROUTES.FORUM_NEW,
+      },
     ],
+  },
+  {
+    element: <NotFoundPage />,
+    path: ROUTES.NOT_FOUND,
   },
   {
     path: '*',

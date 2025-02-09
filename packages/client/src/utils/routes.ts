@@ -7,6 +7,7 @@ export const ROUTES = {
   LEADERBOARD: '/leaderbord',
   START_GAME: '/start-game',
   FORUM: '/forum',
-  FORUM_MESSAGE: '/forum/:messageId',
+  FORUM_MESSAGE: '/forum/:id',
   NOT_FOUND: '/not-found',
+  FORUM_NEW: '/forum/new',
 } as const
