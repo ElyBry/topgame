@@ -10,6 +10,7 @@ import {
   SignupPage,
     TestCore,
   TopicPage,
+	ServerErrorPage
   TopicNewPage,
   StartGame
 } from '../pages'
@@ -75,6 +76,10 @@ export const router: RouteObject[] = [
   {
     element: <NotFoundPage />,
     path: ROUTES.NOT_FOUND,
+  },
+  {
+    element: <ServerErrorPage />,
+    path: ROUTES.SERVER_ERROR,
   },
   {
     path: '*',
