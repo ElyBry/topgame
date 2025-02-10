@@ -1,4 +1,4 @@
-import Header from '../../../components/Header/Header'
+import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import PageWrapperNotBg from '../../../components/PageWrapperNotBg/PageWrapperNotBg'
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import SubTitle from '../../../components/SubTitle/SubTitle'
@@ -7,8 +7,7 @@ import Button from '../../../components/Button/Button'
 
 export const EndGame: React.FC = () => {
   return (
-    <>
-      <Header/>
+    <PageWrapper layout="alternative" showNav={true}>
       <PageWrapperNotBg>
         <WrapperBgColor title="Игра окончена: Победа белых">
           <SubTitle text="Можно сыграть ещё раз" />
@@ -18,6 +17,6 @@ export const EndGame: React.FC = () => {
           />
         </WrapperBgColor>
       </PageWrapperNotBg>
-    </>
+    </PageWrapper>
   )
 }
