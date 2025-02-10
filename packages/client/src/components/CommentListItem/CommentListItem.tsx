@@ -2,7 +2,7 @@ import styles from "./CommentListItem.module.css";
 
 interface CommentListItemProps {
   author: string;
-  avatar: string;
+  avatar?: string | null;
   text: string;
   date: string;
 }

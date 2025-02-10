@@ -8,9 +8,9 @@ import {
   ProfilePage,
   SigninPage,
   SignupPage,
-    TestCore,
+  TestCore,
   TopicPage,
-	ServerErrorPage
+	ServerErrorPage,
   TopicNewPage,
   StartGame
 } from '../pages'
