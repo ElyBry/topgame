@@ -4,7 +4,7 @@ import { faComment } from '@fortawesome/free-regular-svg-icons'
 
 interface TopicListItemProps {
   author: string;
-  avatar: string;
+  avatar: string | null;
   title: string;
   text: string;
   commentsCount: number;
