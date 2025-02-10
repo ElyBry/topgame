@@ -10,7 +10,6 @@ import AvatarProfile from "../../../components/AvatarProfile/AvatarProfile";
 import NameProfile from "../../../components/NameProfile/NameProfile";
 import CurrentDataProfile from "../../../components/CurrentDataProfile/CurrentDataProfile";
 import Modal from "../../../components/Modal/Modal";
-import Navigation from "../../../components/Navigation/Navigation";
 import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
 
@@ -119,7 +118,7 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <PageWrapper layout="alternative" headerNav={<Navigation />}>
+      <PageWrapper layout="alternative" showNav={true}>
         <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
         <NameProfile name={userData.login} />
 

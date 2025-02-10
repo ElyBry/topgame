@@ -1,4 +1,3 @@
-import Header from '../../../components/Header/Header'
 import PageWrapperNotBg from '../../../components/PageWrapperNotBg/PageWrapperNotBg'
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import Switch from '../../../components/Switch/Switch'
@@ -7,6 +6,7 @@ import stylesButton from "../../../components/Button/Button.module.css";
 import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 import { SETTING_GAME_DEFAULT, SETTING_GAME_SELECT } from '../../../utils/constants'
+import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 
 export const StartGame: React.FC = () => {
   const [isSettingTime, setIsSettingTime] = useState(false);
@@ -26,8 +26,7 @@ export const StartGame: React.FC = () => {
   }
 
   return (
-    <>
-      <Header/>
+    <PageWrapper layout="alternative" showNav={true}>
       <PageWrapperNotBg>
         <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
           <SubTitle text="Выбрать сторону для авторизованного пользователя" />
@@ -47,6 +46,6 @@ export const StartGame: React.FC = () => {
           />
         </WrapperBgColor>
       </PageWrapperNotBg>
-    </>
+    </PageWrapper>
   )
 }
