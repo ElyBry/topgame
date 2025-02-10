@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  headerNav?: React.ReactNode;
+}
+
+const Header: React.FC<HeaderProps> = ({ headerNav }) => {
   return (
-    <Link to="/" className={styles.header}>
-      <span className={styles.logo}>
-        Chessify
-      </span>
+    <header className={styles.header}>
+          <span className={styles.logo}>
+            Chessify
+          </span>
       <h1 className={styles.game_name}>Chessify</h1>
-    </Link>
-  );
+      {headerNav}
+    </header>
+)
+
 };
 
 export default Header;
