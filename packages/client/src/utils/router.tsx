@@ -12,7 +12,8 @@ import {
   TopicPage,
 	ServerErrorPage,
   TopicNewPage,
-  StartGame
+  StartGame,
+  EndGame
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
@@ -58,6 +59,10 @@ export const router: RouteObject[] = [
       {
         element: <StartGame />,
         path: ROUTES.START_GAME,
+      },
+      {
+        element: <EndGame />,
+        path: ROUTES.END_GAME,
       },
       {
         element: <ForumPage />,

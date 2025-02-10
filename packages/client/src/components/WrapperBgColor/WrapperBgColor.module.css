@@ -1,6 +1,7 @@
 .wrapper_color {
   position: relative;
   width: 100%;
+  min-height: 300px;
   padding: 40px;
   border-radius: 20px;
   background: url(./i/bg.webp) bottom right/cover #f3f3f3 no-repeat;
