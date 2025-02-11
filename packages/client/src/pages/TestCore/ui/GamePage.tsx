@@ -4,7 +4,7 @@ import {GameEngine} from "../../../core/GameEngine";
 import {Sound} from "../../../core/Sound";
 
 export const TestCore = () => {
-    const [canvasSize, setCanvasSize] = useState({width: 2000, height: 10000});
+    const [canvasSize, setCanvasSize] = useState({width: window.innerWidth - window.innerWidth * 0.05, height: window.innerHeight - window.innerHeight * 0.05});
     const gameEngineRef = useRef<GameEngine | null>(null);
 
   useEffect(() => {
