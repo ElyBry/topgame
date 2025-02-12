@@ -1,5 +1,5 @@
 import styles from "./AttachFile.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useId } from "react";
 
 type AttachFileProps = {
   className?: string;
@@ -9,6 +9,7 @@ type AttachFileProps = {
 const AttachFile: React.FC<AttachFileProps> = ({ onChange }) => {
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
@@ -23,7 +24,7 @@ const AttachFile: React.FC<AttachFileProps> = ({ onChange }) => {
     <div className={styles.attach_file}>
       <input
         type="file"
-        id="choose-file__upload"
+        id={inputId}
         name="avatar"
         accept="image/*"
         ref={fileInputRef}
@@ -31,7 +32,7 @@ const AttachFile: React.FC<AttachFileProps> = ({ onChange }) => {
         onChange={handleFileChange}
       />
 
-      <label htmlFor="choose-file__upload" className={styles.attach_file_link}>
+      <label htmlFor={inputId} className={styles.attach_file_link}>
         {file ? "Выберите другой файл" : "Выберите файл"}
       </label>
 
