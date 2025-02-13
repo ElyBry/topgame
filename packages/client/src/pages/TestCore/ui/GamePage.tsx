@@ -23,7 +23,6 @@ export const TestCore = () => {
         gameEngineRef.current.start();
     }
   }, [canvasSize]);
-
   return (
       <>
         <canvas id={"chessCanvas"} style={{ userSelect: "none"}} width={canvasSize.width} height={canvasSize.height}></canvas>

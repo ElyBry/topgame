@@ -4,7 +4,7 @@ export const ROUTES = {
   SIGN_UP: '/sign-up',
   PROFILE: '/profile',
   GAME: '/game',
-  LEADERBOARD: '/leaderbord',
+  LEADERBOARD: '/leaderboard',
   START_GAME: '/start-game',
   END_GAME: '/end-game',
   FORUM: '/forum',
