@@ -38,6 +38,7 @@ export class EventManager {
       // Если цвет фигур совпадает, то убираем селект на фигуре(есть вид шахмат с возможностью убивать свои фигуры)
       if (this.selectedFigure.color === board.getFigure(x,y)?.color && !(this.selectedFigure instanceof King && board.getFigure(x, y) instanceof Rook)) {
         this.selectedFigure = null;
+        this.gameEngine.getSounds().playCancelMoveSound();
         return;
       }
       if (currentPlayer.makeMove(this.selectedFigure.x, this.selectedFigure.y, x, y, board)) {
@@ -47,7 +48,6 @@ export class EventManager {
           const isLongCastling = x < this.selectedFigure.x;
           const isShortCastling = x > this.selectedFigure.x;
           const startX = this.selectedFigure.x;
-          const endX = x;
           let kingNewX: number;
           let rookNewX: number;
 
@@ -100,6 +100,7 @@ export class EventManager {
           this.gameEngine.getCanvasManager().animateFigureMovement(board, this.selectedFigure, this.selectedFigure.x, this.selectedFigure.y, x, y, 300);
         }
         this.lastMove = move;
+        this.gameEngine.getNotation().addMove(move);
         this.moveIs = true;
         this.gameEngine.updateGameLogic();
       }
@@ -107,9 +108,12 @@ export class EventManager {
       this.selectedFigure = null;
     } else if (figure && figure.color === this.gameEngine.getCurrentPlayer().color) {
       this.selectedFigure = figure;
+      const availableMoves = this.gameEngine.getBoard().getAvailableMoves(figure);
+      this.gameEngine.getCanvasManager().drawPossibleMoves(availableMoves);
     } else if (figure !== null && figure !== undefined && figure?.color !== this.gameEngine.getCurrentPlayer().color) {
       // Здесь должно быть отображение уведомления для игрока, что сейчас не его ход и это не его фигура
       console.log(`Сейчас не ваш ход`);
+      this.gameEngine.getSounds().playCancelMoveSound();
     }
     // console.log(`Selected figure ${this.selectedFigure?.constructor.name}`);
   }

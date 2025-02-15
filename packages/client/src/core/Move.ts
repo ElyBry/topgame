@@ -28,7 +28,6 @@ export class Move {
     this.figure.move(this.startX, this.startY, board);
   }
 
-  // Возвращает ход в алгебраической нотации (например, "e2-e4")
   getMoveNotation(): string {
     return `${String.fromCharCode(97 + this.startX)}${8 - this.startY}-${String.fromCharCode(97 + this.endX)}${8 - this.endY}`;
   }
