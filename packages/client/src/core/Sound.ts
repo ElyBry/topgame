@@ -4,22 +4,26 @@ export class Sound {
   private captureSound: HTMLAudioElement;
   private loseSound: HTMLAudioElement;
   private checkSound: HTMLAudioElement;
+  private cancelMoveSound: HTMLAudioElement;
+  private clockTickSound: HTMLAudioElement;
   dir = 'audio/';
 
   constructor() {
     this.moveSound = new Audio(this.dir + 'move.mp3'); // движение
-    this.captureSound = new Audio(this.dir + 'capture.mp3'); // взятие фигуры
+    this.captureSound = new Audio(this.dir + 'capture.mp3'); // сьедение фигуры
     this.winSound = new Audio(this.dir + 'win.mp3'); //  победа
     this.loseSound = new Audio(this.dir + 'lose.mp3'); // проигрыш
     this.checkSound = new Audio(this.dir + 'check.mp3'); // шах
-  }
-
-  playCaptureSound() {
-    this.captureSound.play();
+    this.cancelMoveSound = new Audio(this.dir + 'illegalmove.mp3') // отмена выбора
+    this.clockTickSound = new Audio(this.dir + 'tick.mp3') // тиканье
   }
 
   playMoveSound() {
     this.moveSound.play();
+  }
+
+  playCaptureSound() {
+    this.captureSound.play();
   }
 
   playWinSound() {
@@ -32,6 +36,14 @@ export class Sound {
 
   playCheckSound() {
     this.checkSound.play();
+  }
+
+  playCancelMoveSound() {
+    this.cancelMoveSound.play();
+  }
+
+  playClockTickSound() {
+    this.clockTickSound.play();
   }
 
   mute() {

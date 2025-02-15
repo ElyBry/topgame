@@ -1,0 +1,17 @@
+.timerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}

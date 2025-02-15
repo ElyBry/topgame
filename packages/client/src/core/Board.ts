@@ -5,22 +5,25 @@ import {Bishop} from "./figures/Bishop";
 import {Queen} from "./figures/Queen";
 import {King} from "./figures/King";
 import {Pawn} from "./figures/Pawn";
+import {Sound} from "./Sound";
 
 export class Board {
   private cells: (Figure | null)[][];
   private width: number;
   private height: number;
   private cellSize: number;
+  private capturedFigures: Figure[] = [];
+  private sounds: Sound;
 
-  constructor(width: number, height: number, cellSize: number) {
+  constructor(width: number, height: number, cellSize: number, sounds: Sound) {
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
     this.cells = Array.from({ length: height }, () => Array.from({ length: width }, () => null));
+    this.sounds = sounds;
   }
 
   init() {
-    // Инициализация начальной расстановки фигур
     this.cells[0][0] = new Rook('black', 0, 0, this.cellSize);
     this.cells[0][1] = new Knight('black', 0, 1, this.cellSize);
     this.cells[0][2] = new Bishop('black', 0, 2, this.cellSize);
@@ -34,7 +37,6 @@ export class Board {
       this.cells[1][i] = new Pawn('black', 1, i, this.cellSize);
     }
 
-    // Белые фигуры
     this.cells[7][0] = new Rook('white', 7, 0, this.cellSize);
     this.cells[7][1] = new Knight('white', 7, 1, this.cellSize);
     this.cells[7][2] = new Bishop('white', 7, 2, this.cellSize);
@@ -91,7 +93,21 @@ export class Board {
   }
 
   setFigure(x: number, y: number, figure: Figure | null) {
+    const target = this.getFigure(x,y);
+    if (target && target !== figure) {
+      this.capturedFigures.push(target);
+      this.sounds.playCaptureSound();
+    }
+    this.sounds.playMoveSound();
     this.cells[y][x] = figure;
+  }
+
+  clearFigure(x: number, y: number) {
+    this.cells[y][x] = null;
+  }
+
+  getCapturedFigures() {
+    return this.capturedFigures;
   }
 
   moveFigure(x: number, y: number, figure: Figure) {
@@ -185,5 +201,19 @@ export class Board {
   private showPromotionDialog() {
     const selectedPiece = window.prompt("Выберите фигуру (queen, rook, bishop, knight):", "queen");
     return selectedPiece?.toLowerCase() || null;
+  }
+
+  getAvailableMoves(figure: Figure): {x : number, y:number}[] {
+    const availableMoves: {x : number, y:number}[] = [];
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (figure.isValidMove(x, y, this) && this.getFigure(x, y)?.color !== figure.color) {
+          availableMoves.push({x, y});
+        }
+      }
+    }
+
+    return availableMoves;
   }
 }

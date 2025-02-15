@@ -18,6 +18,7 @@ import {
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
 import { PrivateLayout } from '../layouts/PrivateLayout'
+import {ErrorBoundary} from "../components/ErrorBoundary";
 
 export const router: RouteObject[] = [
   {
@@ -30,10 +31,6 @@ export const router: RouteObject[] = [
       {
         element: <SignupPage />,
         path: ROUTES.SIGN_UP,
-      },
-      {
-        element: <TestCore />,
-        path: ROUTES.TEST_CORE,
       },
     ],
   },
@@ -77,6 +74,10 @@ export const router: RouteObject[] = [
         path: ROUTES.FORUM_NEW,
       },
     ],
+  },
+  {
+    element: <ErrorBoundary><TestCore /></ErrorBoundary>,
+    path: ROUTES.TEST_CORE,
   },
   {
     element: <NotFoundPage />,
