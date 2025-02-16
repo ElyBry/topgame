@@ -1,0 +1,11 @@
+.wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 950px;
+  padding: 20px;
+  min-height: calc(100vh - 225px);
+  display: flex;
+  align-items: center;
+}

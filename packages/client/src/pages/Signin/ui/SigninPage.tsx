@@ -8,8 +8,14 @@ import { login } from '../../../api/auth/authApi'
 import { getUserInfo } from '../../../api/auth/userInfoApi'
 import { ROUTES } from '../../../utils/routes'
 import UserContext from '../../../context/userContext'
+import { validateField } from '../../../utils/validate'
 
 type TFormState = {
+  login: string
+  password: string
+}
+
+type TFormErrors = {
   login: string
   password: string
 }
@@ -24,6 +30,14 @@ export const SigninPage = () => {
     login: '',
     password: '',
   })
+  const [formErrors, setFormErrors] = useState<TFormErrors>({
+    login: '',
+    password: '',
+  })
+
+  const isButtonDisabled = () =>
+    Object.values(formErrors).some(value => !!value) ||
+    !Object.values(formState).every(value => !!value)
 
   const context = useContext(UserContext)
 
@@ -49,8 +63,23 @@ export const SigninPage = () => {
     }))
   }
 
+  const handleValidateField = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target
+    if (!value) return
+
+    const error = validateField(name, value)
+
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: error,
+    }))
+  }
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
+
+    if (!handleValidation()) return
+
     if (formState.login.length && formState.password.length) {
       const result = await login(formState)
 
@@ -65,32 +94,49 @@ export const SigninPage = () => {
     }
   }
 
+  const handleValidation = () => {
+    const formFields = { ...formState }
+    let formIsValid = true
+
+    const errorLogin = validateField('login', formFields['login'])
+    const errorPassword = validateField('password', formFields['password'])
+
+    if (errorLogin || errorPassword) {
+      formIsValid = false
+    }
+
+    setFormErrors(prev => ({
+      ...prev,
+      login: errorLogin,
+      password: errorPassword,
+    }))
+
+    return formIsValid
+  }
+
   return (
-    <PageWrapper title="Вход">
+    <PageWrapper title="Вход" showNav={false} lightColor={true}>
       <form onSubmit={handleSubmit}>
         <InputField
           onChange={handleFormChange}
+          onBlur={handleValidateField}
           type="text"
           name="login"
           placeholder="Логин"
-          error={false}
-          message="Это поле обязательно для заполнения"
+          error={!!formErrors['login']}
+          message={formErrors['login']}
         />
         <InputField
           onChange={handleFormChange}
+          onBlur={handleValidateField}
           type="password"
           name="password"
           placeholder="Пароль"
-          error={false}
-          message="Это поле обязательно для заполнения"
+          error={!!formErrors['password']}
+          message={formErrors['password']}
         />
         <div className={styles.button_fieldset}>
-          <Button
-            label="Войти"
-            type="submit"
-            // TODO: нужна стилизация для состояния disabled
-            disabled={!formState.login.length || !formState.password.length}
-          />
+          <Button label="Войти" type="submit" disabled={isButtonDisabled()} />
           <Button
             label="Нет аккаунта?"
             className={styles.button_link}

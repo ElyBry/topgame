@@ -1,5 +1,5 @@
 import styles from "./TopicPage.module.css";
-import { useEffect } from 'react';
+import { useEffect, SyntheticEvent } from 'react';
 import TextareaField from "../../../components/TextareaField/TextareaField";
 import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrapper";
 import CommentListItem from "../../../components/CommentListItem/CommentListItem";
@@ -27,10 +27,10 @@ export const TopicPage = () => {
       </li>
     );
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: SyntheticEvent) => {
       event.preventDefault();
 
-      const formData = new FormData(event.target);
+      const formData = new FormData(event.target as HTMLFormElement);
       const formProps = Object.fromEntries(formData);
       console.log(formProps);
     };
@@ -53,7 +53,7 @@ export const TopicPage = () => {
           <ul className={styles.topic_view_block_comments_list}>{comments}</ul>
         </div>
       </div>
-      <form action="submit" className={[styles.topic_view_block, styles.topic_view_block_reply].join(' ')} onSubmit={handleSubmit}>
+      <form action="" className={[styles.topic_view_block, styles.topic_view_block_reply].join(' ')} onSubmit={handleSubmit}>
         <div className={styles.topic_view_block_content}>
           <p className={styles.topic_view_block_reply_label}>Ваш ответ</p>
           <TextareaField

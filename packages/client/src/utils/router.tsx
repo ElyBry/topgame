@@ -8,12 +8,17 @@ import {
   ProfilePage,
   SigninPage,
   SignupPage,
+  TestCore,
   TopicPage,
-  TopicNewPage
+	ServerErrorPage,
+  TopicNewPage,
+  StartGame,
+  EndGame
 } from '../pages'
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
 import { PrivateLayout } from '../layouts/PrivateLayout'
+import {ErrorBoundary} from "../components/ErrorBoundary";
 
 export const router: RouteObject[] = [
   {
@@ -49,6 +54,14 @@ export const router: RouteObject[] = [
         path: ROUTES.LEADERBOARD,
       },
       {
+        element: <StartGame />,
+        path: ROUTES.START_GAME,
+      },
+      {
+        element: <EndGame />,
+        path: ROUTES.END_GAME,
+      },
+      {
         element: <ForumPage />,
         path: ROUTES.FORUM,
       },
@@ -63,8 +76,16 @@ export const router: RouteObject[] = [
     ],
   },
   {
+    element: <ErrorBoundary><TestCore /></ErrorBoundary>,
+    path: ROUTES.TEST_CORE,
+  },
+  {
     element: <NotFoundPage />,
     path: ROUTES.NOT_FOUND,
+  },
+  {
+    element: <ServerErrorPage />,
+    path: ROUTES.SERVER_ERROR,
   },
   {
     path: '*',

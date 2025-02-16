@@ -1,0 +1,17 @@
+.server_error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.server_error_number {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.server_error_text {
+  font-size: 20px;
+  margin-bottom: 69px;
+}

@@ -1,7 +1,7 @@
 .button {
   display: block;
   width: 100%;
-  max-width: 100%;
+  max-width: 340px;
   background: var(--btn-ele-bg);
   border: none;
   font: 500 1.3rem/1.3rem var(--inter-font);
@@ -13,8 +13,17 @@
   transition: background 0.4s ease;
 }
 
+.button:disabled {
+	cursor: not-allowed;
+	opacity: 0.3;
+}
+
 .button:hover {
   background: var(--btn-ele-bg-hover);
+}
+
+.button:disabled:hover {
+	background: var(--btn-ele-bg);
 }
 
 .button:focus {
@@ -23,6 +32,10 @@
 
 .button + .button {
   margin-top: 14px;
+}
+
+.button:disabled {
+  background: var(--btn-ele-bg-disabled);
 }
 
 .button_link {
@@ -47,6 +60,7 @@
 .button_fieldset {
   padding: 47px 0 0;
   text-align: center;
+  min-height: 112px;
 }
 
 .button_secondary {
@@ -57,4 +71,13 @@
 
 .button_secondary:hover {
   background-color: var(--secondary-background-color);
+}
+
+.button_width_auto {
+  width: auto;
+}
+
+.button_left {
+  margin-left: 0;
+  margin-right: 0;
 }
