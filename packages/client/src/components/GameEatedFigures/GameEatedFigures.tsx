@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./GameEatedFigures.module.css";
 import {Figure} from "../../core/Figure";
 
-// Пропсы для компонента
 interface GameEatedFiguresProps {
   eatenPieces: Figure[];
 }

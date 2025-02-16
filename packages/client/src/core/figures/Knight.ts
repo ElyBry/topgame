@@ -10,4 +10,7 @@ export class Knight extends Figure {
     const dy = Math.abs(y - this.y);
     return (dx === 2 && dy === 1) || (dx === 1 && dy === 2); // Буква Г
   }
+  getName() {
+    return "N";
+  }
 }

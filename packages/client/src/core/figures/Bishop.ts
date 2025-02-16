@@ -10,4 +10,7 @@ export class Bishop extends Figure {
     const dy = Math.abs(y - this.y);
     return dx === dy ? board.isPathClear(this.x, this.y, x, y) : false; // диагональ
   }
+  getName() {
+    return "B";
+  }
 }

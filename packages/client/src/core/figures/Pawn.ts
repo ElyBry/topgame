@@ -39,4 +39,7 @@ export class Pawn extends Figure {
     this.didDoubleMove = Math.abs(dy) === 2;
     super.move(x, y, board);
   }
+  getName() {
+    return "p";
+  }
 }

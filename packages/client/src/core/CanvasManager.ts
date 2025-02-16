@@ -52,7 +52,7 @@ export class CanvasManager {
       } else {
         figure.inAnim = false;
         if (callBack) callBack(figure, board);
-        else figure.move(endX, endY, board, this.sounds);
+        else figure.move(endX, endY, board);
       }
     };
 
@@ -109,8 +109,8 @@ export class CanvasManager {
         figure1.inAnim = false;
         figure2.inAnim = false;
         if (callBack) callBack(board);
-        figure1.move(endX1, endY1, board, this.sounds);
-        figure2.move(endX2, endY2, board, this.sounds);
+        figure1.move(endX1, endY1, board);
+        figure2.move(endX2, endY2, board);
       }
     };
 

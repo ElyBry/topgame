@@ -38,4 +38,8 @@ export class King extends Figure {
     super.move(x, y, board);
     this.hasMoved = true;
   }
+
+  getName() {
+    return "K";
+  }
 }
