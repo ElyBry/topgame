@@ -3,9 +3,9 @@ export class Timer {
   private seconds: number;
   private interval: number | null = null;
 
-  constructor(minutes: number, secondsPerMove: number) {
-    this.minutes = minutes;
-    this.seconds = secondsPerMove;
+  constructor(seconds: number) {
+    this.minutes = Math.floor((seconds / 60) % 60);
+    this.seconds = seconds % 60;
   }
 
   start() {
@@ -29,5 +29,14 @@ export class Timer {
     if (this.interval) {
       clearInterval(this.interval);
     }
+  }
+  getTime() {
+    return this.minutes * 60 + this.seconds
+  }
+  getSeconds() {
+    return this.seconds;
+  }
+  getMinutes() {
+    return this.minutes;
   }
 }

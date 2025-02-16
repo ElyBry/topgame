@@ -1,4 +1,5 @@
 import {Board} from "./Board";
+import {Sound} from "./Sound";
 
 export abstract class Figure {
   color: string;
@@ -6,7 +7,7 @@ export abstract class Figure {
   y: number;
   cellSize = 5;
   image: HTMLImageElement;
-  inAnim: boolean = false;
+  inAnim = false;
 
   constructor(color: string, y: number, x: number, cellSize: number, imageSrc: string) {
     this.color = color;
@@ -20,7 +21,7 @@ export abstract class Figure {
   abstract isValidMove(x: number, y: number, board: Board): boolean;
 
   move(x: number, y: number, board: Board) {
-    board.setFigure(this.x, this.y, null);
+    board.clearFigure(this.x, this.y);
     this.x = x;
     this.y = y;
     board.setFigure(x, y, this);
@@ -38,7 +39,7 @@ export abstract class Figure {
     );
   }
   getPossibleMoves(board: Board) {}
-  draw(ctx: CanvasRenderingContext2D, isSelected: boolean = false, posX?: number, posY?: number) {
+  draw(ctx: CanvasRenderingContext2D, isSelected = false, posX?: number, posY?: number) {
     const x = posX !== undefined ? posX : this.x * this.cellSize;
     const y = posY !== undefined ? posY : this.y * this.cellSize;
 
@@ -48,6 +49,6 @@ export abstract class Figure {
       this.drawHighlight(ctx);
     }
   }
-
+  getName() {}
   clone() {}
 }

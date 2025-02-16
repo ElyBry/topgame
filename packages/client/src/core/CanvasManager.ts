@@ -1,6 +1,6 @@
 import {Board} from "./Board";
 import {Figure} from "./Figure";
-import {Pawn} from "./figures/Pawn";
+import {Sound} from "./Sound";
 
 export class CanvasManager {
   private ctx: CanvasRenderingContext2D;
@@ -9,14 +9,16 @@ export class CanvasManager {
   private height: number;
   private white: string;
   private black: string;
+  private sounds: Sound;
 
-  constructor(ctx: CanvasRenderingContext2D, width: number, height: number, cellSize: number, colorWhiteHex: string, colorBlackHex: string) {
+  constructor(ctx: CanvasRenderingContext2D, width: number, height: number, cellSize: number, colorWhiteHex: string, colorBlackHex: string, sounds: Sound) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
     this.white = colorWhiteHex;
     this.black = colorBlackHex;
+    this.sounds = sounds;
   }
 
   clear() {
@@ -139,7 +141,7 @@ export class CanvasManager {
     this.cellSize = cellSize;
   }
 
-  drawFigures(figures: Figure[], selectedFigure: Figure | null) {
+  drawFigures(figures: Figure[], selectedFigure: Figure | null, board?: Board) {
     figures.forEach(figure => {
       const isSelected = selectedFigure === figure;
       if (figure.inAnim) {
@@ -147,9 +149,15 @@ export class CanvasManager {
       }
       figure.draw(this.ctx, isSelected);
     });
+    if (selectedFigure && !selectedFigure.inAnim && board) {
+      const availableMoves = board.getAvailableMoves(selectedFigure);
+      this.drawPossibleMoves(availableMoves);
+    }
   }
 
-  drawPossibleMoves(possibleMoves: {x: number, y: number}[]) {
+  drawPossibleMoves(possibleMoves: {x: number, y: number}[], colorHex = "rgba(0, 255, 0, 0.3)") {
+    this.ctx.save();
+    this.ctx.fillStyle = colorHex;
     for (const move of possibleMoves) {
       this.ctx.fillRect(
         move.x * this.cellSize,
@@ -158,5 +166,6 @@ export class CanvasManager {
         this.cellSize
       )
     }
+    this.ctx.restore();
   }
 }
