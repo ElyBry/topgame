@@ -20,11 +20,11 @@ export abstract class Figure {
 
   abstract isValidMove(x: number, y: number, board: Board): boolean;
 
-  move(x: number, y: number, board: Board, sound?: Sound) {
+  move(x: number, y: number, board: Board) {
     board.clearFigure(this.x, this.y);
     this.x = x;
     this.y = y;
-    board.setFigure(x, y, this, sound);
+    board.setFigure(x, y, this);
   }
 
   drawHighlight(ctx: CanvasRenderingContext2D) {
@@ -49,6 +49,6 @@ export abstract class Figure {
       this.drawHighlight(ctx);
     }
   }
-
+  getName() {}
   clone() {}
 }

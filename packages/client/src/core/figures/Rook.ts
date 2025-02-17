@@ -2,7 +2,7 @@ import {Board} from "../Board";
 import {Figure} from "../Figure";
 
 export class Rook extends Figure {
-  private hasMoved: boolean = false;
+  private hasMoved = false;
 
   constructor(color: string, x: number, y: number, cellSize: number) {
     super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Rook.svg`);
@@ -18,5 +18,8 @@ export class Rook extends Figure {
 
   getHasMoved() {
     return this.hasMoved;
+  }
+  getName() {
+    return "R";
   }
 }

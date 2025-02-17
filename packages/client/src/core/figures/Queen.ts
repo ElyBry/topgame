@@ -13,4 +13,7 @@ export class Queen extends Figure {
     } // Диагональ, вертикаль и горизонталь
     return false;
   }
+  getName() {
+    return "Q";
+  }
 }

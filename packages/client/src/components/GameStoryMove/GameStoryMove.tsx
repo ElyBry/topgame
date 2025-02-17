@@ -15,7 +15,7 @@ const GameStoryMove: React.FC<GameStoryMoveProps> = ({ moves }) => {
         {moves && moves.length > 0 ? (
           moves.map((move, index) => (
             <tr key={index + 1}>
-              <td>{move.getMoveNotation()}</td>
+              <td>{move.figure.getName() + move.getMoveNotation()}</td>
             </tr>
           ))
         ) : (

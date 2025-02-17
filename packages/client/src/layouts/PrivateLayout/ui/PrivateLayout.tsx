@@ -1,19 +1,20 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import UserContext from '../../../context/userContext'
 import { ROUTES } from '../../../utils/routes'
+import { useAppSelector } from '../../../store/hooks'
 
 export const PrivateLayout = () => {
   const navigate = useNavigate()
-  const context = useContext(UserContext)
+
+  const { user, status } = useAppSelector(state => state.userSlice)
 
   useEffect(() => {
-    if (!context?.userInfo && !context?.loading) {
+    if (!user && status !== 'loading') {
       navigate(ROUTES.SIGN_IN)
     }
-  }, [context?.loading, context?.userInfo, navigate])
+  }, [navigate, status, user])
 
-  if (!context?.userInfo) {
+  if (!user) {
     return null
   }
 

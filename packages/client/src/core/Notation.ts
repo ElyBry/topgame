@@ -16,7 +16,6 @@ export class Notation {
   }
 
   validateNotation(notation: string): boolean {
-    // Проверка корректности нотации
     return /^[a-h][1-8]-[a-h][1-8]$/.test(notation);
   }
 }
