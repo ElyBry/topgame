@@ -7,6 +7,8 @@ import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 import { SETTING_GAME_DEFAULT, SETTING_GAME_SELECT } from '../../../utils/constants'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../../../utils/routes'
 
 export const StartGame: React.FC = () => {
   const [isSettingTime, setIsSettingTime] = useState(false);
@@ -23,6 +25,12 @@ export const StartGame: React.FC = () => {
 
   function switchTimeMove(index: number) {
     setSettingsGame({ ...settingsGame, addTimeMove: SETTING_GAME_SELECT.timePlayMove[index].time });
+  }
+
+  const navigate = useNavigate();
+
+  const handleNavigateToGame = () => {
+		navigate(ROUTES.GAME, { state: settingsGame });
   }
 
   return (
@@ -43,6 +51,7 @@ export const StartGame: React.FC = () => {
           <Button
             label="Начать игру!"
             className={`${stylesButton.button_width_auto} ${stylesButton.button_left}`}
+            onClick={handleNavigateToGame}
           />
         </WrapperBgColor>
       </PageWrapperNotBg>
