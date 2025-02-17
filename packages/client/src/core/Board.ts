@@ -125,9 +125,9 @@ export class Board {
   }
 
   isUnderAttack(x: number, y: number, color: string) {
-    const player_2_color = color === 'white' ? 'black' : 'white';
+    const opponentColor = color === 'white' ? 'black' : 'white';
 
-    const opponentFigures = this.getFiguresByColor(player_2_color);
+    const opponentFigures = this.getFiguresByColor(opponentColor);
     for (const figure of opponentFigures) {
       if (figure.isValidMove(x, y, this)) {
         if (figure instanceof Knight) {
