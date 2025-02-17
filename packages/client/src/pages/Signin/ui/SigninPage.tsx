@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../components/Button/Button'
 import styles from '../../../components/Button/Button.module.css'
@@ -7,8 +7,9 @@ import InputField from '../../../components/InputField/InputField'
 import { login } from '../../../api/auth/authApi'
 import { getUserInfo } from '../../../api/auth/userInfoApi'
 import { ROUTES } from '../../../utils/routes'
-import UserContext from '../../../context/userContext'
 import { validateField } from '../../../utils/validate'
+import { useAppDispatch } from '../../../store/hooks'
+import { setUser } from '../../../store/slice/userSlice'
 
 type TFormState = {
   login: string
@@ -35,11 +36,11 @@ export const SigninPage = () => {
     password: '',
   })
 
+  const dispatch = useAppDispatch()
+
   const isButtonDisabled = () =>
     Object.values(formErrors).some(value => !!value) ||
     !Object.values(formState).every(value => !!value)
-
-  const context = useContext(UserContext)
 
   useEffect(() => {
     const currentTitle = document.title
@@ -87,7 +88,7 @@ export const SigninPage = () => {
         const userInfoResult = await getUserInfo()
 
         if (userInfoResult.id) {
-          context?.setUserInfo(userInfoResult)
+          dispatch(setUser(userInfoResult))
           navigate(ROUTES.MAIN)
         }
       }
