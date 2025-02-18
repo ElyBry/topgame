@@ -12,4 +12,7 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  build: {
+    cssCodeSplit: false
+  }
 })
