@@ -6,6 +6,7 @@ import {Queen} from "./figures/Queen";
 import {King} from "./figures/King";
 import {Pawn} from "./figures/Pawn";
 import {Sound} from "./Sound";
+import {store} from "../store/config/store"
 
 export class Board {
   private cells: (Figure | null)[][];
@@ -14,6 +15,9 @@ export class Board {
   private cellSize: number;
   private capturedFigures: Figure[] = [];
   private sounds: Sound;
+  private storeSettings = store.getState().gameSlice.settings;
+  private player_1_color = this.storeSettings.color;
+  private player_2_color = this.storeSettings.opponentColor
 
   constructor(width: number, height: number, cellSize: number, sounds: Sound) {
     this.width = width;
@@ -24,30 +28,30 @@ export class Board {
   }
 
   init() {
-    this.cells[0][0] = new Rook('black', 0, 0, this.cellSize);
-    this.cells[0][1] = new Knight('black', 0, 1, this.cellSize);
-    this.cells[0][2] = new Bishop('black', 0, 2, this.cellSize);
-    this.cells[0][3] = new Queen('black', 0, 3, this.cellSize);
-    this.cells[0][4] = new King('black', 0, 4, this.cellSize);
-    this.cells[0][5] = new Bishop('black', 0, 5, this.cellSize);
-    this.cells[0][6] = new Knight('black', 0, 6, this.cellSize);
-    this.cells[0][7] = new Rook('black', 0, 7, this.cellSize);
+    this.cells[0][0] = new Rook(this.player_2_color, 0, 0, this.cellSize);
+    this.cells[0][1] = new Knight(this.player_2_color, 0, 1, this.cellSize);
+    this.cells[0][2] = new Bishop(this.player_2_color, 0, 2, this.cellSize);
+    this.cells[0][3] = new Queen(this.player_2_color, 0, 3, this.cellSize);
+    this.cells[0][4] = new King(this.player_2_color, 0, 4, this.cellSize);
+    this.cells[0][5] = new Bishop(this.player_2_color, 0, 5, this.cellSize);
+    this.cells[0][6] = new Knight(this.player_2_color, 0, 6, this.cellSize);
+    this.cells[0][7] = new Rook(this.player_2_color, 0, 7, this.cellSize);
 
     for (let i = 0; i < 8; i++) {
-      this.cells[1][i] = new Pawn('black', 1, i, this.cellSize);
+      this.cells[1][i] = new Pawn(this.player_2_color, 1, i, this.cellSize);
     }
 
-    this.cells[7][0] = new Rook('white', 7, 0, this.cellSize);
-    this.cells[7][1] = new Knight('white', 7, 1, this.cellSize);
-    this.cells[7][2] = new Bishop('white', 7, 2, this.cellSize);
-    this.cells[7][3] = new Queen('white', 7, 3, this.cellSize);
-    this.cells[7][4] = new King('white', 7, 4, this.cellSize);
-    this.cells[7][5] = new Bishop('white', 7, 5, this.cellSize);
-    this.cells[7][6] = new Knight('white', 7, 6, this.cellSize);
-    this.cells[7][7] = new Rook('white', 7, 7, this.cellSize);
+    this.cells[7][0] = new Rook(this.player_1_color, 7, 0, this.cellSize);
+    this.cells[7][1] = new Knight(this.player_1_color, 7, 1, this.cellSize);
+    this.cells[7][2] = new Bishop(this.player_1_color, 7, 2, this.cellSize);
+    this.cells[7][3] = new Queen(this.player_1_color, 7, 3, this.cellSize);
+    this.cells[7][4] = new King(this.player_1_color, 7, 4, this.cellSize);
+    this.cells[7][5] = new Bishop(this.player_1_color, 7, 5, this.cellSize);
+    this.cells[7][6] = new Knight(this.player_1_color, 7, 6, this.cellSize);
+    this.cells[7][7] = new Rook(this.player_1_color, 7, 7, this.cellSize);
 
     for (let i = 0; i < 8; i++) {
-      this.cells[6][i] = new Pawn('white', 6, i, this.cellSize);
+      this.cells[6][i] = new Pawn(this.player_1_color, 6, i, this.cellSize);
     }
   }
 

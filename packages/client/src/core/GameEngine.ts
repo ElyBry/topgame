@@ -8,6 +8,8 @@ import {Sound} from "./Sound";
 import {Notation} from "./Notation";
 import {Move} from "./Move";
 import {Figure} from "./Figure";
+import { setWinnerColor } from '../store/slice/gameSlice'
+import {store} from "../store/config/store"
 
 export class GameEngine {
   private board: Board;
@@ -20,6 +22,11 @@ export class GameEngine {
   private isGameOver: boolean;
   private settings: Settings;
   private sounds: Sound;
+  private storeSettings = store.getState().gameSlice.settings;
+  private player_1_color = this.storeSettings.color;
+  private player_2_color = this.storeSettings.opponentColor
+  private player_1 = 'Player 1'
+  private player_2 = 'Player 2'
   private updateTimeWhite: (time: number) => void;
   private updateTimeBlack: (time: number) => void;
   private currentTimeUpdate: (time: number) => void;
@@ -40,7 +47,7 @@ export class GameEngine {
               updateEatedFigures: (eatedFigures: Figure[]) => void) {
     this.sounds = sounds;
     this.board = new Board(settings.getWidth(), settings.getHeight(), cellSize, sounds);
-    this.players = [new Player('Player 1', 'white'), new Player('Player 2', 'black')];
+    this.players = [new Player(this.player_1, this.player_1_color), new Player(this.player_2, this.player_2_color)];
     this.currentPlayerIndex = 0;
     this.canvasManager = new CanvasManager(settings.getContext(), settings.getWidth(), settings.getHeight(), cellSize, colorWhiteHex, colorBlackHex, sounds);
     this.eventManager = new EventManager(this, canvas, cellSize);
@@ -87,15 +94,15 @@ export class GameEngine {
       }
     }
     if (this.timers[this.currentPlayerIndex].getTime() <= 0) {
-      this.endGame(true, this.players[this.currentPlayerIndex].name);
+      const loserColor = this.players[this.currentPlayerIndex].color;
+      this.endGame(true, loserColor);
     }
   }
   endGame(lose: boolean, whoLose?: string) {
-    if (lose) {
-      console.log(`Проиграл: ${whoLose}`)
+    if (lose && whoLose) {
+      const winner = whoLose === this.player_1_color ? this.player_2_color : this.player_1_color
+      store.dispatch(setWinnerColor(winner));
       this.getSounds().playLoseSound();
-    } else {
-      console.log(`Ничья`);
     }
     this.isGameOver = true;
   }

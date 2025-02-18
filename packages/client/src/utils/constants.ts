@@ -1,23 +1,35 @@
 export const APP_NAME = "Chessify";
-export const SETTING_GAME_DEFAULT = {
-  color: 'white', // Белый цвет фигур
+export enum COLORS {
+  WHITE= 'white',
+  BLACK= 'black',
+  RANDOM= 'random',
+}
+
+export interface ISettingsDefault {
+  color: string
+  time: number
+  addTimeMove: number
+}
+
+export const SETTING_GAME_DEFAULT: ISettingsDefault = {
+  color: COLORS.WHITE, // Белый цвет фигур
   time: 0, // Время на партию для каждого из игроков неограниченно
   addTimeMove: 0 // После каждого хода не происходит добавления времени
 }
 export const SETTING_GAME_SELECT = {
   'color': [
     {
-      'color': 'white',
+      'color': COLORS.WHITE,
       'name': 'Белые',
       'src': '/src/pages/StartGame/ui/i/white.svg'
     },
     {
-      'color': 'random',
+      'color': COLORS.RANDOM,
       'name': 'Случайный выбор',
       'src': '/src/pages/StartGame/ui/i/random.svg'
     },
     {
-      'color': 'black',
+      'color': COLORS.BLACK,
       'name': 'Чёрные',
       'src': '/src/pages/StartGame/ui/i/black.svg',
     }
