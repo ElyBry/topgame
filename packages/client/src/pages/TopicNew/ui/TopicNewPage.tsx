@@ -22,10 +22,10 @@ export const TopicNewPage = () => {
     navigate('/forum');
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.target as HTMLFormElement);
     const formProps = Object.fromEntries(formData);
     console.log(formProps);
   };

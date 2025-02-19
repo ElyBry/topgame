@@ -3,20 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import { APP_NAME } from './utils/constants'
+import startServiceWorker from './serviceWorker'
 
 document.title = APP_NAME;
-
-function startServiceWorker() {
-  if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js").then(registration => {
-              console.log("ServiceWorker registration successful with scope: ", registration.scope);
-          }).catch((error: string) => {
-              console.log("ServiceWorker registration failed: ", error);
-          });
-      });
-  }
-};
 
 startServiceWorker();
 

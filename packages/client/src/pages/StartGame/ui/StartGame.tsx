@@ -41,7 +41,7 @@ export const StartGame: React.FC = () => {
   }
 
   return (
-    <PageWrapper layout="alternative" showNav={true}>
+    <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <PageWrapperNotBg>
         <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
           <SubTitle text="Выбрать сторону для авторизованного пользователя" />

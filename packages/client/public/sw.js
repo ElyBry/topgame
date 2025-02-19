@@ -1,42 +1,66 @@
-const CACHE_NAME = "chessify-cache-v1";
+const CACHE_NAME = 'chessify-cache-v1';
 const ASSETS = [
-  "/",                 // Главная страница
-  "/index.html",       // Основной HTML-файл
-  //"/styles.css",       // Стили
-  "/src/main.tsx",        // Основной JS-код
-  //"/chess.js",         // Логика шахмат
-  // "/assets/board.png",
-  // "/assets/pieces.png",
-  // "/assets/sounds/move.mp3",
-  // "/assets/sounds/capture.mp3",
+  '/',
+  '/index.html',
 ];
 
-// Установка Service Worker и кеширование ресурсов
-self.addEventListener("install", (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("Opened cache and caching assets");
-      return cache.addAll(ASSETS);
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Opened cache and caching assets');
+        return cache.addAll(ASSETS);
+      })
+      .catch(error => {
+        console.error('Cache installation failed:', error);
+      })
   );
 });
 
-// Перехват запросов и загрузка из кеша, если нет интернета
-self.addEventListener("fetch", (event) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request).then((networkResponse) => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        });
-      });
-    }).catch(() => caches.match("/index.html")) // Если ничего не найдено, грузим index.html
+    event.request.url.includes('/api/') 
+      ?
+        fetch(event.request)
+          .then(networkResponse => {
+            const responseClone = networkResponse.clone();
+            
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseClone);
+              });
+
+            return networkResponse;
+          })
+          .catch(() => {
+            return caches.match(event.request);
+          })
+      :
+        caches.match(event.request)
+          .then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+
+            return fetch(event.request)
+              .then(networkResponse => {
+                const responseClone = networkResponse.clone();
+
+                caches.open(CACHE_NAME)
+                  .then(cache => {
+                    cache.put(event.request, responseClone);
+                  });
+
+                return networkResponse;
+              });
+          })
+          .catch(() => {
+            return caches.match('/index.html');
+          })
   );
 });
 
-// Очистка старого кеша при обновлении Service Worker
-self.addEventListener("activate", (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
