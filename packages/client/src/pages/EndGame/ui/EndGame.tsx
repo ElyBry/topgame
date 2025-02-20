@@ -34,7 +34,7 @@ export const EndGame: React.FC = () => {
   }, [winner, settings])
 
   return (
-    <PageWrapper layout="alternative" showNav={true}>
+    <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <PageWrapperNotBg>
         <WrapperBgColor title={title}>
           <SubTitle text="Можно сыграть ещё раз" />

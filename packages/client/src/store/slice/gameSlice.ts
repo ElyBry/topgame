@@ -3,11 +3,11 @@ import { RootState } from '../config/store'
 import { ISettingsDefault } from '../../utils/constants'
 import { COLORS } from '../../utils/constants'
 
-interface IGameSetting extends ISettingsDefault {
+export interface IGameSetting extends ISettingsDefault {
   opponentColor: string
 }
 
-type TSettingsSlice = {
+export type TSettingsSlice = {
   settings: IGameSetting
   winner: string
 }

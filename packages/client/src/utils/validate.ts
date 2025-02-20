@@ -4,7 +4,7 @@ import {
   checkPhone,
   checkPassword,
   checkFirstAndLastNames,
-} from './rules.ts'
+} from './rules'
 
 export const validateField = (key: string, value: string) => {
   let error = ''
