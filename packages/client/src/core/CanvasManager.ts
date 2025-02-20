@@ -150,7 +150,7 @@ export class CanvasManager {
       figure.draw(this.ctx, isSelected);
     });
     if (selectedFigure && !selectedFigure.inAnim && board) {
-      const availableMoves = board.getAvailableMoves(selectedFigure);
+      const availableMoves = board.getAvailableMoves(selectedFigure).availableMoves;
       this.drawPossibleMoves(availableMoves);
     }
   }

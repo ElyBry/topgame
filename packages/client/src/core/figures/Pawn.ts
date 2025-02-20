@@ -12,24 +12,30 @@ export class Pawn extends Figure {
     const dy = y - this.y;
 
     // Первый ход - две клетки, иначе на 1 вперёд
-    if (dx === 0 && dy === direction) {
-      return board.getFigure(x, y) === null;
-    } else if (dx === 0 && dy === 2 * direction && (this.y === 1 || this.y === 6)) {
-      return board.getFigure(x, y) === null && board.getFigure(x, y - direction) === null;
+    if (dx === 0 && dy === direction && (this.x !== x || this.y !== y)) {
+      if (board.getFigure(x, y) === null && this.checkShah(x, y, board)) {
+        return true;
+      }
+    } else if (dx === 0 && dy === 2 * direction && (this.y === 1 || this.y === 6) && (this.x !== x || this.y !== y)) {
+      if (board.getFigure(x, y) === null && board.getFigure(x, y - direction) === null && this.checkShah(x, y, board)) {
+        return true;
+      }
     }
 
     // Возможность взятия на проходе
     if (Math.abs(dx) === 1 && dy === direction) {
       const enemyPawnY = y - direction;
       const enemyPawn = board.getFigure(x, enemyPawnY);
-      if (enemyPawn instanceof Pawn && enemyPawn.color !== this.color && enemyPawn.didDoubleMove) {
+      if (enemyPawn instanceof Pawn && enemyPawn.color !== this.color && enemyPawn.didDoubleMove && this.checkShah(x, y, board)) {
         return true;
       }
     }
 
     // Пешка может бить по диагонали
     if (Math.abs(dx) === 1 && dy === direction) {
-      return board.getFigure(x, y) !== null && board.getFigure(x, y)!.color !== this.color;
+      if (board.getFigure(x, y) !== null && board.getFigure(x, y)!.color !== this.color && this.checkShah(x, y, board)) {
+        return true;
+      }
     }
     return false;
   }

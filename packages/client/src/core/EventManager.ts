@@ -108,7 +108,7 @@ export class EventManager {
       this.selectedFigure = null;
     } else if (figure && figure.color === this.gameEngine.getCurrentPlayer().color) {
       this.selectedFigure = figure;
-      const availableMoves = this.gameEngine.getBoard().getAvailableMoves(figure);
+      const availableMoves = this.gameEngine.getBoard().getAvailableMoves(figure).availableMoves;
       this.gameEngine.getCanvasManager().drawPossibleMoves(availableMoves);
     } else if (figure !== null && figure !== undefined && figure?.color !== this.gameEngine.getCurrentPlayer().color) {
       // Здесь должно быть отображение уведомления для игрока, что сейчас не его ход и это не его фигура
