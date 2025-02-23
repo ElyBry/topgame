@@ -8,7 +8,7 @@ export class Rook extends Figure {
     super(color, x, y, cellSize, `figuresImages/${color === 'black' ? 'B' : ''}Rook.svg`);
   }
   isValidMove(x: number, y: number, board: Board): boolean {
-    return (this.x === x || this.y === y) ? board.isPathClear(this.x, this.y, x,y) : false; // Вертикаль и горизонталь
+    return (this.x === x || this.y === y) && (this.x !== x || this.y !== y) && board.isPathClear(this.x, this.y, x, y) && this.checkShah(x, y, board);
   }
 
   move(x: number, y: number, board: Board) {

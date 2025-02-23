@@ -9,15 +9,17 @@ import {Sound} from "./Sound";
 import {store} from "../store/config/store"
 
 export class Board {
-  private cells: (Figure | null)[][];
-  private width: number;
-  private height: number;
   private cellSize: number;
   private capturedFigures: Figure[] = [];
   private sounds: Sound;
   private storeSettings = store.getState().gameSlice.settings;
   private player_1_color = this.storeSettings.color;
   private player_2_color = this.storeSettings.opponentColor
+  countMovesAfterShah: number;
+  figureShah: Figure | boolean;
+  cells: (Figure | null)[][];
+  width: number;
+  height: number;
 
   constructor(width: number, height: number, cellSize: number, sounds: Sound) {
     this.width = width;
@@ -25,6 +27,8 @@ export class Board {
     this.cellSize = cellSize;
     this.cells = Array.from({ length: height }, () => Array.from({ length: width }, () => null));
     this.sounds = sounds;
+    this.countMovesAfterShah = 0;
+    this.figureShah = false;
   }
 
   init() {
@@ -55,18 +59,21 @@ export class Board {
     }
   }
 
-  isKingInCheck(color: string): boolean {
-    const king = this.findKing(color);
-    if (!king) {
+  isKingInCheck(color: string): { figureShah: Figure, figureKing: Figure } | boolean {
+    const figureKing = this.findKing(color);
+    const opponentFigures = this.getOpponentFigures(color);
+
+    if (!figureKing) {
       return false;
     }
 
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        const figure = this.cells[y][x];
-        if (figure && figure.color !== color && figure.isValidMove(king.x, king.y, this)) {
-          return true;
-        }
+    for (const opponentFigure of opponentFigures) {
+      const figureShah = opponentFigure;
+
+      if (figureShah && figureShah.color !== color && figureShah.isValidMove(figureKing.x, figureKing.y, this)) {
+        this.figureShah = figureShah;
+
+        return { figureShah: figureShah, figureKing: figureKing };
       }
     }
 
@@ -87,6 +94,31 @@ export class Board {
       }
     }
     return null;
+  }
+
+  checkCheckmateAndStalemate(color: string) {
+    const opponentFigures = this.getOpponentFigures(color);
+    let availableMoves: number = 0;
+
+    for (const opponentFigure of opponentFigures) {
+      availableMoves += this.getAvailableMoves(opponentFigure).countMovesFigure;
+    }
+
+    return availableMoves;
+  }
+
+  checkShahAndCheckmate(color: string) {
+    if (this.isKingInCheck(color === 'white' ? 'black' : 'white')) {
+      if (!this.checkCheckmateAndStalemate(color)) {
+        alert(`Шах и мат. Победа ${color === 'white' ? 'белых' : 'чёрных'}!`);
+      } else {
+        alert(`Шах ${color === 'white' ? 'чёрным' : 'белым'}!`);
+      }
+    } else {
+      if (!this.checkCheckmateAndStalemate(color)) {
+        alert(`Ничья!`);
+      }
+    }
   }
 
   getFigure(x: number, y: number): Figure | null {
@@ -124,10 +156,15 @@ export class Board {
     return figure.isValidMove(x, y, this);
   }
 
-  isUnderAttack(x: number, y: number, color: string) {
+  getOpponentFigures(color: string) {
     const opponentColor = color === 'white' ? 'black' : 'white';
 
-    const opponentFigures = this.getFiguresByColor(opponentColor);
+    return this.getFiguresByColor(opponentColor);
+  }
+
+  isUnderAttack(x: number, y: number, color: string) {
+    const opponentFigures = this.getOpponentFigures(color);
+
     for (const figure of opponentFigures) {
       if (figure.isValidMove(x, y, this)) {
         if (figure instanceof Knight) {
@@ -207,17 +244,24 @@ export class Board {
     return selectedPiece?.toLowerCase() || null;
   }
 
-  getAvailableMoves(figure: Figure): {x : number, y:number}[] {
+  getAvailableMoves(figure: Figure): {
+    availableMoves: {
+      x : number, y:number
+    }[],
+    countMovesFigure: number,
+  } {
     const availableMoves: {x : number, y:number}[] = [];
+    let countMovesFigure: number = 0;
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (figure.isValidMove(x, y, this) && this.getFigure(x, y)?.color !== figure.color) {
           availableMoves.push({x, y});
+          countMovesFigure++;
         }
       }
     }
 
-    return availableMoves;
+    return {availableMoves, countMovesFigure};
   }
 }
