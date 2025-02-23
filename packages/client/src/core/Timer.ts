@@ -1,7 +1,7 @@
 export class Timer {
   private minutes: number;
   private seconds: number;
-  private interval: number | null = null;
+  private interval: number | NodeJS.Timeout | null = null;
 
   constructor(seconds: number) {
     this.minutes = Math.floor((seconds / 60) % 60);

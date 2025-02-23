@@ -7,7 +7,7 @@ import Leaderboard from '../../../components/Leaderboard/Leaderboard'
 export const LeaderboardPage: React.FC = () => {
   return (
     <>
-      <PageWrapper layout="alternative" showNav={true}>
+      <PageWrapper layout="alternative" showNav={true} lightColor={true}>
         <PageWrapperNotBg>
           <WrapperBgColor title="Таблица лидеров по рейтингу">
             <SubTitle text="Топ лучших игроков по рейтингу" />

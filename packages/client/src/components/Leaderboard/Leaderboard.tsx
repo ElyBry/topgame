@@ -28,7 +28,7 @@ const Leaderboard: React.FC = () => {
 
       <tbody>
         {mockData.map((item, index) => (
-          <tr>
+          <tr key={index}>
             <td className={styles.leaderboard_number}>{index + 1}</td>
             <td className={styles.leaderboard_name}>{item.name}</td>
             <td className={styles.leaderboard_rating}>{item.rating}</td>

@@ -7,6 +7,11 @@ import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 import { SETTING_GAME_DEFAULT, SETTING_GAME_SELECT } from '../../../utils/constants'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../../../utils/routes'
+import { useAppDispatch } from '../../../store/hooks'
+import { setGameSettings } from '../../../store/slice/gameSlice'
+import {COLORS} from '../../../utils/constants'
 
 export const StartGame: React.FC = () => {
   const [isSettingTime, setIsSettingTime] = useState(false);
@@ -25,8 +30,18 @@ export const StartGame: React.FC = () => {
     setSettingsGame({ ...settingsGame, addTimeMove: SETTING_GAME_SELECT.timePlayMove[index].time });
   }
 
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+
+  const handleNavigateToGame = () => {
+    const color = settingsGame.color === COLORS.RANDOM ? [COLORS.WHITE, COLORS.BLACK][Math.floor(Math.random() * 2)] : settingsGame.color;
+    const opponentColor = color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE
+    dispatch(setGameSettings({...settingsGame, color, opponentColor}))
+    navigate(ROUTES.GAME);
+  }
+
   return (
-    <PageWrapper layout="alternative" showNav={true}>
+    <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <PageWrapperNotBg>
         <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
           <SubTitle text="Выбрать сторону для авторизованного пользователя" />
@@ -43,6 +58,7 @@ export const StartGame: React.FC = () => {
           <Button
             label="Начать игру!"
             className={`${stylesButton.button_width_auto} ${stylesButton.button_left}`}
+            onClick={handleNavigateToGame}
           />
         </WrapperBgColor>
       </PageWrapperNotBg>
