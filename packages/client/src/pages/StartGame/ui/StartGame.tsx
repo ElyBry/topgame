@@ -1,4 +1,3 @@
-import PageWrapperNotBg from '../../../components/PageWrapperNotBg/PageWrapperNotBg'
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import Switch from '../../../components/Switch/Switch'
 import SubTitle from '../../../components/SubTitle/SubTitle'
@@ -42,7 +41,7 @@ export const StartGame: React.FC = () => {
 
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
-      <PageWrapperNotBg>
+      
         <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
           <SubTitle text="Выбрать сторону для авторизованного пользователя" />
           <Switch data={SETTING_GAME_SELECT.color} fnAfterClick={switchColor} />
@@ -61,7 +60,7 @@ export const StartGame: React.FC = () => {
             onClick={handleNavigateToGame}
           />
         </WrapperBgColor>
-      </PageWrapperNotBg>
+      
     </PageWrapper>
   )
 }

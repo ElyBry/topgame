@@ -18,6 +18,12 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const requestUrl = new URL(event.request.url);
+
+  if (requestUrl.protocol === 'chrome-extension:') {
+    return;
+  }
+
   event.respondWith(
     event.request.url.includes('/api/') 
       ?

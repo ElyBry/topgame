@@ -4,6 +4,7 @@ import { updateAvatar } from "../../../api/profile/profileAvatarApi";
 import { updatePassword } from "../../../api/profile/updatePasswordApi"; // 👈 API для смены пароля
 import Button from "../../../components/Button/Button";
 import styles from "../../../components/Button/Button.module.css";
+import stylesPage from "./ProfilePage.module.css";
 import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 import InputField from "../../../components/InputField/InputField";
 import AvatarProfile from "../../../components/AvatarProfile/AvatarProfile";
@@ -132,113 +133,115 @@ export const ProfilePage = () => {
   return (
     <>
       <PageWrapper layout="alternative" showNav={true} lightColor={true}>
-        <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
-        <NameProfile name={userData.login} />
+        <div className={stylesPage.profile_fixed}>
+          <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
+          <NameProfile name={userData.login} />
 
-        {activeSection === "current" && (
-          <>
-            <CurrentDataProfile label="Иия" data={userData.first_name} />
-            <CurrentDataProfile label="Фамилия" data={userData.second_name} />
-            <CurrentDataProfile label="Логин" data={userData.login} />
-            <CurrentDataProfile label="Почта" data={userData.email} />
-            <CurrentDataProfile label="Телефон" data={userData.phone} />
+          {activeSection === "current" && (
+            <>
+              <CurrentDataProfile label="Иия" data={userData.first_name} />
+              <CurrentDataProfile label="Фамилия" data={userData.second_name} />
+              <CurrentDataProfile label="Логин" data={userData.login} />
+              <CurrentDataProfile label="Почта" data={userData.email} />
+              <CurrentDataProfile label="Телефон" data={userData.phone} />
 
-            <div className={styles.button_fieldset}>
-              <Button label="Изменить данные" className={styles.button_link} type="button" onClick={() => setActiveSection("edit")} />
-              <br />
-              <br />
-              <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />
-            </div>
-          </>
-        )}
+              <div className={styles.button_fieldset}>
+                <Button label="Изменить данные" className={styles.button_link} type="button" onClick={() => setActiveSection("edit")} />
+                <br />
+                <br />
+                <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />
+              </div>
+            </>
+          )}
 
-        {activeSection === "edit" && (
-          <>
-            <InputField
-              type="text"
-              name="first_name"
-              placeholder="Введите новое имя"
-              value={userData.first_name}
-              onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
-            />
-            <InputField
-              type="text"
-              name="second_name"
-              placeholder="Введите новую фамилию"
-              value={userData.second_name}
-              onChange={(e) => setUserData({ ...userData, second_name: e.target.value })}
-            />
-            <InputField
-              type="text"
-              name="login"
-              placeholder="Введите новый логин"
-              value={userData.login}
-              onChange={(e) => setUserData({ ...userData, login: e.target.value })}
-            />
-            <InputField
-              type="text"
-              name="email"
-              placeholder="Введите новую почту"
-              value={userData.email}
-              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-            />
-            <InputField
-              type="tel"
-              name="phone"
-              placeholder="Введите новый телефон"
-              value={userData.phone}
-              onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-            />
+          {activeSection === "edit" && (
+            <>
+              <InputField
+                type="text"
+                name="first_name"
+                placeholder="Введите новое имя"
+                value={userData.first_name}
+                onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
+              />
+              <InputField
+                type="text"
+                name="second_name"
+                placeholder="Введите новую фамилию"
+                value={userData.second_name}
+                onChange={(e) => setUserData({ ...userData, second_name: e.target.value })}
+              />
+              <InputField
+                type="text"
+                name="login"
+                placeholder="Введите новый логин"
+                value={userData.login}
+                onChange={(e) => setUserData({ ...userData, login: e.target.value })}
+              />
+              <InputField
+                type="text"
+                name="email"
+                placeholder="Введите новую почту"
+                value={userData.email}
+                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+              />
+              <InputField
+                type="tel"
+                name="phone"
+                placeholder="Введите новый телефон"
+                value={userData.phone}
+                onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
+              />
 
-            <div className={styles.button_fieldset}>
-              <Button label="Сохранить изменения" type="submit" />
-              <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
-            </div>
-          </>
-        )}
+              <div className={styles.button_fieldset}>
+                <Button label="Сохранить изменения" type="submit" />
+                <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
+              </div>
+            </>
+          )}
 
-        {activeSection === "password" && (
-          <>
-            <InputField
-              type="password"
-              name="oldPassword"
-              placeholder="Старый пароль"
-              value={passwords.oldPassword}
-              onChange={(e) => setPasswords({ ...passwords, oldPassword: e.target.value })}
-              error={!!passwordError.oldPassword}
-              message={passwordError.oldPassword}
-            />
-            <InputField
-              type="password"
-              name="newPassword"
-              placeholder="Новый пароль"
-              value={passwords.newPassword}
-              onChange={(e) => setPasswords({ ...passwords, newPassword: e.target.value })}
-              error={!!passwordError.newPassword}
-              message={passwordError.newPassword}
-            />
-            <InputField
-              type="password"
-              name="confirmPassword"
-              placeholder="Подтвердите новый пароль"
-              value={passwords.confirmPassword}
-              onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
-              error={!!passwordError.confirmPassword}
-              message={passwordError.confirmPassword}
-            />
+          {activeSection === "password" && (
+            <>
+              <InputField
+                type="password"
+                name="oldPassword"
+                placeholder="Старый пароль"
+                value={passwords.oldPassword}
+                onChange={(e) => setPasswords({ ...passwords, oldPassword: e.target.value })}
+                error={!!passwordError.oldPassword}
+                message={passwordError.oldPassword}
+              />
+              <InputField
+                type="password"
+                name="newPassword"
+                placeholder="Новый пароль"
+                value={passwords.newPassword}
+                onChange={(e) => setPasswords({ ...passwords, newPassword: e.target.value })}
+                error={!!passwordError.newPassword}
+                message={passwordError.newPassword}
+              />
+              <InputField
+                type="password"
+                name="confirmPassword"
+                placeholder="Подтвердите новый пароль"
+                value={passwords.confirmPassword}
+                onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
+                error={!!passwordError.confirmPassword}
+                message={passwordError.confirmPassword}
+              />
 
-            <div className={styles.button_fieldset}>
-              {isPasswordLoading ? (
-                <Loader />
-              ) : (
-                <>
-                  <Button label="Сохранить новый пароль" type="button" onClick={handlePasswordChange} />
-                  <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
-                </>
-              )}
-            </div>
-          </>
-        )}
+              <div className={styles.button_fieldset}>
+                {isPasswordLoading ? (
+                  <Loader />
+                ) : (
+                  <>
+                    <Button label="Сохранить новый пароль" type="button" onClick={handlePasswordChange} />
+                    <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
+                  </>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </PageWrapper>
 
       {isModalOpen && (

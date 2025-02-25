@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import TopicListItem from "../../../components/TopicListItem/TopicListItem";
 import Button from "../../../components/Button/Button";
-import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrapper";
+import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 import topics from './mock.json'
 
 export const ForumPage = () => {
@@ -36,7 +36,7 @@ export const ForumPage = () => {
   );
 
   return (
-    <PageForumWrapper>
+    <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <div className={styles.forum_top}>
         <h1 className={styles.forum_title}>Форум</h1>
           <Button
@@ -47,6 +47,6 @@ export const ForumPage = () => {
           />
       </div>
       <ul className={styles.forum_list}>{topicItems}</ul>
-    </PageForumWrapper>
+    </PageWrapper>
   )
 }
