@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import InputField from "../../../components/InputField/InputField";
 import TextareaField from "../../../components/TextareaField/TextareaField";
-import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrapper";
+import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 
 export const TopicNewPage = () => {
   useEffect(() => {
@@ -31,7 +31,7 @@ export const TopicNewPage = () => {
   };
 
   return (
-    <PageForumWrapper>
+    <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <h1 className={styles.topic_create_title}>Создание нового топика</h1>
       <form action="submit" className={styles.topic_create_form} onSubmit={handleSubmit}>
         <InputField
@@ -61,6 +61,6 @@ export const TopicNewPage = () => {
           />
         </div>
       </form>
-    </PageForumWrapper>
+    </PageWrapper>
   );
 };

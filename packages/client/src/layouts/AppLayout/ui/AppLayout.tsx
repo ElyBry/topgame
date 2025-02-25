@@ -12,7 +12,7 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
   }, [dispatch])
 
   if (status === 'loading') {
-    null
+    return <div>Loading...</div>
   }
 
   return <>{children}</>

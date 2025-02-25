@@ -1,7 +1,7 @@
 import styles from "./TopicPage.module.css";
 import { useEffect, SyntheticEvent } from 'react';
 import TextareaField from "../../../components/TextareaField/TextareaField";
-import PageForumWrapper from "../../../components/PageForumWrapper/PageForumWrapper";
+import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 import CommentListItem from "../../../components/CommentListItem/CommentListItem";
 import { useParams } from 'react-router-dom'
 import Button from "../../../components/Button/Button";
@@ -36,7 +36,7 @@ export const TopicPage = () => {
     };
 
   return (
-    <PageForumWrapper>
+    <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <h1 className={styles.topic_view_title}>{`Страница с темой форума № ${id}`}</h1>
       <div className={styles.topic_view_block}>
         <div className={styles.topic_view_block_top}>
@@ -68,6 +68,6 @@ export const TopicPage = () => {
             />
         </div>
       </form>
-    </PageForumWrapper>
+    </PageWrapper>
   );
 };
