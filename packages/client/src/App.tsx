@@ -17,13 +17,18 @@ function App() {
   //   fetchServerData()
   // }, [fetchServerData])
 
-  return (
+  let routerItem
+  if (typeof window !== 'undefined') {
+    routerItem = createBrowserRouter(router)
+  }
+
+  return router ? (
     <Provider store={store}>
       <AppLayout>
-        <RouterProvider router={createBrowserRouter(router)} />
+        <RouterProvider router={routerItem} />
       </AppLayout>
     </Provider>
-  )
+  ) : null
 }
 
 export default App

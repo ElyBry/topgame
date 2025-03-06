@@ -5,11 +5,11 @@ import './index.css'
 import { APP_NAME } from './utils/constants'
 import startServiceWorker from './serviceWorker'
 
-document.title = APP_NAME;
 
 startServiceWorker();
+document.title = APP_NAME;
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement,
   // <React.StrictMode>
     <App />
   // {/* </React.StrictMode> */}

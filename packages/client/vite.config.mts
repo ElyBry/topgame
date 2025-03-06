@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { VitePWA } from 'vite-plugin-pwa'
 // import fs from 'fs'
-// import path from 'path'
+import path from 'path'
 dotenv.config()
+import commonjs from 'vite-plugin-commonjs'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,10 +13,14 @@ export default defineConfig({
     port: Number(process.env.CLIENT_PORT) || 3000,
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_PORT__: process.env.SERVER_PORT || 3001,
+  },
+  build: {
+    outDir: path.join(__dirname, 'dist/client'),
   },
   plugins: [
     react(),
+    commonjs(), // Transform CommonJS to ES modules
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
