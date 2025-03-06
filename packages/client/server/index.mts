@@ -38,16 +38,13 @@ async function createServer() {
       let template: string
 
       if (vite) {
-        // Получаем файл client/index.html
         template = await fs.readFile(
           path.resolve(clientPath, 'index.html'),
           'utf-8'
         )
 
-        // Применяем встроенные HTML-преобразования vite и плагинов
         template = await vite.transformIndexHtml(url, template)
 
-        // Загружаем модуль клиента, который будет рендерить HTML-код
         render = (
           await vite.ssrLoadModule(
             path.join(clientPath, 'src/entry-server.tsx')
@@ -59,23 +56,18 @@ async function createServer() {
           'utf-8'
         )
 
-        // Получаем путь до модуля клиента, чтобы не тащить средства сборки клиента на сервер
         const pathToServer = path.join(
           clientPath,
           'dist/server/entry-server.js'
         )
 
-        // Импортируем этот модуль и вызываем с начальным состоянием
         render = (await import('file://' + pathToServer)).render
       }
 
-      // Получаем HTML-строку из JSX
       const appHtml = await render()
 
-      // Заменяем комментарий на сгенерированную HTML-строку
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
-      // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       if (isDev) {

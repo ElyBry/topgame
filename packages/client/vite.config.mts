@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { VitePWA } from 'vite-plugin-pwa'
-// import fs from 'fs'
 import path from 'path'
 dotenv.config()
 import commonjs from 'vite-plugin-commonjs'
@@ -20,7 +19,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    commonjs(), // Transform CommonJS to ES modules
+    commonjs(),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
