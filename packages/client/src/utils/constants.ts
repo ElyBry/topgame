@@ -21,17 +21,17 @@ export const SETTING_GAME_SELECT = {
     {
       'color': COLORS.WHITE,
       'name': 'Белые',
-      'src': '/src/pages/StartGame/ui/i/white.svg'
+      'src': '/StartGame/white.svg'
     },
     {
       'color': COLORS.RANDOM,
       'name': 'Случайный выбор',
-      'src': '/src/pages/StartGame/ui/i/random.svg'
+      'src': '/StartGame/random.svg'
     },
     {
       'color': COLORS.BLACK,
       'name': 'Чёрные',
-      'src': '/src/pages/StartGame/ui/i/black.svg',
+      'src': '/StartGame/black.svg',
     }
   ],
   'timePlay': [

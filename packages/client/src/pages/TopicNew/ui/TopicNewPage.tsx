@@ -8,13 +8,18 @@ import TextareaField from "../../../components/TextareaField/TextareaField";
 import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 
 export const TopicNewPage = () => {
+
   useEffect(() => {
     const currentTitle = document.title;
-
+  
     if (!currentTitle.includes("Создание топика")) {
-      document.title = `Создание топика - ${currentTitle}`;
-    }
-  }, []);
+      document.title = `Создание топика - ${currentTitle}`
+    };
+
+    return () => {
+      document.title = currentTitle;
+    };
+  }, [])
 
   const navigate = useNavigate();
 

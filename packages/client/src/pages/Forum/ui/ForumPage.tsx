@@ -9,11 +9,15 @@ import topics from './mock.json'
 export const ForumPage = () => {
   useEffect(() => {
     const currentTitle = document.title;
-
+  
     if (!currentTitle.includes("Форум")) {
-      document.title = `Форум - ${currentTitle}`;
-    }
-  }, []);
+      document.title = `Форум - ${currentTitle}`
+    };
+
+    return () => {
+      document.title = currentTitle;
+    };
+  }, [])
 
 
   const navigate = useNavigate();
