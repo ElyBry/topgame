@@ -8,13 +8,18 @@ import Button from "../../../components/Button/Button";
 import topic from './mock.json'
 
 export const TopicPage = () => {
+
   useEffect(() => {
     const currentTitle = document.title;
-
+  
     if (!currentTitle.includes("Страница с темой форума")) {
-      document.title = `Страница с темой форума - ${currentTitle}`;
-    }
-  }, []);
+      document.title = `Страница с темой форума - ${currentTitle}`
+    };
+
+    return () => {
+      document.title = currentTitle;
+    };
+  }, [])
 
   const { id } = useParams()
 
