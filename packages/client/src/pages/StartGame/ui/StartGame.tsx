@@ -22,7 +22,11 @@ export const StartGame: React.FC = () => {
 
   function switchTime(index: number) {
     setSettingsGame({ ...settingsGame, time: SETTING_GAME_SELECT.timePlay[index].time });
-    index > 0 ? setIsSettingTime(true) : setIsSettingTime(false);
+		if (index > 0 ) {
+			setIsSettingTime(true)
+		} else {
+			setIsSettingTime(false);
+		}
   }
 
   function switchTimeMove(index: number) {
@@ -41,7 +45,7 @@ export const StartGame: React.FC = () => {
 
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
-      
+
         <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
           <SubTitle text="Выбрать сторону для авторизованного пользователя" />
           <Switch data={SETTING_GAME_SELECT.color} fnAfterClick={switchColor} />
@@ -60,7 +64,7 @@ export const StartGame: React.FC = () => {
             onClick={handleNavigateToGame}
           />
         </WrapperBgColor>
-      
+
     </PageWrapper>
   )
 }

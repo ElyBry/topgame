@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import styles from './InputField.module.css'
 import { Input } from '../Input'
 import { ErrorMessage } from '../ErrorMessage'
