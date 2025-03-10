@@ -1,0 +1,1 @@
+lerna run type-check && lerna run test && lerna run lint

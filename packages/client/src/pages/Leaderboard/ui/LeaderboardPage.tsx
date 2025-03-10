@@ -10,7 +10,7 @@ export const LeaderboardPage: React.FC = () => {
   
     if (!currentTitle.includes("Лидерборд")) {
       document.title = `Лидерборд - ${currentTitle}`
-    };
+    }
 
     return () => {
       document.title = currentTitle;
