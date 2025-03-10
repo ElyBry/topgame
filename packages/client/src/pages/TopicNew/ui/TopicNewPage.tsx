@@ -14,7 +14,7 @@ export const TopicNewPage = () => {
   
     if (!currentTitle.includes("Создание топика")) {
       document.title = `Создание топика - ${currentTitle}`
-    };
+    }
 
     return () => {
       document.title = currentTitle;

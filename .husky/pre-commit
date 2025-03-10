@@ -1,0 +1,2 @@
+yarn run type-check
+yarn run lint

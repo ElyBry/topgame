@@ -7,7 +7,7 @@ import { registerSW } from 'virtual:pwa-register';
 
 if (import.meta.env.MODE === 'production') {
   registerSW();
-};
+}
 
 document.title = APP_NAME;
 

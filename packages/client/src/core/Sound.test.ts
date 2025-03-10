@@ -3,7 +3,7 @@ import { Sound } from './Sound';
 class AudioMock {
   public volume: number = 1;
   public src: string = '';
-  
+
   constructor(src: string) {
     this.src = src;
   }

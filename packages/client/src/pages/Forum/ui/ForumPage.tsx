@@ -12,7 +12,7 @@ export const ForumPage = () => {
   
     if (!currentTitle.includes("Форум")) {
       document.title = `Форум - ${currentTitle}`
-    };
+    }
 
     return () => {
       document.title = currentTitle;

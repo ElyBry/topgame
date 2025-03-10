@@ -13,6 +13,7 @@ import CurrentDataProfile from "../../../components/CurrentDataProfile/CurrentDa
 import Modal from "../../../components/Modal/Modal";
 import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
+import {APIError} from "../../../api/types";
 
 export const ProfilePage = () => {
 
@@ -111,13 +112,13 @@ export const ProfilePage = () => {
       await updatePassword(passwords.oldPassword, passwords.newPassword);
       setPasswords({ oldPassword: "", newPassword: "", confirmPassword: "" });
       setActiveSection("current");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Ошибка смены пароля:", error);
 
-      if (error.response?.data?.reason) {
+      if ((error as APIError).response?.data?.reason) {
         setPasswordError((prev) => ({
           ...prev,
-          oldPassword: error.response.data.reason, // Показываем ошибку сервера
+          oldPassword: (error as APIError).response.data.reason, // Показываем ошибку сервера
         }));
       } else {
         setPasswordError((prev) => ({
