@@ -13,6 +13,11 @@
     "format": "lerna run format",
     "preview": "lerna run preview"
   },
+	"husky": {
+    "hooks": {
+      "pre-commit": "npm run test && npm run lint"
+    }
+  },
   "license": "MIT",
   "workspaces": [
     "packages/*"
