@@ -11,6 +11,8 @@ import { useAppSelector } from '../../../store/hooks'
 import { COLORS } from '../../../utils/constants'
 import { resetWinnerColor } from '../../../store/slice/gameSlice'
 import { useAppDispatch } from '../../../store/hooks'
+import { selectUser } from '../../../store/slice/userSlice'
+import { useSelector } from 'react-redux'
 
 export const EndGame: React.FC = () => {
   const navigate = useNavigate()
@@ -24,7 +26,7 @@ export const EndGame: React.FC = () => {
   const { winner, settings } = useAppSelector(state => state.gameSlice)
 
   const [title, setTitle] = useState('Игра окончена: Ничья')
-
+  const userState = useSelector(selectUser);
   useEffect(() => {
     if (winner === COLORS.BLACK) {
       setTitle('Игра окончена: Победа черных')
