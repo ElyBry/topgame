@@ -101,10 +101,10 @@ export class EventManager {
         }
         this.lastMove = move;
         this.gameEngine.getNotation().addMove(move);
+        console.log(this.gameEngine.getBoard().checkShahAndCheckmate(this.selectedFigure.color));
         this.moveIs = true;
         this.gameEngine.updateGameLogic();
       }
-
       this.selectedFigure = null;
     } else if (figure && figure.color === this.gameEngine.getCurrentPlayer().color) {
       this.selectedFigure = figure;

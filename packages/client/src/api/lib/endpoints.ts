@@ -6,4 +6,5 @@ export const ENDPOINTS = {
   USER_PASSWORD: '/user/password',
   OAUTH_SIGN_IN: '/oauth/yandex',
   OAUTH_SERVICE_ID: '/oauth/yandex/service-id',
+  LEADERBOARD: '/leaderboard',
 } as const
