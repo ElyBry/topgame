@@ -11,6 +11,9 @@ import { COLORS } from '../../utils/constants'
 import { useAppSelector } from '../../store/hooks'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../utils/routes'
+import { leaderboardNewLeaderRequest } from '../../api/leaderboard/leaderboardApi'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../store/slice/userSlice'
 
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
@@ -33,6 +36,8 @@ const ChessBoard = () => {
   const [color, setColor] = useState(activeColor)
   const [notation, setNotation] = useState<Move[]>([])
   const [eatedFigures, setEatedFigures] = useState<Figure[]>([])
+
+  const userState = useSelector(selectUser)
 
   const navigate = useNavigate()
 
@@ -68,6 +73,7 @@ const ChessBoard = () => {
     }
 
     if (winner) {
+      leaderboardNewLeaderRequest({data: { username: userState.user!.login, countMoves: notation.filter((move) => move.figure.color === activeColor).length * -1}, ratingFieldName: "countMoves"})
       navigate(ROUTES.END_GAME)
     }
   }, [canvasSize, winner, navigate])

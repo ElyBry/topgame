@@ -3,4 +3,5 @@ export const ENDPOINTS = {
   USER_INFO: '/auth/user',
   USER_AVATAR: '/user/profile/avatar',
   USER_PASSWORD: '/user/password',
+  LEADERBOARD: '/leaderboard',
 } as const
