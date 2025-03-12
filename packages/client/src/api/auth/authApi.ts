@@ -7,8 +7,21 @@ type TLoginArgs = {
 }
 
 export const login = async ({ login, password }: TLoginArgs) => {
-  return await axiosRequest.post(ENDPOINTS.SIGN_IN, {
+  const response = await axiosRequest.post(ENDPOINTS.SIGN_IN, {
     login,
     password,
-  })
-}
+  });
+
+  const { token } = response.data;
+
+  if (token) {
+    localStorage.setItem('accessToken', token);
+  };
+
+  return response;
+};
+
+export const logout = async () => {
+  const response = await axiosRequest.post(ENDPOINTS.LOGOUT);
+  return response;
+};

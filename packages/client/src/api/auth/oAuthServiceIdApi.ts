@@ -1,0 +1,17 @@
+import { axiosRequest } from '../lib/axiosConfig'
+import { ENDPOINTS } from '../lib/endpoints'
+
+export const getServiceId = async (): Promise<string | null> => {
+  try {
+    const response = await axiosRequest.get(ENDPOINTS.OAUTH_SERVICE_ID)
+
+    if (response.data && response.data.service_id) {
+      return response.data.service_id
+    } else {
+      throw new Error('service_id не найден в ответе')
+    }
+  } catch (error) {
+    console.error('Ошибка при получении service_id:', error)
+    throw error
+  }
+}

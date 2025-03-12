@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../components/Button/Button'
 import styles from '../../../components/Button/Button.module.css'
+import styles2 from './SigninPage.module.css'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import InputField from '../../../components/InputField/InputField'
 import { login } from '../../../api/auth/authApi'
@@ -10,6 +11,10 @@ import { ROUTES } from '../../../utils/routes'
 import { validateField } from '../../../utils/validate'
 import { useAppDispatch } from '../../../store/hooks'
 import { setUser } from '../../../store/slice/userSlice'
+import LoaderFull from '../../../components/LoaderFull/LoaderFull'
+import { getServiceId } from '../../../api/auth/oAuthServiceIdApi'
+import { oauth } from '../../../api/auth/oauthApi'
+import { OAUTH_REDIRECT_URI } from '../../../utils/constants'
 
 type TFormState = {
   login: string
@@ -21,11 +26,6 @@ type TFormErrors = {
   password: string
 }
 
-// const testData = {
-//   login: 'TestTestov',
-//   password: '!Vtest123',
-// }
-
 export const SigninPage = () => {
   const [formState, setFormState] = useState<TFormState>({
     login: '',
@@ -35,12 +35,12 @@ export const SigninPage = () => {
     login: '',
     password: '',
   })
+  const [clientId, setClientId] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [initializing, setInitializing] = useState<boolean>(true)
 
   const dispatch = useAppDispatch()
-
-  const isButtonDisabled = () =>
-    Object.values(formErrors).some(value => !!value) ||
-    !Object.values(formState).every(value => !!value)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const currentTitle = document.title
@@ -48,9 +48,72 @@ export const SigninPage = () => {
     if (!currentTitle.includes('Авторизация')) {
       document.title = `Авторизация - ${currentTitle}`
     }
-  }, [])
 
-  const navigate = useNavigate()
+    const fetchClientId = async () => {
+      if (!initializing && !loading) {
+        try {
+          const id = await getServiceId()
+          setClientId(id)
+        } catch (error) {
+          console.error('Ошибка при получении client_id', error)
+        }
+      }
+    }
+
+    fetchClientId()
+  }, [initializing, loading])
+
+  // OAuth
+  const handleYandexAuth = () => {
+    if (!clientId) {
+      console.error('client_id не найден')
+      return
+    }
+
+    setLoading(true)
+    const redirectUri = OAUTH_REDIRECT_URI
+
+    const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`
+    window.location.href = authUrl
+  }
+
+  useEffect(() => {
+    const handleOAuthCode = async () => {
+      const queryParams = new URLSearchParams(window.location.search)
+      const code = queryParams.get('code')
+      
+      if (code) {
+        setLoading(true)
+        try {
+          const redirectUri = OAUTH_REDIRECT_URI
+          const response = await oauth({ code, redirect_uri: redirectUri })
+          
+          localStorage.setItem('authData', JSON.stringify(response.data))
+          
+          const userInfoResult = await getUserInfo()
+          if (userInfoResult.id) {
+            dispatch(setUser(userInfoResult))
+            
+            window.history.replaceState({}, '', window.location.pathname)
+            navigate(ROUTES.MAIN)
+          }
+        } catch (error) {
+          console.error('Ошибка при OAuth авторизации:', error)
+        } finally {
+          setLoading(false)
+        }
+      }
+      
+      setInitializing(false)
+    }
+    
+    handleOAuthCode()
+  }, [dispatch, navigate])
+  
+
+  const isButtonDisabled = () =>
+    Object.values(formErrors).some(value => !!value) ||
+    !Object.values(formState).every(value => !!value)
 
   const handleNavigate = () => {
     navigate(ROUTES.SIGN_UP)
@@ -82,15 +145,22 @@ export const SigninPage = () => {
     if (!handleValidation()) return
 
     if (formState.login.length && formState.password.length) {
-      const result = await login(formState)
+      setLoading(true)
+      try {
+        const result = await login(formState)
 
-      if (result) {
-        const userInfoResult = await getUserInfo()
+        if (result) {
+          const userInfoResult = await getUserInfo()
 
-        if (userInfoResult.id) {
-          dispatch(setUser(userInfoResult))
-          navigate(ROUTES.MAIN)
+          if (userInfoResult.id) {
+            dispatch(setUser(userInfoResult))
+            navigate(ROUTES.MAIN)
+          }
         }
+      } catch (error) {
+        console.error('Ошибка авторизации:', error)
+      } finally {
+        setLoading(false)
       }
     }
   }
@@ -113,6 +183,14 @@ export const SigninPage = () => {
     }))
 
     return formIsValid
+  }
+
+  if (initializing || loading) {
+    return (
+      <PageWrapper title="Вход" showNav={false} lightColor={true}>
+        <LoaderFull />
+      </PageWrapper>
+    )
   }
 
   return (
@@ -143,6 +221,14 @@ export const SigninPage = () => {
             className={styles.button_link}
             type="button"
             onClick={handleNavigate}
+          />
+          <div className={styles2.oauth_hr}>или</div>
+          <Button
+            label="Войти через Яндекс"
+            type="button"
+            className={styles.button_oauth}
+            onClick={handleYandexAuth}
+            disabled={loading || !clientId}
           />
         </div>
       </form>
