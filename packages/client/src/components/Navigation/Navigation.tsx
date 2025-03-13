@@ -1,12 +1,26 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { logout } from "../../store/slice/userSlice";
+import { logout as apiLogout } from '../../api/auth/authApi'
 import styles from "./Navigation.module.css";
 import { ROUTES } from "../../utils/routes";
+import Button from '../Button/Button'
+import styles2 from '../Button/Button.module.css'
 
 const Navigation = () => {
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => (location.pathname === path ? styles.active : "");
 
+  const handleLogout = async () => {
+    await apiLogout()
+    localStorage.removeItem('accessToken')
+    dispatch(logout())
+    navigate(ROUTES.SIGN_IN)
+  }
+  
   return (
     <nav className={styles.nav}>
       <ul className={styles.nav_list}>
@@ -31,9 +45,12 @@ const Navigation = () => {
           </Link>
         </li>
         <li>
-          <Link to="#" className={`${styles.nav_link} ${styles.logout}`}>
-            Выйти
-          </Link>
+          <Button
+            label="Выйти"
+            type="button"
+            className={styles2.button_logout}
+            onClick={handleLogout}
+          />
         </li>
       </ul>
     </nav>

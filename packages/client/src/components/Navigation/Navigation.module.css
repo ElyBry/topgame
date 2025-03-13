@@ -23,14 +23,3 @@
 .active:hover {
   color: var(--nav-active-hover-color);
 }
-
-.logout {
-  background: var(--logout-btn-bg);
-  color: var(--btn-color);
-  margin-left: 30px;
-}
-
-.logout:hover {
-  background: var(--logout-btn-bg-hover);
-  color: var(--btn-color);
-}

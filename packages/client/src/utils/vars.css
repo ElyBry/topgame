@@ -30,6 +30,8 @@
     --layout-border: #eaeaea;
     --attach-file-color: #8d8d8d;
     --loader-bg: rgba(0, 0, 0, 0.1);
+    --loader-full-bg: rgba(0, 0, 0, 0.5);
     --loader-color: #0099ff;
     --footer-bg: #1e1e1e;
+    --oauth-hr: 0, 26, 52;
 }
