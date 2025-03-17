@@ -1,5 +1,5 @@
-import styles from "./AttachFile.module.css";
 import { useState, useRef, useId } from "react";
+import styled from 'styled-components'
 
 type AttachFileProps = {
   className?: string;
@@ -21,7 +21,7 @@ const AttachFile: React.FC<AttachFileProps> = ({ onChange }) => {
   };
 
   return (
-    <div className={styles.attach_file}>
+    <AttachFileStyle>
       <input
         type="file"
         id={inputId}
@@ -32,13 +32,35 @@ const AttachFile: React.FC<AttachFileProps> = ({ onChange }) => {
         onChange={handleFileChange}
       />
 
-      <label htmlFor={inputId} className={styles.attach_file_link}>
+      <LabelStyle htmlFor={inputId}>
         {file ? "Выберите другой файл" : "Выберите файл"}
-      </label>
+      </LabelStyle>
 
-      {file && <div className={styles.attach_file_name}>Вы выбрали: {file.name}</div>}
-    </div>
+      {file && <AttachFileNameStyle>Вы выбрали: {file.name}</AttachFileNameStyle>}
+    </AttachFileStyle>
   );
 };
+
+const AttachFileStyle = styled.div`
+    text-align: center;
+    max-width: 200px;
+    height: 45px;
+    margin: 0 auto;
+    line-height: 1.6rem;
+`;
+
+const LabelStyle = styled.label`
+    color: var(--link-color);
+    display: inline-block;
+    cursor: pointer;
+`;
+
+const AttachFileNameStyle = styled.div`
+    color: var(--attach-file-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 10px 0 0;
+`;
 
 export default AttachFile;

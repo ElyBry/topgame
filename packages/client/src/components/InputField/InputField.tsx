@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import styles from './InputField.module.css'
 import { Input } from '../Input'
 import { ErrorMessage } from '../ErrorMessage'
 import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react'
+import styled from 'styled-components'
 
 interface InputFieldProps
   extends DetailedHTMLProps<
@@ -25,15 +25,24 @@ const InputField: FC<InputFieldProps> = ({
   ...rest
 }) => {
   return (
-    <div className={styles.fieldset}>
-      <label className={styles.input_wrapper}>
+    <FieldsetStyle>
+      <InputWrapperStyle>
         <Input {...rest} type={type} name={name} placeholder={placeholder} />
-      </label>
+      </InputWrapperStyle>
 
       {/* Отображаем ошибку, если она есть */}
       {error && message && <ErrorMessage message={message} />}
-    </div>
+    </FieldsetStyle>
   )
 }
+
+const FieldsetStyle = styled.div`
+    margin: 16px 0 0
+`;
+
+const InputWrapperStyle = styled.div`
+    display: block;
+    position: relative
+`;
 
 export default InputField

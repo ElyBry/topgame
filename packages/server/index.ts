@@ -9,9 +9,7 @@ const app = express()
 app.use(cors())
 const port = Number(process.env.SERVER_PORT) || 3001
 
-
 createClientAndConnect()
-
 app.use(express.static('./'));
 
 app.get('/', (_, res) => {

@@ -9,8 +9,10 @@ import { Figure } from '../../core/Figure'
 import { GameEatedFigures } from '../GameEatedFigures'
 import { COLORS } from '../../utils/constants'
 import { useAppSelector } from '../../store/hooks'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from '../../utils/routes'
+import { Helmet } from 'react-helmet'
 
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
@@ -74,6 +76,11 @@ const ChessBoard = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Игра - Chessify</title>
+      </Helmet>
+
       <h1>{titlePlayer2}</h1>
       <GameTimer initialSeconds={blackTime} active={color === 'black'} />
       <GameEatedFigures

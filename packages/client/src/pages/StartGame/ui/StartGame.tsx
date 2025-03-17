@@ -1,16 +1,16 @@
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import Switch from '../../../components/Switch/Switch'
 import SubTitle from '../../../components/SubTitle/SubTitle'
-import stylesButton from "../../../components/Button/Button.module.css";
 import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 import { SETTING_GAME_DEFAULT, SETTING_GAME_SELECT } from '../../../utils/constants'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
-import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../utils/routes'
 import { useAppDispatch } from '../../../store/hooks'
 import { setGameSettings } from '../../../store/slice/gameSlice'
 import {COLORS} from '../../../utils/constants'
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 
 export const StartGame: React.FC = () => {
   const [isSettingTime, setIsSettingTime] = useState(false);
@@ -41,26 +41,30 @@ export const StartGame: React.FC = () => {
 
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
-      
-        <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
-          <SubTitle text="Выбрать сторону для авторизованного пользователя" />
-          <Switch data={SETTING_GAME_SELECT.color} fnAfterClick={switchColor} />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Играть в шахматы с другом на одном компьютере: начало игры - Chessify</title>
+      </Helmet>
 
-          <SubTitle text="Минут на партию" />
-          <Switch isWidthAuto={true} data={SETTING_GAME_SELECT.timePlay} fnAfterClick={switchTime} />
+      <WrapperBgColor title="Играть в шахматы с другом на одном компьютере">
+        <SubTitle text="Выбрать сторону для авторизованного пользователя" />
+        <Switch data={SETTING_GAME_SELECT.color} fnAfterClick={switchColor} />
 
-          {isSettingTime && <>
-            <SubTitle text="Добавление секунд на ход" />
-            <Switch isWidthAuto={true} data={SETTING_GAME_SELECT.timePlayMove} fnAfterClick={switchTimeMove} />
-          </>}
+        <SubTitle text="Минут на партию" />
+        <Switch isWidthAuto={true} data={SETTING_GAME_SELECT.timePlay} fnAfterClick={switchTime} />
 
-          <Button
-            label="Начать игру!"
-            className={`${stylesButton.button_width_auto} ${stylesButton.button_left}`}
-            onClick={handleNavigateToGame}
-          />
-        </WrapperBgColor>
-      
+        {isSettingTime && <>
+          <SubTitle text="Добавление секунд на ход" />
+          <Switch isWidthAuto={true} data={SETTING_GAME_SELECT.timePlayMove} fnAfterClick={switchTimeMove} />
+        </>}
+
+        <Button
+          label="Начать игру!"
+          classNames={{ button_width_auto: true, button_left: true }}
+          onClick={handleNavigateToGame}
+        />
+      </WrapperBgColor>
+
     </PageWrapper>
   )
 }

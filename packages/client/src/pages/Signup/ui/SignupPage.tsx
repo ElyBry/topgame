@@ -1,11 +1,12 @@
 import { useEffect, useState, ChangeEvent, FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Button from '../../../components/Button/Button'
-import styles from '../../../components/Button/Button.module.css'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import InputField from '../../../components/InputField/InputField'
 import { validateField } from '../../../utils/validate'
 import { checkPasswordRepeat } from '../../../utils/rules'
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
 
 type TFormState = {
   login: string
@@ -137,6 +138,11 @@ export const SignupPage = () => {
 
   return (
     <PageWrapper title="Регистрация" showNav={false} lightColor={true}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Авторизация - Chessify</title>
+      </Helmet>
+
       <form onSubmit={handleSubmit}>
         <InputField
           onChange={handleFormChange}
@@ -208,7 +214,7 @@ export const SignupPage = () => {
           message={formErrors['password_repeat']}
         />
 
-        <div className={styles.button_fieldset}>
+        <FieldsetStyle>
           <Button
             label="Зарегистрироваться"
             type="submit"
@@ -217,12 +223,18 @@ export const SignupPage = () => {
 
           <Button
             label="Войти"
-            className={styles.button_link}
+            classNames={{ button_link: true }}
             type="button"
             onClick={handleNavigate}
           />
-        </div>
+        </FieldsetStyle>
       </form>
     </PageWrapper>
   )
 }
+
+const FieldsetStyle = styled.div`
+    padding: 47px 0 0;
+    text-align: center;
+    min-height: 112px;
+`;

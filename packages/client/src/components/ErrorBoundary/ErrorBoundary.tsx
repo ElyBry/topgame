@@ -1,5 +1,5 @@
 import React, {ErrorInfo, ReactNode} from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 type ErrorBoundaryProps = {
   children: ReactNode;

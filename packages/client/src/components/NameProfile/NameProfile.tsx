@@ -1,4 +1,4 @@
-import styles from "./NameProfile.module.css";
+import styled from 'styled-components'
 
 type NameProfileProps = {
   name: string;
@@ -6,10 +6,18 @@ type NameProfileProps = {
 
 const NameProfile: React.FC<NameProfileProps> = ({ name }) => {
   return (
-    <h2 className={styles.name}>
+    <NameStyle>
       {name}
-    </h2>
+    </NameStyle>
   );
 };
+
+const NameStyle = styled.h2`
+    text-align: center;
+    font-size: 2rem;
+    line-height: 100%;
+    font-weight: 600;
+    margin: 0 0 40px;
+`;
 
 export default NameProfile;

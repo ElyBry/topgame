@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getUserInfo, TUserInfoResponse } from '../../api/auth/userInfoApi'
 import { RootState } from '../config/store'
+import { PageInitContext } from '../../utils/router'
 
 const STATUS = {
   LOADING: 'loading',
@@ -15,6 +16,7 @@ type TUserSlice = {
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   const response = await getUserInfo()
+
   return response as TUserInfoResponse
 })
 
@@ -39,6 +41,9 @@ const userSlice = createSlice({
 
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.status = STATUS.SUCCESS
+
+      console.log(action.payload, 'action.payloadaction.payloadaction.payload')
+
       state.user = action.payload
     })
 

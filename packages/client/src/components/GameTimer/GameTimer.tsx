@@ -1,5 +1,5 @@
-import styles from "./GameTimer.module.css";
 import React, {useEffect, useState} from "react";
+import styled from 'styled-components'
 
 interface GameTimerProps {
   initialSeconds: number;
@@ -25,11 +25,29 @@ const GameTimer:React.FC<GameTimerProps> = ({ initialSeconds, active}) => {
   }
 
   return (
-    <div className={styles.timerContainer}>
+    <TimerContainerStyle>
       {isActive && "Ваш ход"}
-      <div className={styles.timer}>{formatTime(seconds)}</div>
-    </div>
+      <TimerStyle>{formatTime(seconds)}</TimerStyle>
+    </TimerContainerStyle>
   )
 }
+
+const TimerContainerStyle = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const TimerStyle = styled.div`
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+`;
 
 export default GameTimer;

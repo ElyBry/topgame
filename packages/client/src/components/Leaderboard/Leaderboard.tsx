@@ -1,4 +1,4 @@
-import styles from "./Leaderboard.module.css";
+import styled from 'styled-components'
 
 const Leaderboard: React.FC = () => {
   const mockData = [
@@ -17,26 +17,63 @@ const Leaderboard: React.FC = () => {
   ]
 
   return (
-    <table className={styles.leaderboard}>
+    <LeaderboardStyle>
       <thead>
         <tr>
-          <th className={styles.leaderboard_number}>#</th>
-          <th className={styles.leaderboard_name}>Игрок</th>
-          <th className={styles.leaderboard_rating}>Рейтинг</th>
+          <LeaderboardNumberStyle>#</LeaderboardNumberStyle>
+          <th>Игрок</th>
+          <th>Рейтинг</th>
         </tr>
       </thead>
 
       <tbody>
         {mockData.map((item, index) => (
           <tr key={index}>
-            <td className={styles.leaderboard_number}>{index + 1}</td>
-            <td className={styles.leaderboard_name}>{item.name}</td>
-            <td className={styles.leaderboard_rating}>{item.rating}</td>
+            <LeaderboardNumberStyle>{index + 1}</LeaderboardNumberStyle>
+            <td>{item.name}</td>
+            <td>{item.rating}</td>
           </tr>
         ))}
       </tbody>
-    </table>
+    </LeaderboardStyle>
   );
 };
+
+const LeaderboardStyle = styled.table`
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    border: 0;
+
+    & tbody {
+        border-radius: 0 0 15px 15px;
+        border: 1px solid #e6e6e6;
+    }
+    
+    & thead {
+        background: #e6e6e6;
+    }
+
+    & th {
+        text-align: left;
+    }
+
+    & th, & td {
+        padding: 10px 0;
+    }
+
+    & th {
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    & td {
+        background: #fff;
+    }
+`;
+
+const LeaderboardNumberStyle = styled.th`
+    text-align: center;
+`;
 
 export default Leaderboard;

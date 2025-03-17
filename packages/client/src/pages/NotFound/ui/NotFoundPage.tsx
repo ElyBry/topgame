@@ -1,8 +1,8 @@
-import stylesButton from '../../../components/Button/Button.module.css'
 import Button from '../../../components/Button/Button'
-import styles from './NotFoundPage.module.css'
-import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../utils/routes'
+import { Helmet } from 'react-helmet'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components'
 
 export const NotFoundPage = () => {
   const navigate = useNavigate()
@@ -12,15 +12,40 @@ export const NotFoundPage = () => {
   }
 
   return (
-    <main className={styles.not_found}>
-      <h1 className={styles.not_found_number}>400</h1>
-      <p className={styles.not_found_text}>Не туда попали</p>
+    <NotFoundStyle>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>404</title>
+        <meta name="description" content="Страница не найдена"/>
+      </Helmet>
+
+      <NotFoundNumberStyle>400</NotFoundNumberStyle>
+      <NotFoundTextStyle>Не туда попали</NotFoundTextStyle>
       <Button
         label="На главную страницу"
-        className={stylesButton.button_link}
         type="button"
         onClick={handleNavigateToMain}
       />
-    </main>
+    </NotFoundStyle>
   )
 }
+
+const NotFoundStyle = styled.main`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+const NotFoundNumberStyle = styled.h1`
+    font-size: 40px;
+    margin-bottom: 20px;
+`;
+
+const NotFoundTextStyle = styled.p`
+    font-size: 20px;
+    margin-bottom: 69px;
+`;
+
+export const initNotFoundPage = () => Promise.resolve()

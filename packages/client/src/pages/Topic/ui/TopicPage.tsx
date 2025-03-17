@@ -3,15 +3,16 @@ import { useEffect, SyntheticEvent } from 'react';
 import TextareaField from "../../../components/TextareaField/TextareaField";
 import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 import CommentListItem from "../../../components/CommentListItem/CommentListItem";
-import { useParams } from 'react-router-dom'
 import Button from "../../../components/Button/Button";
 import topic from './mock.json'
+import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 
 export const TopicPage = () => {
 
   useEffect(() => {
     const currentTitle = document.title;
-  
+
     if (!currentTitle.includes("Страница с темой форума")) {
       document.title = `Страница с темой форума - ${currentTitle}`
     };
@@ -42,6 +43,11 @@ export const TopicPage = () => {
 
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Страница с темой форума № ${id}`} - Chessify</title>
+      </Helmet>
+
       <h1 className={styles.topic_view_title}>{`Страница с темой форума № ${id}`}</h1>
       <div className={styles.topic_view_block}>
         <div className={styles.topic_view_block_top}>

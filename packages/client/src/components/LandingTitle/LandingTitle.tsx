@@ -1,4 +1,4 @@
-import styles from "./LandingTitle.module.css";
+import styled from 'styled-components'
 
 type LandingTitleProps = {
   title: string;
@@ -6,10 +6,17 @@ type LandingTitleProps = {
 
 const LandingTitle: React.FC<LandingTitleProps> = ({ title }) => {
   return (
-    <h2 className={styles.landing_title}>
+    <LandingTitleStyle>
       {title}
-    </h2>
+    </LandingTitleStyle>
   );
 };
+
+const LandingTitleStyle = styled.div`
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 100%;
+    margin: 0 0 15px;
+`;
 
 export default LandingTitle;

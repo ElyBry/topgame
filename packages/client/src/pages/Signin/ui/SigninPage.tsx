@@ -1,7 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Button from '../../../components/Button/Button'
-import styles from '../../../components/Button/Button.module.css'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import InputField from '../../../components/InputField/InputField'
 import { login } from '../../../api/auth/authApi'
@@ -10,6 +8,9 @@ import { ROUTES } from '../../../utils/routes'
 import { validateField } from '../../../utils/validate'
 import { useAppDispatch } from '../../../store/hooks'
 import { setUser } from '../../../store/slice/userSlice'
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
 
 type TFormState = {
   login: string
@@ -117,6 +118,11 @@ export const SigninPage = () => {
 
   return (
     <PageWrapper title="Вход" showNav={false} lightColor={true}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Войти - Chessify</title>
+      </Helmet>
+
       <form onSubmit={handleSubmit}>
         <InputField
           onChange={handleFormChange}
@@ -136,16 +142,27 @@ export const SigninPage = () => {
           error={!!formErrors['password']}
           message={formErrors['password']}
         />
-        <div className={styles.button_fieldset}>
+        <FieldsetStyle>
           <Button label="Войти" type="submit" disabled={isButtonDisabled()} />
           <Button
             label="Нет аккаунта?"
-            className={styles.button_link}
+            classNames={{ button_link: true }}
             type="button"
             onClick={handleNavigate}
           />
-        </div>
+        </FieldsetStyle>
       </form>
     </PageWrapper>
   )
+}
+
+const FieldsetStyle = styled.div`
+    padding: 47px 0 0;
+    text-align: center;
+    min-height: 112px;
+`;
+
+
+export const initPages = async () => {
+  console.log('111');
 }

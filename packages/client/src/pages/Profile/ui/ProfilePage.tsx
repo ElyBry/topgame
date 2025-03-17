@@ -3,7 +3,6 @@ import { getUserInfo } from "../../../api/auth/userInfoApi";
 import { updateAvatar } from "../../../api/profile/profileAvatarApi";
 import { updatePassword } from "../../../api/profile/updatePasswordApi"; // 👈 API для смены пароля
 import Button from "../../../components/Button/Button";
-import styles from "../../../components/Button/Button.module.css";
 import stylesPage from "./ProfilePage.module.css";
 import PageWrapper from "../../../components/PageWrapper/PageWrapper";
 import InputField from "../../../components/InputField/InputField";
@@ -13,6 +12,8 @@ import CurrentDataProfile from "../../../components/CurrentDataProfile/CurrentDa
 import Modal from "../../../components/Modal/Modal";
 import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
 
 export const ProfilePage = () => {
 
@@ -133,6 +134,11 @@ export const ProfilePage = () => {
   return (
     <>
       <PageWrapper layout="alternative" showNav={true} lightColor={true}>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Профиль - Chessify</title>
+        </Helmet>
+
         <div className={stylesPage.profile_fixed}>
           <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
           <NameProfile name={userData.login} />
@@ -145,12 +151,12 @@ export const ProfilePage = () => {
               <CurrentDataProfile label="Почта" data={userData.email} />
               <CurrentDataProfile label="Телефон" data={userData.phone} />
 
-              <div className={styles.button_fieldset}>
-                <Button label="Изменить данные" className={styles.button_link} type="button" onClick={() => setActiveSection("edit")} />
+              <FieldsetStyle>
+                <Button label="Изменить данные" classNames={{ button_link: true }} type="button" onClick={() => setActiveSection("edit")} />
                 <br />
                 <br />
-                <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />
-              </div>
+                <Button label="Изменить пароль" classNames={{ button_link: true }} type="button" onClick={() => setActiveSection("password")} />
+              </FieldsetStyle>
             </>
           )}
 
@@ -192,10 +198,10 @@ export const ProfilePage = () => {
                 onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
               />
 
-              <div className={styles.button_fieldset}>
+              <FieldsetStyle>
                 <Button label="Сохранить изменения" type="submit" />
-                <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
-              </div>
+                <Button label="Вернуться" classNames={{ button_link: true }} type="button" onClick={() => setActiveSection("current")} />
+              </FieldsetStyle>
             </>
           )}
 
@@ -229,16 +235,16 @@ export const ProfilePage = () => {
                 message={passwordError.confirmPassword}
               />
 
-              <div className={styles.button_fieldset}>
+              <FieldsetStyle>
                 {isPasswordLoading ? (
                   <Loader />
                 ) : (
                   <>
                     <Button label="Сохранить новый пароль" type="button" onClick={handlePasswordChange} />
-                    <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
+                    <Button label="Вернуться" classNames={{ button_link: true }} type="button" onClick={() => setActiveSection("current")} />
                   </>
                 )}
-              </div>
+              </FieldsetStyle>
             </>
           )}
         </div>
@@ -249,17 +255,23 @@ export const ProfilePage = () => {
           <form>
             <AttachFile onChange={handleAvatarChange} />
 
-            <div className={styles.button_fieldset}>
+            <FieldsetStyle>
               {isLoading ? <Loader /> : (
                 <>
                   <Button label="Обновить" type="button" onClick={handleAvatarUpdate} />
-                  <Button label="Закрыть" className={styles.button_link} type="button" onClick={handleCloseModal} />
+                  <Button label="Закрыть" classNames={{ button_link: true }} type="button" onClick={handleCloseModal} />
                 </>
               )}
-            </div>
+            </FieldsetStyle>
           </form>
         </Modal>
       )}
     </>
   );
 };
+
+const FieldsetStyle = styled.div`
+    padding: 47px 0 0;
+    text-align: center;
+    min-height: 112px;
+`;

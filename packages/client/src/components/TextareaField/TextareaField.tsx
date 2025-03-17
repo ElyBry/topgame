@@ -1,6 +1,6 @@
-import styles from "./TextareaField.module.css";
 import { Textarea } from '../Textarea';
 import { ErrorMessage } from '../ErrorMessage';
+import styled from 'styled-components'
 
 interface TextareaFieldProps {
   name: string;
@@ -12,15 +12,19 @@ interface TextareaFieldProps {
 
 const TextareaField: React.FC<TextareaFieldProps> = ({ name, error, message, placeholder, modelValue }) => {
   return (
-    <div className={styles.fieldset}>
-      <label className={styles.input_wrapper}>
-        <Textarea  name={name} placeholder={placeholder} modelValue={modelValue}/>
+    <FieldsetStyle>
+      <label>
+        <Textarea name={name} placeholder={placeholder} modelValue={modelValue}/>
       </label>
 
       {/* Отображаем ошибку, если она есть */}
       {error && message && <ErrorMessage message={message} />}
-    </div>
+    </FieldsetStyle>
   );
 };
+
+const FieldsetStyle = styled.div`
+    margin: 16px 0 0
+`;
 
 export default TextareaField;

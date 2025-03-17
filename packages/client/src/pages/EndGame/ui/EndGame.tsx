@@ -3,14 +3,14 @@ import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import PageWrapperNotBg from '../../../components/PageWrapperNotBg/PageWrapperNotBg'
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import SubTitle from '../../../components/SubTitle/SubTitle'
-import stylesButton from '../../../components/Button/Button.module.css'
 import Button from '../../../components/Button/Button'
-import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../utils/routes'
 import { useAppSelector } from '../../../store/hooks'
 import { COLORS } from '../../../utils/constants'
 import { resetWinnerColor } from '../../../store/slice/gameSlice'
 import { useAppDispatch } from '../../../store/hooks'
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 
 export const EndGame: React.FC = () => {
   const navigate = useNavigate()
@@ -35,12 +35,17 @@ export const EndGame: React.FC = () => {
 
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Игра завершена - Chessify</title>
+      </Helmet>
+
       <PageWrapperNotBg>
         <WrapperBgColor title={title}>
           <SubTitle text="Можно сыграть ещё раз" />
           <Button
             label="Начать!"
-            className={`${stylesButton.button_width_auto} ${stylesButton.button_left}`}
+            classNames={{ button_width_auto: true, button_left: true }}
             onClick={handleNavigateToStartGame}
           />
         </WrapperBgColor>

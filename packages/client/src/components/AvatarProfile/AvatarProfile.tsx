@@ -1,4 +1,4 @@
-import styles from "./AvatarProfile.module.css";
+import styled from 'styled-components'
 
 type AvatarProfileProps = {
   avatar?: string;
@@ -8,22 +8,73 @@ type AvatarProfileProps = {
 
 const AvatarProfile: React.FC<AvatarProfileProps> = ({ avatar, change, onClick }) => {
   return (
-    <div className={styles.avatar_wrap}>
-      <div className={styles.avatar}>
+    <AvatarWrapStyle>
+      <AvatarStyle>
         {avatar && (
-          <div className={styles.avatar_img_wrap}>
-            <img className={styles.avatar_img} src={avatar} alt="Avatar" />
-          </div>
+          <AvatarImgWrapStyle>
+            <AvatarImgStyle src={avatar} alt="Avatar" />
+          </AvatarImgWrapStyle>
         )}
-      </div>
-      <span
-        className={styles.avatar_change}
-        onClick={onClick}
-      >
-        {change}
-      </span>
-    </div>
+      </AvatarStyle>
+      <AvatarChangeStyle onClick={onClick}>{change}</AvatarChangeStyle>
+    </AvatarWrapStyle>
   );
 };
+
+const AvatarStyle = styled.div`
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAMAAAC5zwKfAAAAS1BMVEVHcEzLy8vOzs7MzMzNzc3Nzc3Nzc3Hx8fPz8/Pz8/MzMzLy8vMzMzMzMzKysrNzc3MzMzJycnNzc3MzMzLy8vNzc3MzMzMzMzNzc3p0tVzAAAAGXRSTlMAQI/f/8+fIBAgUJDPYHCvcDC/74AfoL+Qb8vVsAAAASVJREFUeAHt2AWy4zAQRdFu6YljZazg/lc6ZahUmNSfdRdwzBbQECuN6ox1NOUVhFJ+9AzEMoOoIJgiCgCg2VNtUQ8Skx08TwL5QUy0ABBJJAagCQBIJj9YkiA18AeBvsuZ5cCwxJD+JwT2GnPFS4BB45CVAC2O4now4LhSD0Yct6oH1zhpUw1mnOSrQcZxWuApr3CUFQAzjnICIBUcyiQB+i2mVlnqb9PtVsBq7yT/h87/5D92AxvYwAb22RqNk3SxuX8H9JzLCjdalTW/AvqoCh5WVPRPgK6zGk9nbNffATkvV3i51TLzJehZlRXer6zZH4HKQCCjDqBU3xtsYAMb2MAGNlBDNEMJolliiOZI9hST/Nb9ICYIlQZvKGwXqE7vebD+A8DxOp+LG+8ZAAAAAElFTkSuQmCC") 50% 50% no-repeat var(--avatar-ele-bg);
+    background-size: 40px 40px;
+    border: 3px solid var(--box-bg);
+    cursor: pointer;
+`;
+
+const AvatarImgWrapStyle = styled.div`
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+`;
+
+const AvatarImgStyle = styled.img`
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+`;
+
+const AvatarChangeStyle = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--avatar-hover-bg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.3rem;
+    line-height: 1.4rem;
+    text-align: center;
+    color: var(--btn-color);
+    opacity: 0;
+    transition: all .175s;
+    cursor: pointer;
+`;
+
+const AvatarWrapStyle = styled.div`
+    width: 130px;
+    height: 130px;
+    position: relative;
+    margin: 0 auto 20px;
+    
+    &:hover ${AvatarChangeStyle} {
+        opacity: 1;
+    }
+`;
 
 export default AvatarProfile;

@@ -1,11 +1,13 @@
 import dotenv from 'dotenv'
-dotenv.config()
-
-import express from 'express'
+import serialize from 'serialize-javascript'
+import cookieParser from 'cookie-parser'
+import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
-
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
+import { HelmetData } from 'react-helmet'
+
+dotenv.config()
 
 const __dirname = path.resolve()
 const port = process.env.CLIENTPORT || 3000
@@ -14,6 +16,8 @@ const isDev = process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
+
+  app.use(cookieParser())
 
   let vite: ViteDevServer | undefined
   if (isDev) {
@@ -34,7 +38,9 @@ async function createServer() {
     const url = req.originalUrl
 
     try {
-      let render: () => Promise<string>
+      let render: (
+        req: ExpressRequest
+      ) => Promise<{ html: string; initialState: unknown; helmet: HelmetData; styleTags: string }>
       let template: string
 
       if (vite) {
@@ -61,12 +67,22 @@ async function createServer() {
           'dist/server/entry-server.js'
         )
 
-        render = (await import('file://' + pathToServer)).render
+        //render = (await import('file://' + pathToServer)).render
+        render = (await import(pathToServer)).render
       }
 
-      const appHtml = await render()
+      const { html: appHtml, initialState, helmet, styleTags } = await render(req)
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template
+        .replace('<!--ssr-styles-->', styleTags)
+        .replace(`<!--ssr-helmet-->`, `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`)
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+            isJSON: true,
+          })}</script>`
+        )
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

@@ -5,14 +5,15 @@ import LandingCopy from "../../../components/LandingCopy/LandingCopy";
 import HowToPlay from "../../../components/HowToPlay/HowToPlay";
 import LandingTitle from "../../../components/LandingTitle/LandingTitle";
 import Team from "../../../components/Team/Team";
+import { Helmet } from 'react-helmet'
 
 export const MainPage = () => {
   useEffect(() => {
     const currentTitle = document.title;
-  
+
     if (!currentTitle.includes("Главная")) {
       document.title = `Главная - ${currentTitle}`
-    };
+    }
 
     return () => {
       document.title = currentTitle;
@@ -22,6 +23,12 @@ export const MainPage = () => {
   return (
     <>
       <PageMainWrapper showNav={true} lightColor={false}>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Добро пожаловать в Chessify!</title>
+          <meta name="description" content="Добро пожаловать в Chessify!"/>
+        </Helmet>
+
         <MainSection>
           <LandingCopy />
         </MainSection>
