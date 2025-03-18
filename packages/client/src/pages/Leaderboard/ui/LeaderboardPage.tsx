@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react'
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import SubTitle from '../../../components/SubTitle/SubTitle'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import Leaderboard from '../../../components/Leaderboard/Leaderboard'
 
-export const LeaderboardPage: React.FC = () => {
+export const LeaderboardPage= () => {
   useEffect(() => {
     const currentTitle = document.title;
   
@@ -23,7 +23,7 @@ export const LeaderboardPage: React.FC = () => {
         <WrapperBgColor title="Таблица лидеров по рейтингу">
           <SubTitle text="Топ лучших игроков по рейтингу" />
 
-          <Leaderboard/>
+          <Leaderboard />
         </WrapperBgColor>
       </PageWrapper>
     </>

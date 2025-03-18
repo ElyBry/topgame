@@ -1,0 +1,27 @@
+.oauth_hr {
+  color: rgba(var(--oauth-hr), .4);
+  margin: 16px auto;
+  padding: 0 16px;
+  position: relative;
+  text-align: center;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.oauth_hr:after,
+.oauth_hr:before {
+  background-color: rgba(var(--oauth-hr), .2);
+  content: "";
+  height: 1px;
+  position: absolute;
+  top: 8px;
+  width: 64px;
+}
+
+.oauth_hr:before {
+  left: -64px;
+}
+
+.oauth_hr:after {
+  right: -64px;
+}

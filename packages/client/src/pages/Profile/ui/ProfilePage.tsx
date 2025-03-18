@@ -140,7 +140,7 @@ export const ProfilePage = () => {
 
           {activeSection === "current" && (
             <>
-              <CurrentDataProfile label="Иия" data={userData.first_name} />
+              <CurrentDataProfile label="Имя" data={userData.first_name} />
               <CurrentDataProfile label="Фамилия" data={userData.second_name} />
               <CurrentDataProfile label="Логин" data={userData.login} />
               <CurrentDataProfile label="Почта" data={userData.email} />

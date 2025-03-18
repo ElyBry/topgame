@@ -53,3 +53,5 @@ export const SETTING_GAME_SELECT = {
     { 'name': '30', 'time': 30 }
   ]
 }
+
+export const OAUTH_REDIRECT_URI = 'http://localhost:3000/oauth';
