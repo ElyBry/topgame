@@ -54,4 +54,4 @@ export const SETTING_GAME_SELECT = {
   ]
 }
 
-export const OAUTH_REDIRECT_URI = 'http://localhost:3000/sign-in';
+export const OAUTH_REDIRECT_URI = 'http://localhost:3000/oauth';

@@ -35,7 +35,7 @@ const userSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(fetchUser.pending, (state, _) => {
+    builder.addCase(fetchUser.pending, (state) => {
       state.status = STATUS.LOADING
       state.user = null
     })
@@ -45,7 +45,7 @@ const userSlice = createSlice({
       state.user = action.payload
     })
 
-    builder.addCase(fetchUser.rejected, (state, _) => {
+    builder.addCase(fetchUser.rejected, (state) => {
       state.status = STATUS.ERROR
       state.user = null
     })

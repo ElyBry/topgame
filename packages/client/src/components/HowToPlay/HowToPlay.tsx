@@ -21,7 +21,7 @@ const HowToPlay = () => {
         <li><FontAwesomeIcon icon={faChessQueen} /> Ферзь: двигается на любое количество клеток по&nbsp;вертикали, горизонтали и&nbsp;диагонали.</li>
         <li><FontAwesomeIcon icon={faChessRook} /> Ладья: по горизонтали и вертикали.</li>
         <li><FontAwesomeIcon icon={faChessBishop} /> Слон: по диагонали.</li>
-        <li><FontAwesomeIcon icon={faChessKnight} /> Конь: ходит буквой "Г".</li>
+        <li><FontAwesomeIcon icon={faChessKnight} /> Конь: ходит буквой &apos;Г&apos;. </li>
         <li><FontAwesomeIcon icon={faChessPawn} /> Пешка: двигается вперед на одну клетку, <br />при первом ходе — на две.</li>
       </ul>
       <h3>Геймплей:</h3>
