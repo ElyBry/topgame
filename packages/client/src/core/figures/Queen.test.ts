@@ -1,5 +1,6 @@
 import { Queen } from './Queen';
 import { Board } from '../Board';
+import { Sound } from '../Sound';
 
 jest.mock('../Board');
 
@@ -8,7 +9,7 @@ describe('Queen', () => {
   let whiteQueen: Queen;
 
   beforeEach(() => {
-    board = new Board(8, 8, 50, {} as any);
+    board = new Board(8, 8, 50, {} as Sound);
     board.cells = Array.from({ length: 8 }, () => Array(8).fill(null));
     whiteQueen = new Queen('white', 3, 3, 50);
 

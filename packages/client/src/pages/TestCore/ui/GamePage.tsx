@@ -10,7 +10,7 @@ import {GameEatedFigures} from "../../../components/GameEatedFigures";
 
 export const TestCore = () => {
   const seconds = 300;
-  const [canvasSize, setCanvasSize] = useState({width: window.innerWidth - window.innerWidth * 0.05, height: window.innerHeight - window.innerHeight * 0.05});
+  const [canvasSize] = useState({width: window.innerWidth - window.innerWidth * 0.05, height: window.innerHeight - window.innerHeight * 0.05});
   const gameEngineRef = useRef<GameEngine | null>(null);
   const [whiteTime, setWhiteTime] = useState(seconds);
   const [blackTime, setBlackTime] = useState(seconds);

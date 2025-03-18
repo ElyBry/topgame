@@ -14,7 +14,7 @@ export const TopicPage = () => {
   
     if (!currentTitle.includes("Страница с темой форума")) {
       document.title = `Страница с темой форума - ${currentTitle}`
-    };
+    }
 
     return () => {
       document.title = currentTitle;

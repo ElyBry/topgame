@@ -9,9 +9,18 @@
     "dev": "lerna run dev --parallel",
     "test": "lerna run test",
     "lint": "lerna run lint",
+    "lint:fix": "lerna run lint:fix",
     "lint:client": "lerna run lint --scope=client",
     "format": "lerna run format",
-    "preview": "lerna run preview"
+    "preview": "lerna run preview",
+    "type-check": "lerna run type-check",
+    "pre-commit": "lerna run type-check && lerna run lint",
+    "prepare": "lerna run prepare && husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lerna run type-check && lerna run lint"
+    }
   },
   "license": "MIT",
   "workspaces": [
@@ -31,6 +40,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.18",
+    "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
     "lerna": "^5.4.3",
     "redux-mock-store": "^1.5.5",

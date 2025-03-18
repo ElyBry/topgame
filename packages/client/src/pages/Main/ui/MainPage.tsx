@@ -12,7 +12,7 @@ export const MainPage = () => {
   
     if (!currentTitle.includes("Главная")) {
       document.title = `Главная - ${currentTitle}`
-    };
+    }
 
     return () => {
       document.title = currentTitle;

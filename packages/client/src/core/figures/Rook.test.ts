@@ -1,5 +1,6 @@
 import { Rook } from './Rook';
 import { Board } from '../Board';
+import { Sound } from "../Sound";
 
 jest.mock('../Board');
 
@@ -9,7 +10,7 @@ describe('Rook', () => {
 
   beforeEach(() => {
     // Создаем доску
-    board = new Board(8, 8, 50, {} as any);
+    board = new Board(8, 8, 50, {} as Sound);
 
     // Инициализация клеток доски
     board.cells = Array.from({ length: 8 }, () => Array(8).fill(null));
