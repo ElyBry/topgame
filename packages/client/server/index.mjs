@@ -24,6 +24,7 @@ async function createServer() {
     }
     app.get('*', async (req, res, next) => {
         const url = req.originalUrl;
+        console.log(url);
         try {
             let render;
             let template;
