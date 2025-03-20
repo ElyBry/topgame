@@ -1,5 +1,5 @@
-import App from './App'
 import { render, screen } from '@testing-library/react'
+import Main from './Main'
 
 const appContent = 'Вот тут будет жить ваше приложение :)'
 
@@ -10,6 +10,6 @@ global.fetch = jest.fn(() =>
 )
 
 test('Example test', async () => {
-  render(<App />)
+  render(<Main />)
   expect(screen.getByText(appContent)).toBeDefined()
 })

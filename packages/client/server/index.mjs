@@ -1,15 +1,18 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import serialize from 'serialize-javascript';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
 import fs from 'fs/promises';
 import { createServer as createViteServer } from 'vite';
+dotenv.config();
 const __dirname = path.resolve();
 const port = process.env.CLIENTPORT || 3000;
 const clientPath = __dirname;
 const isDev = process.env.NODE_ENV === 'development';
 async function createServer() {
     const app = express();
+    app.use(cookieParser());
     let vite;
     if (isDev) {
         vite = await createViteServer({
@@ -35,10 +38,17 @@ async function createServer() {
             else {
                 template = await fs.readFile(path.join(clientPath, 'dist/client/index.html'), 'utf-8');
                 const pathToServer = path.join(clientPath, 'dist/server/entry-server.js');
-                render = (await import('file://' + pathToServer)).render;
+                //render = (await import('file://' + pathToServer)).render
+                render = (await import(pathToServer)).render;
             }
-            const appHtml = await render();
-            const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+            const { html: appHtml, initialState, helmet, styleTags } = await render(req);
+            const html = template
+                .replace('<!--ssr-styles-->', styleTags)
+                .replace(`<!--ssr-helmet-->`, `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`)
+                .replace(`<!--ssr-outlet-->`, appHtml)
+                .replace(`<!--ssr-initial-state-->`, `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+                isJSON: true,
+            })}</script>`);
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
         }
         catch (e) {
