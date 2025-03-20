@@ -12,7 +12,7 @@ const router = createBrowserRouter(routes)
 
 if (import.meta.env.MODE === 'production') {
   registerSW();
-};
+}
 
 document.title = APP_NAME;
 
