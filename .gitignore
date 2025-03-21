@@ -4,4 +4,4 @@ node_modules/
 .vscode
 dist
 tmp
-/packages/client/dev-dist/
+/packages/client/dev-dist
