@@ -113,6 +113,7 @@ export class GameEngine {
     this.currentTimeUpdate = this.currentPlayerIndex === 0 ? this.updateTimeWhite : this.updateTimeBlack;
     this.changePlayer(this.players[this.currentPlayerIndex].color);
     this.timers[this.currentPlayerIndex].start();
+    this.board.onMoveMade();
     if (this.settings.getMinutesPerParty() > 0) {
       // this.getSounds().playClockTickSound();
     }

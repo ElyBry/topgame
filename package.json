@@ -2,6 +2,7 @@
   "name": "client-server-template-with-vite",
   "private": true,
   "scripts": {
+    "start": "docker-compose up -d postgres pgadmin && yarn dev",
     "bootstrap": "yarn && node init.js && lerna clean --yes",
     "build": "lerna run build",
     "dev:client": "lerna run dev --scope=client",

@@ -15,6 +15,7 @@ export class Board {
   private storeSettings = store.getState().gameSlice.settings;
   private player_1_color = this.storeSettings.color;
   private player_2_color = this.storeSettings.opponentColor
+  private availableMovesCache: Map<Figure, {x : number, y: number}[]> = new Map();
   countMovesAfterShah: number;
   figureShah: Figure | boolean;
   cells: (Figure | null)[][];
@@ -31,6 +32,17 @@ export class Board {
     this.figureShah = false;
   }
 
+  // Init for test
+  // init() {
+  //   this.cells[5][5] = new King(this.player_1_color, 5, 5, this.cellSize);
+  //   this.cells[7][0] = new Rook(this.player_2_color, 7, 0, this.cellSize);
+  //   this.cells[0][4] = new King(this.player_2_color, 0, 4, this.cellSize);
+  //   this.cells[6][4] = new Queen(this.player_2_color, 6, 4, this.cellSize);
+  //   this.cells[5][2] = new Bishop(this.player_2_color, 5, 2, this.cellSize);
+  //   this.cells[7][7] = new Rook(this.player_1_color, 7, 7, this.cellSize);
+  //   this.cells[4][3] = new Pawn(this.player_1_color, 4, 3, this.cellSize);
+  //   this.cells[6][3] = new Pawn(this.player_2_color, 6, 3, this.cellSize);
+  // }
   init() {
     this.cells[0][0] = new Rook(this.player_2_color, 0, 0, this.cellSize);
     this.cells[0][1] = new Knight(this.player_2_color, 0, 1, this.cellSize);
@@ -230,8 +242,8 @@ export class Board {
     for (let i = 1; i < steps; i++) {
       const checkX = startX + i * stepX;
       const checkY = startY + i * stepY;
-
-      if (this.getFigure(checkX, checkY) !== null) {
+      const figure = this.getFigure(checkX, checkY);
+      if (figure !== null && figure.x == checkX && figure.y == checkY ) {
         return false;
       }
     }
@@ -250,18 +262,35 @@ export class Board {
     }[],
     countMovesFigure: number,
   } {
-    const availableMoves: {x : number, y:number}[] = [];
-    let countMovesFigure: number = 0;
-
+    if (this.availableMovesCache.has(figure)) {
+      const availableMoves = this.availableMovesCache.get(figure)!;
+      return {
+        availableMoves,
+        countMovesFigure: availableMoves.length,
+      };
+    }
+    this.updateAvailableMovesCache(figure);
+    const availableMoves = this.availableMovesCache.get(figure)!;
+    return {
+      availableMoves,
+      countMovesFigure: availableMoves.length,
+    };
+  }
+  updateAvailableMovesCache(figure: Figure) {
+    const availableMoves: { x: number, y: number }[] = [];
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (figure.isValidMove(x, y, this) && this.getFigure(x, y)?.color !== figure.color) {
-          availableMoves.push({x, y});
-          countMovesFigure++;
+          availableMoves.push({ x, y });
         }
       }
     }
-
-    return {availableMoves, countMovesFigure};
+    this.availableMovesCache.set(figure, availableMoves);
+  }
+  clearAvailableMovesCache() {
+    this.availableMovesCache.clear();
+  }
+  onMoveMade() {
+    this.clearAvailableMovesCache();
   }
 }
