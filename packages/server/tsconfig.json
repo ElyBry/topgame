@@ -1,9 +1,14 @@
 {
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
+  },
   "compilerOptions": {
     "composite": true,
-    "target": "es2019",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": true,
@@ -17,13 +22,14 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     //"verbatimModuleSyntax": null,
     "lib": ["es2019", "esnext.asynciterable"],
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"]
-    },
-    "outDir": "dist"
+    }
   }
 }
