@@ -18,7 +18,8 @@
     "type-check": "lerna run type-check",
     "pre-commit": "lerna run type-check && lerna run lint",
     "prepare": "lerna run prepare && husky install",
-    "migrate": "lerna run db:migrate --scope=server"
+    "migrate": "lerna run db:migrate --scope=server",
+    "seed": "lerna run db:seed --scope=server"
   },
   "husky": {
     "hooks": {
@@ -62,16 +63,12 @@
     "babel-jest": "^28.0.0",
     "eslint": "^9.20.1",
     "eslint-plugin-prettier": "^5.2.3",
-    "jest": "^28.0.8",
+    "jest": "^29.7.0",
     "prettier": "^3.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
-    "reflect-metadata": "^0.2.2",
-    "sequelize": "^6.37.6",
-    "sequelize-typescript": "^2.1.6",
-    "serialize-javascript": "^6.0.2",
     "ts-jest": "^28.0.8",
     "vite": "^3.0.7"
   }
