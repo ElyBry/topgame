@@ -1,8 +1,8 @@
-import styles from "./ThemeSwitcher.module.css";
 import { useState, useEffect, useId } from "react";
+import styles from "./ThemeSwitcher.module.css";
 
 const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
   const switchInputId = useId(); // Генерируем уникальный id
 
   useEffect(() => {

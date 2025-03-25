@@ -1,4 +1,3 @@
-import styles from './ChessBoard.module.css'
 import { useEffect, useRef, useState } from 'react'
 import { SettingsClassic } from '../../core/SettingsClassic'
 import { GameEngine } from '../../core/GameEngine'
@@ -15,6 +14,7 @@ import { ROUTES } from '../../utils/routes'
 import { leaderboardNewLeaderRequest } from '../../api/leaderboard/leaderboardApi'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../store/slice/userSlice'
+import styles from './ChessBoard.module.css'
 
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
