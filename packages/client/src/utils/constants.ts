@@ -12,9 +12,9 @@ export interface ISettingsDefault {
 }
 
 export const SETTING_GAME_DEFAULT: ISettingsDefault = {
-  color: COLORS.WHITE, // Белый цвет фигур
-  time: 0, // Время на партию для каждого из игроков неограниченно
-  addTimeMove: 0 // После каждого хода не происходит добавления времени
+  color: COLORS.WHITE,
+  time: 0,
+  addTimeMove: 0
 }
 export const SETTING_GAME_SELECT = {
   'color': [

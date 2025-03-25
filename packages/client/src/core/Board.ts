@@ -21,6 +21,7 @@ export class Board {
   cells: (Figure | null)[][];
   width: number;
   height: number;
+  private isCheckShah = false;
 
   constructor(width: number, height: number, cellSize: number, sounds: Sound) {
     this.width = width;
@@ -32,63 +33,73 @@ export class Board {
     this.figureShah = false;
   }
 
-  // Init for test
+  // Init for test rokirovka(zabyl kak on english)
+  init() {
+    this.cells[0][0] = new Rook(this.player_2_color, 0, 0, this.cellSize);
+    this.cells[7][4] = new King(this.player_1_color, 7, 4, this.cellSize);
+    this.cells[0][7] = new Rook(this.player_2_color, 0, 7, this.cellSize);
+    this.cells[7][0] = new Rook(this.player_1_color, 7, 0, this.cellSize);
+    this.cells[0][4] = new King(this.player_2_color, 0, 4, this.cellSize);
+    this.cells[7][7] = new Rook(this.player_1_color, 7, 7, this.cellSize);
+  }
+  // Init for test king move
   // init() {
-  //   this.cells[5][5] = new King(this.player_1_color, 5, 5, this.cellSize);
+  //   this.cells[4][6] = new King(this.player_1_color, 4, 6
+  //   , this.cellSize);
   //   this.cells[7][0] = new Rook(this.player_2_color, 7, 0, this.cellSize);
   //   this.cells[0][4] = new King(this.player_2_color, 0, 4, this.cellSize);
   //   this.cells[6][4] = new Queen(this.player_2_color, 6, 4, this.cellSize);
   //   this.cells[5][2] = new Bishop(this.player_2_color, 5, 2, this.cellSize);
-  //   this.cells[7][7] = new Rook(this.player_1_color, 7, 7, this.cellSize);
-  //   this.cells[4][3] = new Pawn(this.player_1_color, 4, 3, this.cellSize);
+  //   this.cells[7][5] = new Rook(this.player_1_color, 7, 5, this.cellSize);
+  //   this.cells[7][3] = new Pawn(this.player_1_color, 7, 3, this.cellSize);
   //   this.cells[6][3] = new Pawn(this.player_2_color, 6, 3, this.cellSize);
   // }
-  init() {
-    this.cells[0][0] = new Rook(this.player_2_color, 0, 0, this.cellSize);
-    this.cells[0][1] = new Knight(this.player_2_color, 0, 1, this.cellSize);
-    this.cells[0][2] = new Bishop(this.player_2_color, 0, 2, this.cellSize);
-    this.cells[0][3] = new Queen(this.player_2_color, 0, 3, this.cellSize);
-    this.cells[0][4] = new King(this.player_2_color, 0, 4, this.cellSize);
-    this.cells[0][5] = new Bishop(this.player_2_color, 0, 5, this.cellSize);
-    this.cells[0][6] = new Knight(this.player_2_color, 0, 6, this.cellSize);
-    this.cells[0][7] = new Rook(this.player_2_color, 0, 7, this.cellSize);
+  // init() {
+  //   this.cells[0][0] = new Rook(this.player_2_color, 0, 0, this.cellSize);
+  //   this.cells[0][1] = new Knight(this.player_2_color, 0, 1, this.cellSize);
+  //   this.cells[0][2] = new Bishop(this.player_2_color, 0, 2, this.cellSize);
+  //   this.cells[0][3] = new Queen(this.player_2_color, 0, 3, this.cellSize);
+  //   this.cells[0][4] = new King(this.player_2_color, 0, 4, this.cellSize);
+  //   this.cells[0][5] = new Bishop(this.player_2_color, 0, 5, this.cellSize);
+  //   this.cells[0][6] = new Knight(this.player_2_color, 0, 6, this.cellSize);
+  //   this.cells[0][7] = new Rook(this.player_2_color, 0, 7, this.cellSize);
+  //
+  //   for (let i = 0; i < 8; i++) {
+  //     this.cells[1][i] = new Pawn(this.player_2_color, 1, i, this.cellSize);
+  //   }
+  //
+  //   this.cells[7][0] = new Rook(this.player_1_color, 7, 0, this.cellSize);
+  //   this.cells[7][1] = new Knight(this.player_1_color, 7, 1, this.cellSize);
+  //   this.cells[7][2] = new Bishop(this.player_1_color, 7, 2, this.cellSize);
+  //   this.cells[7][3] = new Queen(this.player_1_color, 7, 3, this.cellSize);
+  //   this.cells[7][4] = new King(this.player_1_color, 7, 4, this.cellSize);
+  //   this.cells[7][5] = new Bishop(this.player_1_color, 7, 5, this.cellSize);
+  //   this.cells[7][6] = new Knight(this.player_1_color, 7, 6, this.cellSize);
+  //   this.cells[7][7] = new Rook(this.player_1_color, 7, 7, this.cellSize);
+  //
+  //   for (let i = 0; i < 8; i++) {
+  //     this.cells[6][i] = new Pawn(this.player_1_color, 6, i, this.cellSize);
+  //   }
+  // }
 
-    for (let i = 0; i < 8; i++) {
-      this.cells[1][i] = new Pawn(this.player_2_color, 1, i, this.cellSize);
+  isKingInCheck(color: string): boolean {
+    if (this.isCheckShah) {
+      return false;
     }
-
-    this.cells[7][0] = new Rook(this.player_1_color, 7, 0, this.cellSize);
-    this.cells[7][1] = new Knight(this.player_1_color, 7, 1, this.cellSize);
-    this.cells[7][2] = new Bishop(this.player_1_color, 7, 2, this.cellSize);
-    this.cells[7][3] = new Queen(this.player_1_color, 7, 3, this.cellSize);
-    this.cells[7][4] = new King(this.player_1_color, 7, 4, this.cellSize);
-    this.cells[7][5] = new Bishop(this.player_1_color, 7, 5, this.cellSize);
-    this.cells[7][6] = new Knight(this.player_1_color, 7, 6, this.cellSize);
-    this.cells[7][7] = new Rook(this.player_1_color, 7, 7, this.cellSize);
-
-    for (let i = 0; i < 8; i++) {
-      this.cells[6][i] = new Pawn(this.player_1_color, 6, i, this.cellSize);
-    }
-  }
-
-  isKingInCheck(color: string): { figureShah: Figure, figureKing: Figure } | boolean {
-    const figureKing = this.findKing(color);
-    const opponentFigures = this.getOpponentFigures(color);
-
-    if (!figureKing) {
+    const king = this.findKing(color);
+    if (!king) {
       return false;
     }
 
-    for (const opponentFigure of opponentFigures) {
-      const figureShah = opponentFigure;
-
-      if (figureShah && figureShah.color !== color && figureShah.isValidMove(figureKing.x, figureKing.y, this)) {
-        this.figureShah = figureShah;
-
-        return { figureShah: figureShah, figureKing: figureKing };
+    const opponentFigures = this.getOpponentFigures(color);
+    this.isCheckShah = true;
+    for (const figure of opponentFigures) {
+      if (figure.isValidMove(king.x, king.y, this)) {
+        this.isCheckShah = false;
+        return true
       }
     }
-
+    this.isCheckShah = false;
     return false;
   }
 
@@ -113,7 +124,7 @@ export class Board {
     let availableMoves: number = 0;
 
     for (const opponentFigure of opponentFigures) {
-      availableMoves += this.getAvailableMoves(opponentFigure).countMovesFigure;
+      availableMoves += this.getAvailableMoves(opponentFigure).availableMoves.length;
     }
 
     return availableMoves;
@@ -228,6 +239,7 @@ export class Board {
       }
 
       this.setFigure(x, y, newPiece);
+      this.checkShahAndCheckmate(newPiece.color);
     }
   }
 
@@ -259,29 +271,30 @@ export class Board {
   getAvailableMoves(figure: Figure): {
     availableMoves: {
       x : number, y:number
-    }[],
-    countMovesFigure: number,
+    }[]
   } {
     if (this.availableMovesCache.has(figure)) {
       const availableMoves = this.availableMovesCache.get(figure)!;
-      return {
-        availableMoves,
-        countMovesFigure: availableMoves.length,
-      };
+      return { availableMoves };
     }
     this.updateAvailableMovesCache(figure);
     const availableMoves = this.availableMovesCache.get(figure)!;
     return {
-      availableMoves,
-      countMovesFigure: availableMoves.length,
+      availableMoves
     };
   }
   updateAvailableMovesCache(figure: Figure) {
     const availableMoves: { x: number, y: number }[] = [];
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        if (figure.isValidMove(x, y, this) && this.getFigure(x, y)?.color !== figure.color) {
-          availableMoves.push({ x, y });
+        const figureOnCoordinate = this.getFigure(x, y);
+        if (figure.isValidMove(x, y, this)) {
+          if (figureOnCoordinate?.color !== figure.color) {
+            availableMoves.push({ x, y });
+          }
+          if (figure.isValidMove(x, y, this) && figure instanceof King && figureOnCoordinate instanceof Rook && figure.color === figureOnCoordinate.color) {
+            availableMoves.push({ x, y });
+          }
         }
       }
     }

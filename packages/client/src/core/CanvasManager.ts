@@ -111,6 +111,7 @@ export class CanvasManager {
         if (callBack) callBack(board);
         figure1.move(endX1, endY1, board);
         figure2.move(endX2, endY2, board);
+        board.clearAvailableMovesCache();
       }
     };
 

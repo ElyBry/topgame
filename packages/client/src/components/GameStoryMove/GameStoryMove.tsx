@@ -20,7 +20,7 @@ const GameStoryMove: React.FC<GameStoryMoveProps> = ({ moves }) => {
           ))
         ) : (
           <tr>
-            <td>Нет доступных ходов</td>
+            <td>Нет сделанных ходов</td>
           </tr>
         )}
         </tbody>

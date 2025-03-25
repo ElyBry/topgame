@@ -17,7 +17,6 @@ export class GameEngine {
   private currentPlayerIndex: number;
   private canvasManager: CanvasManager;
   private eventManager: EventManager;
-  private timers: Timer[];
   private notation: Notation;
   private isGameOver: boolean;
   private settings: Settings;
@@ -33,6 +32,7 @@ export class GameEngine {
   private changePlayer: (color: string) => void;
   private updateNotation: (moves: Move[]) => void;
   private updateEatedFigures: (eatedFigures: Figure[]) => void;
+  private timers: Timer[] = [];
 
   constructor(settings: Settings,
               canvas: HTMLCanvasElement,
@@ -51,9 +51,11 @@ export class GameEngine {
     this.currentPlayerIndex = 0;
     this.canvasManager = new CanvasManager(settings.getContext(), settings.getWidth(), settings.getHeight(), cellSize, colorWhiteHex, colorBlackHex, sounds);
     this.eventManager = new EventManager(this, canvas, cellSize);
-    const timerWhite = new Timer(settings.getMinutesPerParty());
-    const timerBlack = new Timer(settings.getMinutesPerParty());
-    this.timers = [timerWhite, timerBlack];
+    if (settings.getMinutesPerParty() !== 0) {
+      const timerWhite = new Timer(settings.getMinutesPerParty());
+      const timerBlack = new Timer(settings.getMinutesPerParty());
+      this.timers = [timerWhite, timerBlack];
+    }
     this.isGameOver = false;
     this.settings = settings;
     this.updateTimeWhite = whiteTimer;
@@ -67,7 +69,7 @@ export class GameEngine {
 
   start() {
     this.board.init();
-    this.timers[this.currentPlayerIndex].start();
+    this.timers[this.currentPlayerIndex]?.start();
     this.gameLoop();
   }
 
@@ -76,7 +78,7 @@ export class GameEngine {
 
     this.updateGameLogic();
     this.drawGame();
-    this.currentTimeUpdate(this.timers[this.currentPlayerIndex].getTime());
+    this.currentTimeUpdate(this.timers[this.currentPlayerIndex]?.getTime());
 
     requestAnimationFrame(() => this.gameLoop());
   }
@@ -93,7 +95,7 @@ export class GameEngine {
         this.checkGameOver();
       }
     }
-    if (this.timers[this.currentPlayerIndex].getTime() <= 0) {
+    if (this.timers[this.currentPlayerIndex]?.getTime() <= 0) {
       const loserColor = this.players[this.currentPlayerIndex].color;
       this.endGame(true, loserColor);
     }
@@ -107,12 +109,13 @@ export class GameEngine {
     this.isGameOver = true;
   }
   switchPlayer() {
-    this.timers[this.currentPlayerIndex].stop();
+    this.timers[this.currentPlayerIndex]?.addTime(this.settings.getCountSecondsPerMove());
+    this.timers[this.currentPlayerIndex]?.stop();
     this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
     this.players[this.currentPlayerIndex].isTurn = true;
     this.currentTimeUpdate = this.currentPlayerIndex === 0 ? this.updateTimeWhite : this.updateTimeBlack;
     this.changePlayer(this.players[this.currentPlayerIndex].color);
-    this.timers[this.currentPlayerIndex].start();
+    this.timers[this.currentPlayerIndex]?.start();
     this.board.onMoveMade();
     if (this.settings.getMinutesPerParty() > 0) {
       // this.getSounds().playClockTickSound();

@@ -19,19 +19,8 @@ export class King extends Figure {
   isValidMove(x: number, y: number, board: Board): boolean {
     const dx = Math.abs(x - this.x);
     const dy = Math.abs(y - this.y);
-
-    if (dx <= 1 && dy <= 1) {
-      const originalX = this.x;
-      const originalY = this.y;
-      this.x = x;
-      this.y = y;
-
-      const isUnderAttack = board.isUnderAttack(x, y, this.color);
-
-      this.x = originalX;
-      this.y = originalY;
-
-      return !isUnderAttack;
+    if (dx <= 1 && dy <= 1 && !(board.getFigure(x,y) instanceof Rook)) {
+      return this.checkShah(x, y, board);
     }
 
     if (!this.hasMoved && y === this.y) {

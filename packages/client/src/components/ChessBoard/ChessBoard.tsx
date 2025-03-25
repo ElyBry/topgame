@@ -18,13 +18,12 @@ import { selectUser } from '../../store/slice/userSlice'
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
   const { color: activeColor, time, addTimeMove } = settings
-
-  const secondsPerParty = time * 60 || 300
+  const secondsPerParty = time * 60
   const [titlePlayer1] = useState(
-    activeColor === COLORS.BLACK ? 'Таймер черных' : 'Таймер белых'
+    activeColor === COLORS.BLACK ? 'Чёрные' : 'Белые'
   )
   const [titlePlayer2] = useState(
-    activeColor === COLORS.BLACK ? 'Таймер белых' : 'Таймер черных'
+    activeColor === COLORS.BLACK ? 'Белые' : 'Чёрные'
   )
   const [canvasSize, setCanvasSize] = useState({
     width: window.innerWidth - window.innerWidth * 0.05,
@@ -48,7 +47,7 @@ const ChessBoard = () => {
     const settings = new SettingsClassic(ctx)
     settings.initialize()
     settings.setDebugMode(true)
-    settings.setWithTime(true)
+    settings.setWithTime(time !== 0)
     settings.setMinutesPerParty(secondsPerParty)
     settings.setCountSecondsPerMove(addTimeMove)
     const whiteColor = '#F0D9B5'
@@ -81,7 +80,11 @@ const ChessBoard = () => {
   return (
     <div>
       <h1>{titlePlayer2}</h1>
-      <GameTimer initialSeconds={blackTime} active={color === 'black'} />
+      {
+        time !== 0 && (
+          <GameTimer initialSeconds={blackTime} active={color === 'black'} />
+        )
+      }
       <GameEatedFigures
         eatenPieces={eatedFigures.filter(figure => figure.color === 'white')}
       />
@@ -90,11 +93,16 @@ const ChessBoard = () => {
         style={{ userSelect: 'none' }}
         width={canvasSize.width}
         height={canvasSize.height}></canvas>
+      <h1>{titlePlayer1}</h1>
+      {
+        time !== 0 && (
+          <GameTimer initialSeconds={whiteTime} active={color === 'white'} />
+        )
+      }
       <GameEatedFigures
         eatenPieces={eatedFigures.filter(figure => figure.color === 'black')}
       />
-      <h1>{titlePlayer1}</h1>
-      <GameTimer initialSeconds={whiteTime} active={color === 'white'} />
+
       <h1>История</h1>
       <GameStoryMove moves={notation} />
     </div>

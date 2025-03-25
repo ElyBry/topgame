@@ -24,7 +24,11 @@ export class Timer {
       this.seconds--;
     }
   }
-
+  addTime(timeToAdd: number): void {
+    const totalSeconds = this.getTime() + timeToAdd;
+    this.minutes = Math.floor(totalSeconds / 60);
+    this.seconds = totalSeconds % 60;
+  }
   stop() {
     if (this.interval) {
       clearInterval(this.interval);
