@@ -24,7 +24,6 @@ export abstract class Figure {
     this.x = x;
     this.y = y;
     board.setFigure(x, y, this);
-    board.checkShahAndCheckmate(this.color);
   }
 
   checkShah(x: number, y: number, board: Board): boolean {

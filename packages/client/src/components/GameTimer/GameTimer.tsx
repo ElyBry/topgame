@@ -19,7 +19,7 @@ const GameTimer:React.FC<GameTimerProps> = ({ initialSeconds, active}) => {
   }, [active]);
 
   const formatTime = (seconds: number) => {
-    const minutes = Math.floor((seconds / 60) % 60);
+    const minutes = Math.floor(seconds / 60);
     const lastSeconds = seconds % 60;
     return `${minutes.toString().padStart(2, "0")}:${lastSeconds.toString().padStart(2, "0")}`;
   }

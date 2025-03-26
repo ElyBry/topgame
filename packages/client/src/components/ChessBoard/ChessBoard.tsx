@@ -14,6 +14,7 @@ import { ROUTES } from '../../utils/routes'
 import { leaderboardNewLeaderRequest } from '../../api/leaderboard/leaderboardApi'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../store/slice/userSlice'
+import styles from "./chessBoard.module.css";
 
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
@@ -26,8 +27,8 @@ const ChessBoard = () => {
     activeColor === COLORS.BLACK ? 'Белые' : 'Чёрные'
   )
   const [canvasSize, setCanvasSize] = useState({
-    width: window.innerWidth - window.innerWidth * 0.05,
-    height: window.innerHeight - window.innerHeight * 0.05,
+    width: window.innerWidth - window.innerWidth * 0.20,
+    height: window.innerHeight - window.innerHeight * 0.20,
   })
   const gameEngineRef = useRef<GameEngine | null>(null)
   const [whiteTime, setWhiteTime] = useState(secondsPerParty)
@@ -46,7 +47,6 @@ const ChessBoard = () => {
 
     const settings = new SettingsClassic(ctx)
     settings.initialize()
-    settings.setDebugMode(true)
     settings.setWithTime(time !== 0)
     settings.setMinutesPerParty(secondsPerParty)
     settings.setCountSecondsPerMove(addTimeMove)
@@ -78,33 +78,45 @@ const ChessBoard = () => {
   }, [canvasSize, winner, navigate])
 
   return (
-    <div>
-      <h1>{titlePlayer2}</h1>
-      {
-        time !== 0 && (
-          <GameTimer initialSeconds={blackTime} active={color === 'black'} />
-        )
-      }
-      <GameEatedFigures
-        eatenPieces={eatedFigures.filter(figure => figure.color === 'white')}
-      />
-      <canvas
-        id={'chessCanvas'}
-        style={{ userSelect: 'none' }}
-        width={canvasSize.width}
-        height={canvasSize.height}></canvas>
-      <h1>{titlePlayer1}</h1>
-      {
-        time !== 0 && (
-          <GameTimer initialSeconds={whiteTime} active={color === 'white'} />
-        )
-      }
-      <GameEatedFigures
-        eatenPieces={eatedFigures.filter(figure => figure.color === 'black')}
-      />
+    <div className={styles.container}>
+      <div className={styles.gameArea}>
+        <div className={styles.playerArea}>
+          <div className={styles.playerInfo}>
+            <h3 className={styles.playerTitle}>{titlePlayer2}</h3>
+            {time !== 0 && (
+              <GameTimer initialSeconds={blackTime} active={color === 'black'} />
+            )}
+          </div>
+          <GameEatedFigures
+            eatenPieces={eatedFigures.filter(figure => figure.color === 'white')}
+          />
+        </div>
 
-      <h1>История</h1>
-      <GameStoryMove moves={notation} />
+        <div className={styles.boardContainer}>
+          <canvas
+            id="chessCanvas"
+            className={styles.chessCanvas}
+            width={canvasSize.height}
+            height={canvasSize.height}
+          />
+        </div>
+
+        <div className={styles.playerArea}>
+          <div className={styles.playerInfo}>
+            <h3 className={styles.playerTitle}>{titlePlayer1}</h3>
+            {time !== 0 && (
+              <GameTimer initialSeconds={whiteTime} active={color === 'white'} />
+            )}
+          </div>
+          <GameEatedFigures
+            eatenPieces={eatedFigures.filter(figure => figure.color === 'black')}
+          />
+        </div>
+      </div>
+
+      <div className={styles.historyContainer}>
+        <GameStoryMove moves={notation} />
+      </div>
     </div>
   )
 }

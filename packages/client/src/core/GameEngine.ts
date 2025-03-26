@@ -49,7 +49,7 @@ export class GameEngine {
     this.board = new Board(settings.getWidth(), settings.getHeight(), cellSize, sounds);
     this.players = [new Player(this.player_1, this.player_1_color), new Player(this.player_2, this.player_2_color)];
     this.currentPlayerIndex = 0;
-    this.canvasManager = new CanvasManager(settings.getContext(), settings.getWidth(), settings.getHeight(), cellSize, colorWhiteHex, colorBlackHex, sounds);
+    this.canvasManager = new CanvasManager(settings.getContext(), settings.getWidth(), settings.getHeight(), cellSize, colorWhiteHex, colorBlackHex);
     this.eventManager = new EventManager(this, canvas, cellSize);
     if (settings.getMinutesPerParty() !== 0) {
       const timerWhite = new Timer(settings.getMinutesPerParty());
@@ -90,9 +90,11 @@ export class GameEngine {
       if (isMove) {
         currentPlayer.endTurn();
         this.updateNotation(this.notation.getHistory());
-        this.updateEatedFigures(this.board.getCapturedFigures());
         this.switchPlayer();
         this.checkGameOver();
+        setTimeout(() => {
+          this.checkShahAndCheckmate(currentPlayer.color);
+        }, 1000)
       }
     }
     if (this.timers[this.currentPlayerIndex]?.getTime() <= 0) {
@@ -102,14 +104,33 @@ export class GameEngine {
   }
   endGame(lose: boolean, whoLose?: string) {
     if (lose && whoLose) {
-      const winner = whoLose === this.player_1_color ? this.player_2_color : this.player_1_color
+      const winner = whoLose === this.player_1_color ? this.player_2_color : this.player_1_color;
       store.dispatch(setWinnerColor(winner));
       this.getSounds().playLoseSound();
+    } else if (!lose) {
+      store.dispatch(setWinnerColor('draw'));
     }
     this.isGameOver = true;
   }
+
+  checkShahAndCheckmate(color: string) {
+    const opponentColor = color === 'white' ? 'black' : 'white';
+    if (this.board.isKingInCheck(opponentColor)) {
+      if (!this.board.checkCheckmateAndStalemate(color)) {
+        this.endGame(true, opponentColor);
+      } else {
+        this.getSounds().playCheckSound();
+      }
+    } else {
+      if (!this.board.checkCheckmateAndStalemate(color)) {
+        this.endGame(false);
+      }
+    }
+  }
+
   switchPlayer() {
-    this.timers[this.currentPlayerIndex]?.addTime(this.settings.getCountSecondsPerMove());
+    this.timers[this.currentPlayerIndex]?.addSeconds(this.settings.getCountSecondsPerMove());
+    this.currentTimeUpdate(this.timers[this.currentPlayerIndex]?.getTime());
     this.timers[this.currentPlayerIndex]?.stop();
     this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
     this.players[this.currentPlayerIndex].isTurn = true;
@@ -117,6 +138,7 @@ export class GameEngine {
     this.changePlayer(this.players[this.currentPlayerIndex].color);
     this.timers[this.currentPlayerIndex]?.start();
     this.board.onMoveMade();
+    this.updateEatedFigures(this.board.getCapturedFigures());
     if (this.settings.getMinutesPerParty() > 0) {
       // this.getSounds().playClockTickSound();
     }

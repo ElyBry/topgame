@@ -1,6 +1,5 @@
 import {Board} from "./Board";
 import {Figure} from "./Figure";
-import {Sound} from "./Sound";
 
 export class CanvasManager {
   private ctx: CanvasRenderingContext2D;
@@ -9,16 +8,14 @@ export class CanvasManager {
   private height: number;
   private white: string;
   private black: string;
-  private sounds: Sound;
 
-  constructor(ctx: CanvasRenderingContext2D, width: number, height: number, cellSize: number, colorWhiteHex: string, colorBlackHex: string, sounds: Sound) {
+  constructor(ctx: CanvasRenderingContext2D, width: number, height: number, cellSize: number, colorWhiteHex: string, colorBlackHex: string) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
     this.white = colorWhiteHex;
     this.black = colorBlackHex;
-    this.sounds = sounds;
   }
 
   clear() {
