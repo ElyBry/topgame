@@ -23,11 +23,10 @@ async function createServer() {
         app.use(vite.middlewares);
     }
     else {
-        app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
+        app.use(express.static(path.join(clientPath, 'public'), { index: false }));
     }
     app.get('*', async (req, res, next) => {
         const url = req.originalUrl;
-        console.log(url);
         try {
             let render;
             let template;
