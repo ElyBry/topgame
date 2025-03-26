@@ -1,8 +1,13 @@
-import { ReactNode, useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { selectUser, useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchUser } from '../../../store/slice/userSlice'
+import { Outlet } from 'react-router-dom';
+import { PageInitArgs } from '../../../utils/router'
+import { usePage } from '../../../hooks/usePage'
+import { useEffect } from 'react'
 
-export const AppLayout = ({ children }: { children: ReactNode }) => {
+export const AppLayout = () => {
+  usePage({ initPage: initPages })
+
   const { status } = useAppSelector(state => state.userSlice)
 
   const dispatch = useAppDispatch()
@@ -15,5 +20,11 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
     return <div>Loading...</div>
   }
 
-  return <>{children}</>
+  return <Outlet />
+}
+
+export const initPages = async ({ dispatch, state }: PageInitArgs) => {
+  if (!selectUser(state).user) {
+    return dispatch(fetchUser())
+  }
 }
