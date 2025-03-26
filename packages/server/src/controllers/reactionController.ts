@@ -36,6 +36,22 @@ export const addReaction = async (req: any, res: any) => {
   }
 }
 
+export const deleteReaction = async (req: any, res: any) => {
+  try {
+    const { id } = req.body
+    await Reaction.destroy({
+      where: {
+        id
+      },
+    })
+
+    res.send('success')
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Unexpected error occurred on server!')
+  }
+}
+
 export const getReactions = async (req: any, res: any) => {
   try {
     const { topicId } = req.params

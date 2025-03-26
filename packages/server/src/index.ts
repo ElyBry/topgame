@@ -8,6 +8,8 @@ import reactionRouter from './routes/reactionRouter'
 dotenv.config()
 
 const app = express()
+app.use(express.json());
+
 app.use(cors())
 const port = Number(process.env.SERVER_PORT) || 3001
 

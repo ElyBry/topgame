@@ -18,7 +18,8 @@
     "type-check": "lerna run type-check",
     "pre-commit": "lerna run type-check && lerna run lint",
     "prepare": "lerna run prepare && husky install",
-    "migrate": "lerna run db:migrate --scope=server"
+    "migrate": "lerna run db:migrate --scope=server",
+    "seed": "lerna run db:seed --scope=server"
   },
   "husky": {
     "hooks": {

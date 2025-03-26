@@ -13,7 +13,8 @@
     "test": "jest .",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
-    "db:migrate": "sequelize db:migrate"
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed"
   },
   "dependencies": {
     "@babel/core": "^7.26.9",
