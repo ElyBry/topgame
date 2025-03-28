@@ -14,6 +14,7 @@ import Modal from "../../../components/Modal/Modal";
 import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
 import {APIError} from "../../../api/types";
+import ThemeSwitcher from "../../../components/ThemeSwitcher/ThemeSwitcher";
 
 export const ProfilePage = () => {
 
@@ -134,6 +135,7 @@ export const ProfilePage = () => {
   return (
     <>
       <PageWrapper layout="alternative" showNav={true} lightColor={true}>
+        <ThemeSwitcher />
         <div className={stylesPage.profile_fixed}>
           <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
           <NameProfile name={userData.login} />

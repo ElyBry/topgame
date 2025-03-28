@@ -11,13 +11,17 @@
   display: block;
   padding: 10px 16px;
   background: var(--nav-bg);
-  color: var(--text-color);
+  color: var(--nav-color);
   border-radius: 5px;
+}
+
+.nav_link:hover {
+  color: var(--nav-hover-color);
 }
 
 .active {
   background: var(--nav-active-bg);
-  color: var(--btn-color);
+  color: var(--nav-active-color);
 }
 
 .active:hover {

@@ -9,6 +9,8 @@ import topicRouter from './routes/topicRouter'
 dotenv.config()
 
 const app = express()
+app.use(express.json());
+
 app.use(cors())
 app.use(express.json())
 const port = Number(process.env.SERVER_PORT) || 3001

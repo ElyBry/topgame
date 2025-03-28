@@ -8,8 +8,10 @@ interface WrapperBgColorProps {
 const WrapperBgColor: React.FC<WrapperBgColorProps> = ({ children, title }) => {
   return (
     <div className={styles.wrapper_color}>
-      <h1 className={styles.wrapper_title}>{title}</h1>
-      {children}
+      <div className={styles.wrapper_inner}>
+        <h1 className={styles.wrapper_title}>{title}</h1>
+        {children}
+      </div>
     </div>
   );
 };

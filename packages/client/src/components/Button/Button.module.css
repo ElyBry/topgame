@@ -15,7 +15,7 @@
 
 .button:disabled {
 	cursor: not-allowed;
-	opacity: 0.3;
+	opacity: 0.5;
 }
 
 .button:hover {
@@ -32,10 +32,6 @@
 
 .button + .button {
   margin-top: 14px;
-}
-
-.button:disabled {
-  background: var(--btn-ele-bg-disabled);
 }
 
 .button_link {

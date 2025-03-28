@@ -11,9 +11,9 @@
   width: 100px;
   cursor: pointer;
   text-align: center;
-  padding: 7px 20px;
-  background: #e3e3e3;
-  border: 1px solid #d0d0dc;
+  padding: 10px;
+  background: var(--switch-bg);
+  border: 1px solid var(--switch-border);
   transition: .3s;
 }
 
@@ -31,9 +31,9 @@
 }
 
 .switch_item_active {
-  color: var(--btn-ele-bg-hover);
+  color: var(--link-color);
   background: #0c71b01a;
-  border-color: var(--btn-ele-bg-hover);
+  border-color: var(--link-color);
 }
 
 .switch_item_img {

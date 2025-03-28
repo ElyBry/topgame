@@ -1,0 +1,78 @@
+/* Основные стили для контейнера */
+.theme-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  height: 52px;
+  background: var(--theme-bg);
+  border-radius: 50px;
+  padding: 5px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.switch .sun,
+.switch .moon {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  transition: opacity 0.3s ease;
+}
+
+.switch .sun {
+  left: 10px;
+}
+
+.switch .moon {
+  right: 10px;
+  opacity: 0.5;
+  transform: rotate(-90deg);
+}
+
+.switch .sun svg,
+.switch .moon svg {
+    fill: var(--theme-fill);
+}
+
+.switch:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 42px;
+  height: 42px;
+  background: var(--theme-active-bg);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.theme-switch input:checked + .switch::before {
+  transform: translateX(68px);
+}
+
+.theme-switch input:checked + .switch .sun {
+  opacity: 0.5;
+}
+
+.theme-switch input:checked + .switch .sun svg {
+  fill: var(--theme-fill-noactive);
+}
+
+.theme-switch input:checked + .switch .moon {
+  opacity: 1;
+}
