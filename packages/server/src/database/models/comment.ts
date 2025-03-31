@@ -1,29 +1,37 @@
 import { DataType, Model } from 'sequelize-typescript'
 import { ModelAttributes } from 'sequelize/types'
 
-export interface ITopic {
+export interface IComment {
   id: number
-  name: string
-  text: string
+  topicId: number
+  parentCommentId: number | null
   author: string
+  text: string
   createdAt: Date
   updatedAt: Date
 }
 
-export const topicModel: ModelAttributes<Model, ITopic> = {
+export const commentModel: ModelAttributes<Model, IComment> = {
   id: {
     type: DataType.INTEGER,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false,
   },
-  name: {
+  topicId: {
+    type: DataType.INTEGER,
+    references: {
+      model: 'topics',
+      key: 'id',
+    },
+  },
+  text: {
     type: DataType.STRING(255),
     allowNull: false,
   },
-  text: {
-    type: DataType.STRING,
-    allowNull: false,
+  parentCommentId: {
+    type: DataType.INTEGER,
+    allowNull: true,
   },
   author: {
     type: DataType.STRING(255),

@@ -5,6 +5,7 @@ import { dbConnect } from './db'
 
 import reactionRouter from './routes/reactionRouter'
 import themeRouter from './routes/themeRouter';
+import topicRouter from './routes/topicRouter'
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ const port = Number(process.env.SERVER_PORT) || 3001
 
 dbConnect()
 
+app.use('/topics/', topicRouter)
 app.use('/topics/:topicId/', reactionRouter)
 app.use('/api', themeRouter);
 
