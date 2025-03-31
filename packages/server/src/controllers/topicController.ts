@@ -7,16 +7,16 @@ export const TopicComments = sequelize.define('comments', commentModel)
 
 Topics.hasMany(TopicComments, {
   foreignKey: 'topicId',
-  as: 'comments',
+  as: 'comment',
 })
 TopicComments.belongsTo(Topics, {
   foreignKey: 'topicId',
-  as: 'topics',
+  as: 'topic',
 })
 
 export const getTopics = async (_req: any, res: any) => {
   try {
-    const topics = await Topics.findAll({ order: [['createdAt', 'DESC']], })
+    const topics = await Topics.findAll({ order: [['createdAt', 'DESC']] })
 
     res.send(topics)
   } catch (err) {
@@ -27,8 +27,8 @@ export const getTopics = async (_req: any, res: any) => {
 
 export const addTopic = async (req: any, res: any) => {
   try {
-    const { name, text, author, createdAt } = req.body
-    const topic = await Topics.create({ name, text, author, createdAt })
+    const { name, text, author } = req.body
+    const topic = await Topics.create({ name, text, author })
 
     res.send(topic)
   } catch (err) {
@@ -44,15 +44,15 @@ export const getCommentsByTopicId = async (req: any, res: any) => {
       order: [['createdAt', 'ASC']],
     })
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send(err)
   }
 }
 
 export const getTopicId = async (req: any, res: any) => {
   try {
-    const commentsTopic = await getCommentsByTopicId(req, res);
+    const commentsTopic = await getCommentsByTopicId(req, res)
     const topic = await Topics.findByPk(req.params.id)
-    const result = {topic, commentsTopic};
+    const result = { topic, commentsTopic }
 
     res.status(200).send(result)
   } catch (err) {
@@ -72,7 +72,7 @@ export const createComment = async (req: any, res: any) => {
       author,
       parentCommentId: parentCommentId || null,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     })
 
     res.send(comment)
