@@ -1,5 +1,10 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { User } from './database/models/UserModel'
+import { SiteTheme } from './database/models/SiteTheme'
+import { UserTheme } from './database/models/UserTheme'
+
 const isDev = process.env.NODE_ENV === 'development'
+
 const {
   POSTGRES_HOST,
   POSTGRES_HOST_DEV,
@@ -20,13 +25,17 @@ export const sequelizeOptions: SequelizeOptions = {
   define: {
     timestamps: false,
   },
+  logging: true,
 }
-export const sequelize = new Sequelize(sequelizeOptions)
+
+export const sequelize = new Sequelize(sequelizeOptions);
+
+sequelize.addModels([User, UserTheme, SiteTheme]);
 
 export async function dbConnect() {
   try {
     await sequelize.authenticate()
-    await sequelize.sync({ force: false })
+    await sequelize.sync()
     console.log('Connection has been established successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)

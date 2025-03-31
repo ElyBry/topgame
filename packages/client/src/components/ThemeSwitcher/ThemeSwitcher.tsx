@@ -1,17 +1,39 @@
 import { useState, useEffect, useId } from "react";
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../store/slice/userSlice'
+import { switchTheme, loadUserTheme } from '../../utils/themeUtils';
 import styles from "./ThemeSwitcher.module.css";
 
 const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
-  const switchInputId = useId(); // Генерируем уникальный id
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
+
+  const userState = useSelector(selectUser);
+
+  const switchInputId = useId();
+
+  useEffect(() => {
+    loadUserTheme(userState).then(theme => {
+      setTheme(theme);
+    });
+  }, []);
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    const newTheme = theme === "light" ? "dark" : "light";
+
+    setTheme(newTheme);
+    
+    switchTheme(newTheme, userState);
   };
 
   return (
@@ -23,7 +45,6 @@ const ThemeSwitcher = () => {
         onChange={toggleTheme}
         className={styles.hiddenInput}
         role="switch"
-        aria-checked={theme === "dark"}
         aria-label="Переключатель темы"
       />
       <label htmlFor={switchInputId} className={styles.switch}>
