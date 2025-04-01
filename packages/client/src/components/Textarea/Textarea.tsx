@@ -1,16 +1,27 @@
-import styles from "./Textarea.module.css";
-import { useState } from 'react';
+import styles from './Textarea.module.css'
 
 interface TextareaProps {
-  name: string;
-  placeholder?: string;
-  modelValue?: string;
+  name: string
+  placeholder?: string
+  modelValue?: string
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
-const Textarea: React.FC<TextareaProps> = ({ name, placeholder, modelValue }) => {
-  const [value, setValue] = useState(modelValue || '');
+const Textarea: React.FC<TextareaProps> = ({
+  name,
+  placeholder,
+  modelValue,
+  onChange,
+}) => {
+  return (
+    <textarea
+      className={styles.textarea}
+      name={name}
+      placeholder={placeholder}
+      value={modelValue}
+      onChange={onChange}
+    />
+  )
+}
 
-  return <textarea className={styles.textarea} name={name} placeholder={placeholder} value={value} onChange={(event) => setValue(event.target.value)}/>;
-};
-
-export default Textarea;
+export default Textarea

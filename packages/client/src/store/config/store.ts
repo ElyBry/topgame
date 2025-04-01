@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useStore as useStoreBase } from 'react-redux'
 import userSlice from '../slice/userSlice'
 import gameSlice from '../slice/gameSlice'
+import topicsSlice from '../slice/topicsSlice'
 import ssrReducer from '../slice/ssrSlice'
 
 declare global {
@@ -15,11 +16,13 @@ export const reducer = combineReducers({
   userSlice,
   gameSlice,
   ssr: ssrReducer,
+  topicsSlice,
 })
 
 export const store = configureStore({
   reducer,
-  preloadedState: typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
+  preloadedState:
+    typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
 })
 
 export type RootState = ReturnType<typeof reducer>

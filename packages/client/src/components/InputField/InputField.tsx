@@ -13,6 +13,8 @@ interface InputFieldProps
   error?: boolean
   message?: string
   placeholder: string
+  modelValue?: string
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const InputField: FC<InputFieldProps> = ({
@@ -21,12 +23,21 @@ const InputField: FC<InputFieldProps> = ({
   error,
   message,
   placeholder,
+  onChange,
+  modelValue,
   ...rest
 }) => {
   return (
     <div className={styles.fieldset}>
       <label className={styles.input_wrapper}>
-        <Input {...rest} type={type} name={name} placeholder={placeholder} />
+        <Input
+          {...rest}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          modelValue={modelValue}
+          onChange={onChange}
+        />
       </label>
 
       {/* Отображаем ошибку, если она есть */}

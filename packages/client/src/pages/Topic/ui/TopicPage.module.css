@@ -23,7 +23,7 @@
 }
 
 .topic_view_block_date {
-  color: var(--text-color-secondary)
+  color: var(--text-color-secondary);
 }
 
 .topic_view_block_content {
@@ -40,7 +40,6 @@
 
 .topic_view_block_comments_list {
   border-top: 1px solid var(--border-color);
-  padding: 0 20px;
 }
 
 .topic_view_block_comments_list li:not(:first-child) {
@@ -60,4 +59,15 @@
 .topic_view_block_button {
   width: 250px;
   margin: 16px 0 0 auto;
+}
+
+.button_logout {
+  background: var(--logout-btn-bg);
+  color: var(--btn-color);
+  margin-left: 30px;
+}
+
+.button_logout:hover {
+  background: var(--logout-btn-bg-hover);
+  color: var(--btn-color);
 }

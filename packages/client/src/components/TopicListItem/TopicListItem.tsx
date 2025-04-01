@@ -1,37 +1,33 @@
-import styles from "./TopicListItem.module.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment } from '@fortawesome/free-regular-svg-icons'
+import { formatDate, getTime } from '../../utils/lib/formatDate'
+import styles from './TopicListItem.module.css'
 
 interface TopicListItemProps {
-  author: string;
-  avatar: string | null;
-  title: string;
-  text: string;
-  commentsCount: number;
-  date: string;
+  name: string
+  text: string
+  author: string
+  createdAt: string
 }
 
-const TopicListItem: React.FC<TopicListItemProps> = ({ author, avatar, title, text, commentsCount, date }) => {
-
+const TopicListItem: React.FC<TopicListItemProps> = ({
+  name,
+  text,
+  author,
+  createdAt,
+}) => {
   return (
     <div className={styles.topic_block}>
-      <div className={styles.topic_block_avatar}>
-        {avatar && <img src={avatar} alt="avatar-image" />}
-      </div>
       <div className={styles.topic_block_content}>
         <p className={styles.topic_block_author}>{author}</p>
-        <p className={styles.topic_block_label}>{title}</p>
+        <p className={styles.topic_block_label}>{name}</p>
         <p className={styles.topic_block_text}>{text}</p>
         <div className={styles.topic_block_bottom}>
-          <span className={styles.topic_block_count}>
-            <FontAwesomeIcon icon={faComment} />
-            {commentsCount}
+          <span className={styles.topic_block_date}>
+            {formatDate(createdAt)} {getTime(createdAt)}
           </span>
-          <span className={styles.topic_block_date}>{date}</span>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TopicListItem;
+export default TopicListItem

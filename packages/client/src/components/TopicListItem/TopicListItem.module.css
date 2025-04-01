@@ -1,4 +1,5 @@
 .topic_block {
+  width: 100%;
   padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -22,14 +23,21 @@
 }
 
 .topic_block_content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
+.topic_block_author {
+  font-style: italic;
+  margin-bottom: 3px;
+}
 
 .topic_block_label {
   font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 
 .topic_block_text {
@@ -38,12 +46,12 @@
 }
 
 .topic_block_bottom {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  color: var(--text-color-secondary)
+  justify-content: flex-end;
+  color: var(--text-color-secondary);
 }
 
-.topic_block_count svg{
+.topic_block_count svg {
   margin-right: 4px;
 }

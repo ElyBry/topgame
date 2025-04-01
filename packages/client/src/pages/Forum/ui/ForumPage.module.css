@@ -25,3 +25,13 @@
   flex-direction: column;
   gap: 4px;
 }
+
+.forum_empty {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 100px 0;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--text-secondary-color);
+}
