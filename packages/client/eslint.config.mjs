@@ -22,7 +22,7 @@ export default tseslint.config(
       'no-unsafe-optional-chaining': 'off',
       'no-debugger': 'warn',
       'no-useless-constructor': 'warn',
-      'react/prop-types': 'warn',
+      'react/prop-types': 'off',
       'prefer-const': 'warn',
       '@typescript-eslint/no-console': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',

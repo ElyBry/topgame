@@ -23,7 +23,7 @@ export const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
   repositoryMode: true,
   define: {
-    timestamps: false,
+    timestamps: true,
   },
   logging: true,
 }
