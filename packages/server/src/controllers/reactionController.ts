@@ -21,6 +21,7 @@ Reaction.belongsTo(User, {
 })
 
 export const addReaction = async (req: any, res: any) => {
+  console.log(req.body);
   try {
     const { userId, topicId, type } = req.body
     const reactions = await Reaction.create({

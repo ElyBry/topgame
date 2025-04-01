@@ -15,11 +15,13 @@ export class Board {
   private storeSettings = store.getState().gameSlice.settings;
   private player_1_color = this.storeSettings.color;
   private player_2_color = this.storeSettings.opponentColor
+  private availableMovesCache: Map<Figure, {x : number, y: number}[]> = new Map();
   countMovesAfterShah: number;
   figureShah: Figure | boolean;
   cells: (Figure | null)[][];
   width: number;
   height: number;
+  private isCheckShah = false;
 
   constructor(width: number, height: number, cellSize: number, sounds: Sound) {
     this.width = width;
@@ -59,24 +61,24 @@ export class Board {
     }
   }
 
-  isKingInCheck(color: string): { figureShah: Figure, figureKing: Figure } | boolean {
-    const figureKing = this.findKing(color);
-    const opponentFigures = this.getOpponentFigures(color);
-
-    if (!figureKing) {
+  isKingInCheck(color: string): boolean {
+    if (this.isCheckShah) {
+      return false;
+    }
+    const king = this.findKing(color);
+    if (!king) {
       return false;
     }
 
-    for (const opponentFigure of opponentFigures) {
-      const figureShah = opponentFigure;
-
-      if (figureShah && figureShah.color !== color && figureShah.isValidMove(figureKing.x, figureKing.y, this)) {
-        this.figureShah = figureShah;
-
-        return { figureShah: figureShah, figureKing: figureKing };
+    const opponentFigures = this.getOpponentFigures(color);
+    this.isCheckShah = true;
+    for (const figure of opponentFigures) {
+      if (figure.isValidMove(king.x, king.y, this)) {
+        this.isCheckShah = false;
+        return true
       }
     }
-
+    this.isCheckShah = false;
     return false;
   }
 
@@ -101,24 +103,10 @@ export class Board {
     let availableMoves: number = 0;
 
     for (const opponentFigure of opponentFigures) {
-      availableMoves += this.getAvailableMoves(opponentFigure).countMovesFigure;
+      availableMoves += this.getAvailableMoves(opponentFigure).availableMoves.length;
     }
 
     return availableMoves;
-  }
-
-  checkShahAndCheckmate(color: string) {
-    if (this.isKingInCheck(color === 'white' ? 'black' : 'white')) {
-      if (!this.checkCheckmateAndStalemate(color)) {
-        alert(`Шах и мат. Победа ${color === 'white' ? 'белых' : 'чёрных'}!`);
-      } else {
-        alert(`Шах ${color === 'white' ? 'чёрным' : 'белым'}!`);
-      }
-    } else {
-      if (!this.checkCheckmateAndStalemate(color)) {
-        alert(`Ничья!`);
-      }
-    }
   }
 
   getFigure(x: number, y: number): Figure | null {
@@ -216,6 +204,7 @@ export class Board {
       }
 
       this.setFigure(x, y, newPiece);
+      this.clearAvailableMovesCache();
     }
   }
 
@@ -230,8 +219,8 @@ export class Board {
     for (let i = 1; i < steps; i++) {
       const checkX = startX + i * stepX;
       const checkY = startY + i * stepY;
-
-      if (this.getFigure(checkX, checkY) !== null) {
+      const figure = this.getFigure(checkX, checkY);
+      if (figure !== null && figure.x == checkX && figure.y == checkY ) {
         return false;
       }
     }
@@ -247,21 +236,39 @@ export class Board {
   getAvailableMoves(figure: Figure): {
     availableMoves: {
       x : number, y:number
-    }[],
-    countMovesFigure: number,
+    }[]
   } {
-    const availableMoves: {x : number, y:number}[] = [];
-    let countMovesFigure: number = 0;
-
+    if (this.availableMovesCache.has(figure)) {
+      const availableMoves = this.availableMovesCache.get(figure)!;
+      return { availableMoves };
+    }
+    this.updateAvailableMovesCache(figure);
+    const availableMoves = this.availableMovesCache.get(figure)!;
+    return {
+      availableMoves
+    };
+  }
+  updateAvailableMovesCache(figure: Figure) {
+    const availableMoves: { x: number, y: number }[] = [];
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        if (figure.isValidMove(x, y, this) && this.getFigure(x, y)?.color !== figure.color) {
-          availableMoves.push({x, y});
-          countMovesFigure++;
+        const figureOnCoordinate = this.getFigure(x, y);
+        if (figure.isValidMove(x, y, this)) {
+          if (figureOnCoordinate?.color !== figure.color) {
+            availableMoves.push({ x, y });
+          }
+          if (figure.isValidMove(x, y, this) && figure instanceof King && figureOnCoordinate instanceof Rook && figure.color === figureOnCoordinate.color) {
+            availableMoves.push({ x, y });
+          }
         }
       }
     }
-
-    return {availableMoves, countMovesFigure};
+    this.availableMovesCache.set(figure, availableMoves);
+  }
+  clearAvailableMovesCache() {
+    this.availableMovesCache.clear();
+  }
+  onMoveMade() {
+    this.clearAvailableMovesCache();
   }
 }

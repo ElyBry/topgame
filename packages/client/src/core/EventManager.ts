@@ -101,7 +101,6 @@ export class EventManager {
         }
         this.lastMove = move;
         this.gameEngine.getNotation().addMove(move);
-        console.log(this.gameEngine.getBoard().checkShahAndCheckmate(this.selectedFigure.color));
         this.moveIs = true;
         this.gameEngine.updateGameLogic();
       }
@@ -111,11 +110,8 @@ export class EventManager {
       const availableMoves = this.gameEngine.getBoard().getAvailableMoves(figure).availableMoves;
       this.gameEngine.getCanvasManager().drawPossibleMoves(availableMoves);
     } else if (figure !== null && figure !== undefined && figure?.color !== this.gameEngine.getCurrentPlayer().color) {
-      // Здесь должно быть отображение уведомления для игрока, что сейчас не его ход и это не его фигура
-      console.log(`Сейчас не ваш ход`);
       this.gameEngine.getSounds().playCancelMoveSound();
     }
-    // console.log(`Selected figure ${this.selectedFigure?.constructor.name}`);
   }
 
   getSelectedFigure() {
