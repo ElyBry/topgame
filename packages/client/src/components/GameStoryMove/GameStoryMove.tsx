@@ -9,7 +9,6 @@ interface GameStoryMoveProps {
 const GameStoryMove: React.FC<GameStoryMoveProps> = ({ moves }) => {
   return (
     <div className={styles.container}>
-      <h2>История ходов</h2>
       <table className={styles.table}>
         <tbody>
         {moves && moves.length > 0 ? (
@@ -20,7 +19,7 @@ const GameStoryMove: React.FC<GameStoryMoveProps> = ({ moves }) => {
           ))
         ) : (
           <tr className={styles.none}>
-            <td>Нет сделанных ходов</td>
+            <td>Нет выполненных ходов</td>
           </tr>
         )}
         </tbody>
