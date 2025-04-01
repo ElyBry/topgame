@@ -5,7 +5,7 @@ export const updateUserTheme = async (req: Request, res: Response) => {
   try {
     const userId = Number(req.params.userId);
     const themeId = String(req.body.theme);
-    const authMethod = req.body.authMethod || 'global';
+    const authMethod = req.body.authMethod || 'local';
     const userName = req.body.userName || 'user';
 
     console.log({
