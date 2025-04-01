@@ -1,5 +1,5 @@
 import { TUserInfoResponse } from '../api/auth/userInfoApi'
-import { ThemeService, DEFAULT_THEME } from '../api/themes/themeApi'
+import { ThemeService, DEFAULT_THEME, UNKNOWN_THEME } from '../api/themes/themeApi'
 
 const STATUS = {
   LOADING: 'loading',
@@ -25,23 +25,26 @@ export const switchTheme = (newTheme: string, userState: TUserSlice) => {
 };
   
 export const loadUserTheme = async (userState: TUserSlice) => {
+  const defaultTheme = localStorage.getItem("theme") || DEFAULT_THEME;
+
   if (userIsLoggedIn(userState) && userState.user) {
     try {
       const userTheme = await ThemeService.getUserTheme(userState.user.id);
       
-      if (userTheme === DEFAULT_THEME) {
-        switchTheme(DEFAULT_THEME, userState);
+      if (userTheme === UNKNOWN_THEME) {
+        switchTheme(defaultTheme, userState);
+        return defaultTheme;
       }
-      
+
       return userTheme;
+
     } catch (error: unknown) {
       console.error("Ошибка при загрузке темы пользователя:", error);
       return DEFAULT_THEME;
     }
   }
 
-  const themeFromLocalStorage = localStorage.getItem("theme");
-  return themeFromLocalStorage || DEFAULT_THEME;
+  return defaultTheme;
 };
   
 const userIsLoggedIn = (userState: TUserSlice): boolean => {
