@@ -1,12 +1,13 @@
 import { DataType, Model } from 'sequelize-typescript'
 import { ModelAttributes } from 'sequelize/types'
 
-export interface ITopic {
+export interface IUser {
   id: number
   name: string
+	authMethod: string
 }
 
-export const userModel: ModelAttributes<Model, ITopic> = {
+export const userModel: ModelAttributes<Model, IUser> = {
   id: {
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -17,4 +18,8 @@ export const userModel: ModelAttributes<Model, ITopic> = {
     type: DataType.STRING(255),
     allowNull: false,
   },
+	authMethod: {
+		type: DataType.STRING(255),
+    allowNull: false,
+	}
 }
