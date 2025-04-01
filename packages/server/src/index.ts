@@ -4,6 +4,7 @@ import express from 'express'
 import { dbConnect } from './db'
 
 import reactionRouter from './routes/reactionRouter'
+import themeRouter from './routes/themeRouter';
 import topicRouter from './routes/topicRouter'
 
 dotenv.config()
@@ -24,6 +25,7 @@ app.use(express.static('./'))
 
 app.use('/topics/', topicRouter)
 app.use('/topics/:topicId/', reactionRouter)
+app.use('/api', themeRouter);
 
 app.get('/', (_, res) => {
   res.send('Hello, World!')

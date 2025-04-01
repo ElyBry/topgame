@@ -8,23 +8,26 @@ import { useEffect } from 'react'
 export const AppLayout = () => {
   usePage({ initPage: initPages })
 
-  const { status } = useAppSelector(state => state.userSlice)
+  // const { status } = useAppSelector(state => state.userSlice)
+  // const { user } = useAppSelector(state => selectUser(state));
 
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+  // useEffect(() => {
+  //   if (status !== 'loading') {
+  //       dispatch(fetchUser())
+  //   }
+  // }, [dispatch])
 
-  if (status === 'loading') {
-    return <div>Loading...</div>
-  }
+  // if (status === 'loading') {
+  //   return <div>Loading...</div>
+  // }
 
   return <Outlet />
 }
 
 export const initPages = async ({ dispatch, state }: PageInitArgs) => {
-  if (!selectUser(state).user) {
-    return dispatch(fetchUser())
-  }
+  // if (!selectUser(state).user) {
+  //   return dispatch(fetchUser())
+  // }
 }

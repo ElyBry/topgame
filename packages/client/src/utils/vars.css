@@ -50,6 +50,7 @@
     --switch-active-bg: #0c71b01a;
     --switch-border: #d0d0dc;
     --theme-bg: #323232;
+    --theme-border: #fff;
     --theme-fill: #fff;
     --theme-fill-noactive: #fff;
     --theme-active-bg: #0191ea;
@@ -107,6 +108,7 @@
     --switch-active-bg: #0c71b0;
     --switch-border: #444444;
     --theme-bg: #fff;
+    --theme-border: #323232;
     --theme-fill: #fff;
     --theme-fill-noactive: #323232;
     --theme-active-bg: #0191ea;

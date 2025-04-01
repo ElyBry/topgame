@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../../../api/auth/userInfoApi";
 import { updateAvatar } from "../../../api/profile/profileAvatarApi";
-import { updatePassword } from "../../../api/profile/updatePasswordApi"; // 👈 API для смены пароля
+import { updatePassword } from "../../../api/profile/updatePasswordApi";
 import Button from "../../../components/Button/Button";
 import styles from "../../../components/Button/Button.module.css";
 import stylesPage from "./ProfilePage.module.css";
@@ -14,7 +14,6 @@ import Modal from "../../../components/Modal/Modal";
 import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
 import {APIError} from "../../../api/types";
-import ThemeSwitcher from "../../../components/ThemeSwitcher/ThemeSwitcher";
 
 export const ProfilePage = () => {
 
@@ -119,7 +118,7 @@ export const ProfilePage = () => {
       if ((error as APIError).response?.data?.reason) {
         setPasswordError((prev) => ({
           ...prev,
-          oldPassword: (error as APIError).response.data.reason, // Показываем ошибку сервера
+          oldPassword: (error as APIError).response.data.reason,
         }));
       } else {
         setPasswordError((prev) => ({
@@ -135,7 +134,6 @@ export const ProfilePage = () => {
   return (
     <>
       <PageWrapper layout="alternative" showNav={true} lightColor={true}>
-        <ThemeSwitcher />
         <div className={stylesPage.profile_fixed}>
           <AvatarProfile avatar={userData.avatar} change="Поменять аватар" onClick={handleAvatarChangeClick} />
           <NameProfile name={userData.login} />
