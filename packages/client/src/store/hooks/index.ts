@@ -3,3 +3,4 @@ import { AppDispatch, RootState } from '../config/store'
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
 export const useAppSelector = useSelector.withTypes<RootState>()
+export const selectUser = (state: RootState) => state.userSlice

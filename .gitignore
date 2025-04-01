@@ -5,3 +5,8 @@ node_modules/
 dist
 tmp
 /packages/client/dev-dist
+.yarn/install-state.gz
+packages/client/tsconfig.server.tsbuildinfo
+*.map
+*.d.ts
+.DS_Store

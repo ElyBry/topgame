@@ -2,16 +2,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background: var(--secondary-background-color);
+    color: var(--text-secondary-color);
+    padding: 10px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px var(--box-shadow);
+    border: 1px solid var(--tbl-box-border);
+    font-size: 1.3rem;
+    min-height: 65px;
+    width: 140px;
+    margin: 0 auto;
     gap: 0.25rem;
-    font-size: 0.875rem;
-    color: var(--text-color);
 }
 
 .timer {
-    font-family: monospace;
-    font-size: 1.25rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 10px 0 5px;
     color: var(--text-color);
+    font-family: monospace;
     background-color: var(--input-ele-bg);
     padding: 0.25rem 0.5rem;
     border-radius: var(--border-radius);

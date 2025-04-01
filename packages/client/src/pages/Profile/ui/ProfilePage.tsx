@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../../../api/auth/userInfoApi";
 import { updateAvatar } from "../../../api/profile/profileAvatarApi";
-import { updatePassword } from "../../../api/profile/updatePasswordApi"; // 👈 API для смены пароля
+import { updatePassword } from "../../../api/profile/updatePasswordApi";
 import Button from "../../../components/Button/Button";
 import styles from "../../../components/Button/Button.module.css";
 import stylesPage from "./ProfilePage.module.css";
@@ -118,7 +118,7 @@ export const ProfilePage = () => {
       if ((error as APIError).response?.data?.reason) {
         setPasswordError((prev) => ({
           ...prev,
-          oldPassword: (error as APIError).response.data.reason, // Показываем ошибку сервера
+          oldPassword: (error as APIError).response.data.reason,
         }));
       } else {
         setPasswordError((prev) => ({

@@ -6,6 +6,7 @@ import PageWrapper from '../../../components/PageWrapper/PageWrapper'
 import InputField from '../../../components/InputField/InputField'
 import { validateField } from '../../../utils/validate'
 import { checkPasswordRepeat } from '../../../utils/rules'
+import { ROUTES } from '../../../utils/routes'
 
 type TFormState = {
   login: string
@@ -61,7 +62,7 @@ export const SignupPage = () => {
   const navigate = useNavigate()
 
   const handleNavigate = () => {
-    navigate('/sign-in')
+    navigate(ROUTES.SIGN_IN)
   }
 
   const handleFormChange = (evt: ChangeEvent<HTMLInputElement>) => {

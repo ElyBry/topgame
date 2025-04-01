@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import PageWrapper from '../../../components/PageWrapper/PageWrapper'
-import PageWrapperNotBg from '../../../components/PageWrapperNotBg/PageWrapperNotBg'
 import WrapperBgColor from '../../../components/WrapperBgColor/WrapperBgColor'
 import SubTitle from '../../../components/SubTitle/SubTitle'
 import stylesButton from '../../../components/Button/Button.module.css'
@@ -37,16 +36,14 @@ export const EndGame: React.FC = () => {
 
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
-      <PageWrapperNotBg>
-        <WrapperBgColor title={title}>
-          <SubTitle text="Можно сыграть ещё раз" />
-          <Button
-            label="Начать!"
-            className={`${stylesButton.button_width_auto} ${stylesButton.button_left}`}
-            onClick={handleNavigateToStartGame}
-          />
-        </WrapperBgColor>
-      </PageWrapperNotBg>
+      <WrapperBgColor title={title}>
+        <SubTitle text="Можно сыграть ещё раз" />
+        <Button
+          label="Начать!"
+          className={`${stylesButton.button_width_auto} ${stylesButton.button_left}`}
+          onClick={handleNavigateToStartGame}
+        />
+      </WrapperBgColor>
     </PageWrapper>
   )
 }

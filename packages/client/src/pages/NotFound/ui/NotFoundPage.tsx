@@ -24,3 +24,5 @@ export const NotFoundPage = () => {
     </main>
   )
 }
+
+export const initNotFoundPage = () => Promise.resolve()

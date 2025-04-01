@@ -8,8 +8,8 @@ interface GameEatedFiguresProps {
 
 const GameEatedFigures: React.FC<GameEatedFiguresProps> = ({ eatenPieces }) => {
   return (
-    <div className={styles.container}>
-      <h2>Сьеденные фигуры</h2>
+    <>
+      <h2 className={styles.title}>Съеденные фигуры</h2>
       <div className={styles.figures}>
         {eatenPieces.map((piece, index) => (
           <div key={index} className={`${styles.piece} ${styles[piece.color]}`}>
@@ -17,7 +17,7 @@ const GameEatedFigures: React.FC<GameEatedFiguresProps> = ({ eatenPieces }) => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

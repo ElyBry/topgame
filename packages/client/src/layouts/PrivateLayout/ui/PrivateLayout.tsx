@@ -14,9 +14,5 @@ export const PrivateLayout = () => {
     }
   }, [navigate, status, user])
 
-  if (!user) {
-    return null
-  }
-
   return <Outlet />
 }

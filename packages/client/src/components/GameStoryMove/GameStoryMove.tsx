@@ -19,7 +19,7 @@ const GameStoryMove: React.FC<GameStoryMoveProps> = ({ moves }) => {
             </tr>
           ))
         ) : (
-          <tr>
+          <tr className={styles.none}>
             <td>Нет сделанных ходов</td>
           </tr>
         )}

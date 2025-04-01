@@ -7,7 +7,7 @@
 
 .leaderboard thead {
 
-    background: #e6e6e6;
+    background: var(--tbl-thead-bg);
 }
 
 .leaderboard th {
@@ -24,7 +24,7 @@
 }
 
 .leaderboard td {
-    background: #fff;
+    background: var(--tbl-bg);
 }
 
 th.leaderboard_number, td.leaderboard_number {
@@ -33,5 +33,5 @@ th.leaderboard_number, td.leaderboard_number {
 
 .leaderboard tbody {
     border-radius: 0 0 15px 15px;
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--tbl-box-border);
 }

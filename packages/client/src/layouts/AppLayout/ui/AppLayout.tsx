@@ -1,19 +1,33 @@
-import { ReactNode, useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { selectUser, useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchUser } from '../../../store/slice/userSlice'
+import { Outlet } from 'react-router-dom';
+import { PageInitArgs } from '../../../utils/router'
+import { usePage } from '../../../hooks/usePage'
+import { useEffect } from 'react'
 
-export const AppLayout = ({ children }: { children: ReactNode }) => {
-  const { status } = useAppSelector(state => state.userSlice)
+export const AppLayout = () => {
+  usePage({ initPage: initPages })
 
-  const dispatch = useAppDispatch()
+  // const { status } = useAppSelector(state => state.userSlice)
+  // const { user } = useAppSelector(state => selectUser(state));
 
-  useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+  // const dispatch = useAppDispatch()
 
-  if (status === 'loading') {
-    return <div>Loading...</div>
-  }
+  // useEffect(() => {
+  //   if (status !== 'loading') {
+  //       dispatch(fetchUser())
+  //   }
+  // }, [dispatch])
 
-  return <>{children}</>
+  // if (status === 'loading') {
+  //   return <div>Loading...</div>
+  // }
+
+  return <Outlet />
+}
+
+export const initPages = async ({ dispatch, state }: PageInitArgs) => {
+  // if (!selectUser(state).user) {
+  //   return dispatch(fetchUser())
+  // }
 }
