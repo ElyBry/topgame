@@ -2,6 +2,41 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
+
+    await queryInterface.bulkInsert(
+      'users_data',
+      [
+        {
+          id: '6',
+          name: 'Alice',
+          authMethod: 'local',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: '7',
+          name: 'Bob',
+          authMethod: 'local',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: '8',
+          name: 'Charlie',
+          authMethod: 'yandex',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    )
+
+    const usersThemeId = await queryInterface.sequelize.query(
+      `SELECT id from "users_data";`
+    )
+
+    const userId = usersThemeId[0].map(user => user.id);
+
     await queryInterface.bulkInsert(
       'users',
       [
@@ -28,13 +63,13 @@ module.exports = {
     )
 
     const usersDataId = await queryInterface.sequelize.query(
-      `SELECT id from USERS;`
+      `SELECT id from "users";`
     )
 
     const usersId = usersDataId[0]
 
     const usersDataNames = await queryInterface.sequelize.query(
-      `SELECT name from USERS;`
+      `SELECT name from "users";`
     )
 
     const usersName = usersDataNames[0]
@@ -61,7 +96,7 @@ module.exports = {
     )
 
     const topicsData = await queryInterface.sequelize.query(
-      `SELECT id from TOPICS;`
+      `SELECT id from "topics";`
     )
 
     const topics = topicsData[0]
@@ -133,34 +168,38 @@ module.exports = {
       {
         theme: 'light',
         description: 'Светлая тема оформления',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         theme: 'dark',
         description: 'Темная тема оформления',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ])
 
     const themesData = await queryInterface.sequelize.query(
-      `SELECT id from SITE_THEME;`
+      `SELECT id from "site_theme";`
     )
 
     const themes = themesData[0]
 
     await queryInterface.bulkInsert('user_theme', [
       {
-        ownerId: usersId[0].id,
+        ownerId: userId[0],
         themeId: themes[0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        ownerId: usersId[1].id,
+        ownerId: userId[1],
         themeId: themes[1].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        ownerId: usersId[1].id,
+        ownerId: userId[2],
         themeId: themes[0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -177,5 +216,6 @@ module.exports = {
     await queryInterface.bulkDelete('comments', null, {})
     await queryInterface.bulkDelete('topics', null, {})
     await queryInterface.bulkDelete('users', null, {})
+    await queryInterface.bulkDelete('users_data', null, {})
   },
 }
