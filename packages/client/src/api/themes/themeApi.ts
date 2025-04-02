@@ -4,6 +4,8 @@ import axios, { AxiosError } from 'axios'
 
 export const DEFAULT_THEME = "light";
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
+export const UNKNOWN_THEME = "unknown";
+
 export class ThemeService {
   static async getUserTheme(userId: number): Promise<string> {
     try {
@@ -13,7 +15,7 @@ export class ThemeService {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response && axiosError.response.status === 404) {
-          return DEFAULT_THEME;
+          return UNKNOWN_THEME;
         }
       }
       console.error("Error fetching theme:", error);
