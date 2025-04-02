@@ -4,6 +4,8 @@ import { ModelAttributes } from 'sequelize/types'
 export interface IReaction {
   id: number
   type: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export const reactionModel: ModelAttributes<Model, IReaction> = {
@@ -16,5 +18,11 @@ export const reactionModel: ModelAttributes<Model, IReaction> = {
   type: {
     type: DataType.STRING,
     allowNull: false,
+  },
+  createdAt: {
+    type: DataType.DATE,
+  },
+  updatedAt: {
+    type: DataType.DATE,
   },
 }

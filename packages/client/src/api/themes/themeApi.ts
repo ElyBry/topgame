@@ -3,6 +3,7 @@ import { ENDPOINTS } from '../lib/endpoints'
 import axios, { AxiosError } from 'axios'
 
 export const DEFAULT_THEME = "light";
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export const UNKNOWN_THEME = "unknown";
 
 export class ThemeService {
