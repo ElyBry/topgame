@@ -10,10 +10,24 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
+      topicId: {
+        type: Sequelize.INTEGER
+      },
+      userId: {
+        type: Sequelize.INTEGER
+      },
       type: {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     })
   },
 
