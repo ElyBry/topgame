@@ -23,7 +23,7 @@ services:
             dockerfile: Dockerfile.server
             args:
               SERVER_PORT: ${SERVER_PORT}
-              POSTGRES_HOST: ${POSTGRES_HOST}
+              POSTGRES_HOST: postgres
         restart: always
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"

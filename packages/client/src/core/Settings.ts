@@ -9,10 +9,10 @@ export abstract class Settings {
   protected minutesPerParty: number = 10;
   protected countSecondsPerMove: number = 5;
 
-  protected start: () => void = () => {}; // Callback при старте игры
-  protected stop: () => void = () => {}; // Callback при остановке игры
-  protected gameLoop: () => void = () => {}; // Callback для игрового цикла
-  protected onGameOver: () => void = () => {}; // Callback при завершении игры
+  protected start: () => void = () => {};
+  protected stop: () => void = () => {};
+  protected gameLoop: () => void = () => {};
+  protected onGameOver: () => void = () => {};
 
   constructor(ctx: CanvasRenderingContext2D) {
     this.ctx = ctx;

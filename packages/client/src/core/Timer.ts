@@ -4,7 +4,7 @@ export class Timer {
   private interval: number | NodeJS.Timeout | null = null;
 
   constructor(seconds: number) {
-    this.minutes = Math.floor((seconds / 60) % 60);
+    this.minutes = Math.floor(seconds / 60);
     this.seconds = seconds % 60;
   }
 
@@ -24,7 +24,11 @@ export class Timer {
       this.seconds--;
     }
   }
-
+  addSeconds(seconds: number): void {
+    const totalSeconds = this.getTime() + seconds;
+    this.minutes = Math.floor(totalSeconds / 60);
+    this.seconds = totalSeconds % 60;
+  }
   stop() {
     if (this.interval) {
       clearInterval(this.interval);

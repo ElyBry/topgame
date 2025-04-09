@@ -49,10 +49,7 @@ export const StartGame: React.FC = () => {
   const navigate = useNavigate()
 
   const handleNavigateToGame = () => {
-    const color =
-      settingsGame.color === COLORS.RANDOM
-        ? [COLORS.WHITE, COLORS.BLACK][Math.floor(Math.random() * 2)]
-        : settingsGame.color
+    const color = COLORS.WHITE;
     const opponentColor = color === COLORS.WHITE ? COLORS.BLACK : COLORS.WHITE
     dispatch(setGameSettings({ ...settingsGame, color, opponentColor }))
     navigate(ROUTES.GAME)

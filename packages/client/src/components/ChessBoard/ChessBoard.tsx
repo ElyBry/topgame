@@ -14,22 +14,21 @@ import { ROUTES } from '../../utils/routes'
 import { leaderboardNewLeaderRequest } from '../../api/leaderboard/leaderboardApi'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../store/slice/userSlice'
-import styles from './ChessBoard.module.css'
+import styles from "./chessBoard.module.css";
 
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
   const { color: activeColor, time, addTimeMove } = settings
-
-  const secondsPerParty = time * 60 || 300
+  const secondsPerParty = time * 60
   const [titlePlayer1] = useState(
-    activeColor === COLORS.BLACK ? 'Таймер черных' : 'Таймер белых'
+    activeColor === COLORS.BLACK ? 'Чёрные' : 'Белые'
   )
   const [titlePlayer2] = useState(
-    activeColor === COLORS.BLACK ? 'Таймер белых' : 'Таймер черных'
+    activeColor === COLORS.BLACK ? 'Белые' : 'Чёрные'
   )
   const [canvasSize, setCanvasSize] = useState({
-    width: window.innerHeight - window.innerHeight * 0.05,
-    height: window.innerHeight - window.innerHeight * 0.05,
+    width: 0,
+    height: 0
   })
   const gameEngineRef = useRef<GameEngine | null>(null)
   const [whiteTime, setWhiteTime] = useState(secondsPerParty)
@@ -43,13 +42,20 @@ const ChessBoard = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    setCanvasSize({
+      width: window?.innerHeight - window?.innerHeight * 0.05,
+      height: window?.innerHeight - window?.innerHeight * 0.05,
+    })
+  }, [])
+
+  useEffect(() => {
+    if (canvasSize.width === 0 || canvasSize.height === 0) return;
     const canvas = document.getElementById('chessCanvas') as HTMLCanvasElement
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
     const settings = new SettingsClassic(ctx)
     settings.initialize()
-    settings.setDebugMode(true)
-    settings.setWithTime(true)
+    settings.setWithTime(time !== 0)
     settings.setMinutesPerParty(secondsPerParty)
     settings.setCountSecondsPerMove(addTimeMove)
     const whiteColor = '#F0D9B5'
@@ -84,7 +90,9 @@ const ChessBoard = () => {
       <div className={styles.chess_col_left}>
         <div className={styles.chess_player}>
           <h2 className={styles.chess_title}>{titlePlayer2}</h2>
-          <GameTimer initialSeconds={blackTime} active={color === 'black'} />
+          {time !== 0 && (
+            <GameTimer initialSeconds={blackTime} active={color === 'black'} />
+          )}
           <GameEatedFigures
             eatenPieces={eatedFigures.filter(figure => figure.color === 'white')}
           />
@@ -94,7 +102,9 @@ const ChessBoard = () => {
           <GameEatedFigures
             eatenPieces={eatedFigures.filter(figure => figure.color === 'black')}
           />
-          <GameTimer initialSeconds={whiteTime} active={color === 'white'} />
+          {time !== 0 && (
+            <GameTimer initialSeconds={whiteTime} active={color === 'white'} />
+          )}
           <h2 className={styles.chess_title}>{titlePlayer1}</h2>
         </div>
       </div>
