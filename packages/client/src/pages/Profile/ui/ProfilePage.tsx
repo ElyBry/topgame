@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getUserInfo } from "../../../api/auth/userInfoApi";
 import { updateAvatar } from "../../../api/profile/profileAvatarApi";
 import { updatePassword } from "../../../api/profile/updatePasswordApi";
+import { updateUserProfile } from "../../../api/profile/updateUserProfileApi";
 import Button from "../../../components/Button/Button";
 import styles from "../../../components/Button/Button.module.css";
 import stylesPage from "./ProfilePage.module.css";
@@ -29,6 +30,7 @@ export const ProfilePage = () => {
     };
   }, []);
 
+  const [isOAuthUser, setIsOAuthUser] = useState(false);
   const [activeSection, setActiveSection] = useState<"current" | "edit" | "password">("current");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
@@ -69,6 +71,8 @@ export const ProfilePage = () => {
           phone: userInfo.phone,
           avatar: `${avatarApiUrl}${userInfo.avatar}`,
         });
+        const authType = localStorage.getItem('authType');
+        setIsOAuthUser(authType === 'oauth');
       } catch (error) {
         console.error("Ошибка загрузки профиля:", error);
       }
@@ -131,6 +135,22 @@ export const ProfilePage = () => {
     }
   };
 
+  const handleProfileUpdate = async () => {
+    const updatedData = {
+      first_name: userData.first_name,
+      second_name: userData.second_name,
+      login: userData.login,
+      email: userData.email,
+      phone: userData.phone,
+    };
+    try {
+      await updateUserProfile(updatedData);
+      setActiveSection("current");
+    } catch (error: any) {
+      console.error("Ошибка обновления профиля:", error);
+    }
+  };
+
   return (
     <>
       <PageWrapper layout="alternative" showNav={true} lightColor={true}>
@@ -150,7 +170,9 @@ export const ProfilePage = () => {
                 <Button label="Изменить данные" className={styles.button_link} type="button" onClick={() => setActiveSection("edit")} />
                 <br />
                 <br />
-                <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />
+                {!isOAuthUser && (
+                  <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />
+                )}
               </div>
             </>
           )}
@@ -194,7 +216,7 @@ export const ProfilePage = () => {
               />
 
               <div className={styles.button_fieldset}>
-                <Button label="Сохранить изменения" type="submit" />
+                <Button label="Сохранить изменения" type="submit" onClick={handleProfileUpdate} />
                 <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
               </div>
             </>

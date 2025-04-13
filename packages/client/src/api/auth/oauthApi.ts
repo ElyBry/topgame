@@ -12,6 +12,8 @@ export const oauth = async ({ code, redirect_uri }: TOAuthArgs) => {
       code,
       redirect_uri,
     });
+
+    localStorage.setItem('authType', 'oauth');
     
     return response.data;
   } catch (error) {
