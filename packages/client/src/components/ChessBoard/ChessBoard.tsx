@@ -86,10 +86,10 @@ const ChessBoard = () => {
       navigate(ROUTES.END_GAME)
     }
   }, [canvasSize, winner, navigate])
-
-		const handleGoBack = async () => {
-			navigate(ROUTES.START_GAME)
-		}
+	
+    const handleGoBack = async () => {
+      navigate(ROUTES.START_GAME)
+    }
 
   return (
     <>
