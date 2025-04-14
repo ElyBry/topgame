@@ -17,10 +17,13 @@ type TSignupArgs = {
 
 export const signup = async (userData: TSignupArgs) => {
   try {
-    const response = await axiosRequest.post(ENDPOINTS.SIGN_UP, userData)
-    return response
+    const response = await axiosRequest.post(ENDPOINTS.SIGN_UP, userData);
+
+    localStorage.removeItem('authType');
+
+    return response;
   } catch (error: any) {
-    throw error.response?.data || { reason: 'Unknown error' }
+    throw error.response?.data || { reason: 'Unknown error' };
   }
 }
 
@@ -36,10 +39,15 @@ export const login = async ({ login, password }: TLoginArgs) => {
     localStorage.setItem('accessToken', token);
   };
 
+  localStorage.removeItem('authType');
+
   return response;
 };
 
 export const logout = async () => {
   const response = await axiosRequest.post(ENDPOINTS.LOGOUT);
+
+  localStorage.removeItem('authType');
+
   return response;
 };
