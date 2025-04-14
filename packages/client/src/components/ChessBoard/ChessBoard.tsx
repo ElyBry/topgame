@@ -15,6 +15,8 @@ import { leaderboardNewLeaderRequest } from '../../api/leaderboard/leaderboardAp
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../store/slice/userSlice'
 import styles from "./chessBoard.module.css";
+import Button from '../Button/Button'
+import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons";
 
 const ChessBoard = () => {
   const { settings, winner } = useAppSelector(state => state.gameSlice)
@@ -85,7 +87,18 @@ const ChessBoard = () => {
     }
   }, [canvasSize, winner, navigate])
 
+		const handleGoBack = async () => {
+			navigate(ROUTES.START_GAME)
+		}
+
   return (
+    <>
+      <Button
+        type="button"
+        className={styles.chess_button}
+        icon={faArrowAltCircleLeft}
+        onClick={handleGoBack}
+      />
     <div className={styles.chess_wrap}>
       <div className={styles.chess_col_left}>
         <div className={styles.chess_player}>
@@ -122,6 +135,7 @@ const ChessBoard = () => {
         <GameStoryMove moves={notation} />
       </div>
     </div>
+    </>
   )
 }
 
