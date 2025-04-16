@@ -7,6 +7,7 @@ import InputField from '../../../components/InputField/InputField'
 import { validateField } from '../../../utils/validate'
 import { checkPasswordRepeat } from '../../../utils/rules'
 import { ROUTES } from '../../../utils/routes'
+import { signup } from '../../../api/auth/authApi'
 
 type TFormState = {
   login: string
@@ -90,6 +91,22 @@ export const SignupPage = () => {
     evt.preventDefault()
 
     if (!handleValidation()) return
+
+    try {
+      const { login, password, email, first_name, second_name, phone } = formState
+      const response = await signup({
+        login,
+        password,
+        email,
+        first_name,
+        second_name,
+        phone,
+      })
+  
+      navigate(ROUTES.MAIN)
+    } catch (error: any) {
+      console.error('Signup error:', error)
+    }
   }
 
   const handleValidation = () => {

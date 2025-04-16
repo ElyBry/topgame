@@ -69,7 +69,6 @@ export const ProfilePage = () => {
   const avatarApiUrl = "https://ya-praktikum.tech/api/v2/resources";
 
   useEffect(() => {
-    setAuthMethod(localStorage.getItem('authMethod') || '')
     const fetchUserData = async () => {
       try {
         const userInfo = await getUserInfo();
@@ -89,6 +88,8 @@ export const ProfilePage = () => {
           phone: userInfo.phone,
           avatar: `${avatarApiUrl}${userInfo.avatar}`,
         });
+        const authType = localStorage.getItem('authType');
+        setAuthMethod(authType || 'local');
       } catch (error) {
         console.error("Ошибка загрузки профиля:", error);
       }

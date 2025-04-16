@@ -17,7 +17,7 @@ export class ThemeService {
           return UNKNOWN_THEME;
         }
       }
-      console.error("Error fetching theme:", error);
+      //console.error("Error fetching theme:", error);
       return DEFAULT_THEME;
     }
   }
