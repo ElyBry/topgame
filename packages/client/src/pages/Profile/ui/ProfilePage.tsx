@@ -14,6 +14,8 @@ import Modal from "../../../components/Modal/Modal";
 import AttachFile from "../../../components/AttachFile/AttachFile";
 import Loader from "../../../components/Loader/Loader";
 import {APIError} from "../../../api/types";
+import { updateUserData } from '../../../api/profile/updateUserDataApi'
+import { validateFormFields } from '../../../utils/rules'
 
 export const ProfilePage = () => {
 
@@ -32,6 +34,7 @@ export const ProfilePage = () => {
   const [activeSection, setActiveSection] = useState<"current" | "edit" | "password">("current");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
+  const [authMethod, setAuthMethod] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [passwordError, setPasswordError] = useState({
@@ -54,14 +57,31 @@ export const ProfilePage = () => {
     phone: "",
     avatar: "",
   });
+  const [newUserData, setNewUserData] = useState({
+    first_name: "",
+    second_name: "",
+    login: "",
+    email: "",
+    phone: "",
+    avatar: "",
+  });
 
   const avatarApiUrl = "https://ya-praktikum.tech/api/v2/resources";
 
   useEffect(() => {
+    setAuthMethod(localStorage.getItem('authMethod') || '')
     const fetchUserData = async () => {
       try {
         const userInfo = await getUserInfo();
         setUserData({
+          first_name: userInfo.first_name,
+          second_name: userInfo.second_name,
+          login: userInfo.login,
+          email: userInfo.email,
+          phone: userInfo.phone,
+          avatar: `${avatarApiUrl}${userInfo.avatar}`,
+        });
+        setNewUserData({
           first_name: userInfo.first_name,
           second_name: userInfo.second_name,
           login: userInfo.login,
@@ -76,6 +96,24 @@ export const ProfilePage = () => {
 
     fetchUserData();
   }, []);
+
+  const handleProfileUpdate = async () => {
+    setIsLoading(true);
+    try {
+      await updateUserData(
+        newUserData.first_name,
+        newUserData.second_name,
+        newUserData.login,
+        newUserData.email,
+        newUserData.phone
+      );
+      setUserData(newUserData);
+    } catch (error) {
+      console.error("Ошибка обновления аватара:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const handleAvatarChangeClick = () => setIsModalOpen(true);
   const handleCloseModal = () => {
@@ -103,6 +141,9 @@ export const ProfilePage = () => {
       setIsLoading(false);
     }
   };
+  const cancelChange = () => {
+    setNewUserData(userData);
+  }
 
   const handlePasswordChange = async () => {
     setIsPasswordLoading(true);
@@ -150,7 +191,7 @@ export const ProfilePage = () => {
                 <Button label="Изменить данные" className={styles.button_link} type="button" onClick={() => setActiveSection("edit")} />
                 <br />
                 <br />
-                <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />
+                {(authMethod === 'local') && <Button label="Изменить пароль" className={styles.button_link} type="button" onClick={() => setActiveSection("password")} />}
               </div>
             </>
           )}
@@ -161,46 +202,54 @@ export const ProfilePage = () => {
                 type="text"
                 name="first_name"
                 placeholder="Введите новое имя"
-                value={userData.first_name}
-                onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
+                modelValue={newUserData.first_name}
+                onChange={(e) => setNewUserData({ ...newUserData, first_name: e.target.value })}
               />
               <InputField
                 type="text"
                 name="second_name"
                 placeholder="Введите новую фамилию"
-                value={userData.second_name}
-                onChange={(e) => setUserData({ ...userData, second_name: e.target.value })}
+                modelValue={newUserData.second_name}
+                onChange={(e) => setNewUserData({ ...newUserData, second_name: e.target.value })}
               />
               <InputField
                 type="text"
                 name="login"
                 placeholder="Введите новый логин"
-                value={userData.login}
-                onChange={(e) => setUserData({ ...userData, login: e.target.value })}
+                modelValue={newUserData.login}
+                onChange={(e) => setNewUserData({ ...newUserData, login: e.target.value })}
               />
               <InputField
                 type="text"
                 name="email"
                 placeholder="Введите новую почту"
-                value={userData.email}
-                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                modelValue={newUserData.email}
+                onChange={(e) => setNewUserData({ ...newUserData, email: e.target.value })}
               />
               <InputField
                 type="tel"
                 name="phone"
                 placeholder="Введите новый телефон"
-                value={userData.phone}
-                onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
+                modelValue={newUserData.phone}
+                onChange={(e) => setNewUserData({ ...newUserData, phone: e.target.value })}
               />
-
               <div className={styles.button_fieldset}>
-                <Button label="Сохранить изменения" type="submit" />
-                <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => setActiveSection("current")} />
+                {
+                  isLoading ? <Loader /> : (
+                    <>
+                      <Button label="Сохранить изменения" type="submit" onClick={() => handleProfileUpdate()} />
+                      <Button label="Вернуться" className={styles.button_link} type="button" onClick={() => {
+                        cancelChange()
+                        setActiveSection('current')
+                      }} />
+                    </>
+                  )
+                }
               </div>
             </>
           )}
 
-          {activeSection === "password" && (
+          {activeSection === 'password' && (
             <>
               <InputField
                 type="password"
