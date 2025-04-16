@@ -10,7 +10,7 @@ const Leaderboard = () => {
   const observer = useRef<IntersectionObserver | null>(null);
   const fetchLeaderboard = async (pageNumber: number) => {
     try {
-      const response = await getResults({ teamName: 'MyAwesomeGame', ratingFieldName: 'countMoves', cursor: pageNumber, limit: 10 });
+      const response = await getResults({ ratingFieldName: 'countMoves', cursor: pageNumber, limit: 10 });
       setLeaderboardList((prev) => [...prev, ...response.data])
       setLoading(false);
     } catch (e) {

@@ -61,6 +61,9 @@ export const SigninPage = () => {
     }
 
     fetchClientId()
+    return () => {
+      document.title = `${currentTitle}`
+    }
   }, [initializing, loading])
 
   // OAuth
@@ -87,10 +90,10 @@ export const SigninPage = () => {
         try {
           const redirectUri = OAUTH_REDIRECT_URI
           const response = await oauth({ code, redirect_uri: redirectUri })
-          
-          localStorage.setItem('authData', JSON.stringify(response.data))
-          
+          localStorage.setItem('authMethod', 'yandex');
+          localStorage.setItem('authData', response)
           const userInfoResult = await getUserInfo()
+
           if (userInfoResult.id) {
             dispatch(setUser(userInfoResult))
             
@@ -153,6 +156,7 @@ export const SigninPage = () => {
           const userInfoResult = await getUserInfo()
 
           if (userInfoResult.id) {
+            localStorage.setItem('authMethod', 'local');
             dispatch(setUser(userInfoResult))
             navigate(ROUTES.MAIN)
           }

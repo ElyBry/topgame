@@ -72,6 +72,9 @@ export class GameEngine {
     this.timers[this.currentPlayerIndex]?.start();
     this.gameLoop();
   }
+  stop() {
+    this.isGameOver = true;
+  }
 
   gameLoop() {
     if (this.isGameOver) return;

@@ -1,5 +1,6 @@
 import React, {ErrorInfo, ReactNode} from "react";
 import {useNavigate} from "react-router-dom";
+import { newError } from '../../api/error/errorApi'
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -48,6 +49,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
       error,
       errorInfo
     })
+    newError({ error: error.message, errorInfo: error.stack });
   }
 
   render() {

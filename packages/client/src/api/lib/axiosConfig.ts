@@ -10,8 +10,12 @@ export const axiosRequest = axios.create({
   withCredentials: true,
 })
 
-const API_LOCAL_URL = 'http://localhost:3001/api'
+const API_LOCAL_URL = 'http://localhost:3001'
 
 export const axiosRequestLocal = axios.create({
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+  withCredentials: true,
   baseURL: API_LOCAL_URL,
 })

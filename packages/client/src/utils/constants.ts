@@ -27,17 +27,17 @@ export const SETTING_GAME_SELECT = {
     {
       'color': COLORS.WHITE,
       'name': 'Белые',
-      'src': '/StartGame/white.svg'
+      'src': '/startGame/white.svg'
     },
     {
       'color': COLORS.RANDOM,
       'name': 'Случайный выбор',
-      'src': '/StartGame/random.svg'
+      'src': '/startGame/random.svg'
     },
     {
       'color': COLORS.BLACK,
       'name': 'Чёрные',
-      'src': '/StartGame/black.svg',
+      'src': '/startGame/black.svg',
     }
   ],
   'timePlay': [
@@ -61,3 +61,5 @@ export const SETTING_GAME_SELECT = {
 }
 
 export const OAUTH_REDIRECT_URI = 'http://localhost:3000/oauth';
+
+export const DANGEROUS_SYMBOLS = /[&<>"']/;

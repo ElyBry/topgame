@@ -12,7 +12,12 @@ const Navigation = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isActive = (path: string) => (location.pathname === path ? styles.active : "");
+  const isActive = (path: string) => {
+    if (path === ROUTES.MAIN) {
+      return location.pathname === path ? styles.active : "";
+    }
+    return location.pathname.startsWith(path) ? styles.active : "";
+  };
 
   const handleLogout = async () => {
     await apiLogout()

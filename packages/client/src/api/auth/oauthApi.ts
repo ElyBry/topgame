@@ -14,7 +14,7 @@ export const oauth = async ({ code, redirect_uri }: TOAuthArgs) => {
     });
 
     localStorage.setItem('authType', 'oauth');
-    
+
     return response.data;
   } catch (error) {
     console.error("Ошибка авторизации через Яндекс:", error);

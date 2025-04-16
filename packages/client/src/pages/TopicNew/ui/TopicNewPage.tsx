@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { selectUser, useAppDispatch } from '../../../store/hooks'
 import { createNewTopic } from '../../../store/slice/topicsSlice'
 import { ROUTES } from '../../../utils/routes'
+import { validateFormFields } from '../../../utils/rules'
 
 export const TopicNewPage = () => {
   useEffect(() => {
@@ -50,6 +51,12 @@ export const TopicNewPage = () => {
       author: userState.user?.login || 'Неизвестный автор',
       text: topicText,
       name: topicName,
+    }
+
+    const validationForm = validateFormFields(data);
+    if (!validationForm.isValid) {
+      alert(validationForm.errorMessage)
+      return;
     }
 
     await dispatch(createNewTopic(data))
