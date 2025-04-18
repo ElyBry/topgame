@@ -5,6 +5,7 @@ import userSlice from '../slice/userSlice'
 import gameSlice from '../slice/gameSlice'
 import topicsSlice from '../slice/topicsSlice'
 import ssrReducer from '../slice/ssrSlice'
+import reactionsSlice from '../slice/reactionsSlice'
 
 declare global {
   interface Window {
@@ -17,6 +18,7 @@ export const reducer = combineReducers({
   gameSlice,
   ssr: ssrReducer,
   topicsSlice,
+	reactionsSlice
 })
 
 export const store = configureStore({

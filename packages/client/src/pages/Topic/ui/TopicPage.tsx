@@ -13,6 +13,13 @@ import {
   fetchTopic,
   selectTopicsSlice,
 } from '../../../store/slice/topicsSlice'
+import {
+	createNewReaction,
+  fetchReactions,
+  selectReactionsSlice,
+} from '../../../store/slice/reactionsSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 
 export const TopicPage = () => {
   useEffect(() => {
@@ -67,6 +74,58 @@ export const TopicPage = () => {
     setCommentText('')
   }
 
+  const { reactions } = useSelector(selectReactionsSlice)
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchReactions(Number(id)))
+    }
+  }, [dispatch])
+
+  const likes = reactions.data.filter(item => item.type === 'like')
+  const dislikes = reactions.data.filter(item => item.type === 'dislike')
+
+  const isCurrentUserLikes = () =>
+    likes.some(like => like.userId === userState.user?.id)
+  const isCurrentUserDisLikes = () =>
+    dislikes.some(like => like.userId === userState.user?.id)
+
+	const handleAddLike = async () => {
+		const userId = userState.user?.id;
+		if (!userId) return;
+
+		const payload = {
+			topicId: Number(id),
+			data: {
+				userId,
+				topicId: Number(id),
+				type: 'like'
+			}
+		}
+		await dispatch(createNewReaction(payload))
+		 if (id) {
+      await dispatch(fetchReactions(Number(id)))
+    }
+	}
+
+	const handleAddDisLike = async () => {
+		const userId = userState.user?.id;
+		if (!userId) return;
+
+		const payload = {
+			topicId: Number(id),
+			data: {
+				userId,
+				topicId: Number(id),
+				type: 'dislike'
+			}
+		}
+		await dispatch(createNewReaction(payload))
+		 if (id) {
+      await dispatch(fetchReactions(Number(id)))
+    }
+	}
+
   return (
     <PageWrapper layout="alternative" showNav={true} lightColor={true}>
       <h1
@@ -82,7 +141,41 @@ export const TopicPage = () => {
           </p>
         </div>
         <div className={styles.topic_view_block_content}>
-          <p className={styles.topic_view_block_text}>{topic?.text}</p>
+          <div className={styles.topic_view_block_content_inner}>
+            <p className={styles.topic_view_block_text}>{topic?.text}</p>
+          </div>
+          <div className={styles.topic_view_block_reactions}>
+            <div
+              className={[
+                styles.topic_view_block_reactions_item,
+                isCurrentUserLikes()
+                  ? styles.topic_view_block_reactions_item_active
+                  : '',
+              ].join(' ')}>
+              <FontAwesomeIcon icon={faThumbsUp} onClick={handleAddLike}/>
+
+              {likes.length > 0 && (
+                <span className={styles.topic_view_block_reactions_item_count}>
+                  {likes.length}
+                </span>
+              )}
+            </div>
+            <div
+              className={[
+                styles.topic_view_block_reactions_item,
+                isCurrentUserDisLikes()
+                  ? styles.topic_view_block_reactions_item_active
+                  : '',
+              ].join(' ')}>
+              <FontAwesomeIcon icon={faThumbsDown} onClick={handleAddDisLike}/>
+
+              {dislikes.length > 0 && (
+                <span className={styles.topic_view_block_reactions_item_count}>
+                  {dislikes.length}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
         <div className={styles.topic_view_block_comments}>
           <div className={styles.topic_view_block_comments_count}>

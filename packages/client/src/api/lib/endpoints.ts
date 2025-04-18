@@ -11,4 +11,5 @@ export const ENDPOINTS = {
   LEADERBOARD: '/leaderboard',
   THEME: '/theme',
   TOPICS_LIST: '/topics',
+  REACTIONS: '/reactions',
 } as const

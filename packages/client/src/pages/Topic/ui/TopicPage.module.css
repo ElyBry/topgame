@@ -27,7 +27,6 @@
 }
 
 .topic_view_block_content {
-  margin-bottom: 16px;
   padding: 0 20px 20px 20px;
 }
 
@@ -70,4 +69,22 @@
 .button_logout:hover {
   background: var(--logout-btn-bg-hover);
   color: var(--btn-color);
+}
+
+.topic_view_block_reactions {
+	display: flex;
+	gap: 12px;
+	margin-top: 16px;
+}
+
+.topic_view_block_reactions_item_count {
+	display: inline-flex;
+	margin-left: 4px;
+}
+
+.topic_view_block_reactions_item svg {
+	cursor: pointer;
+}
+.topic_view_block_reactions_item.topic_view_block_reactions_item_active svg {
+	color: var(--theme-active-bg);
 }

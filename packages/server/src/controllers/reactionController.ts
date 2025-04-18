@@ -21,16 +21,15 @@ Reaction.belongsTo(User, {
 })
 
 export const addReaction = async (req: any, res: any) => {
-  console.log(req.body);
   try {
     const { userId, topicId, type } = req.body
-    const reactions = await Reaction.create({
+    const reaction = await Reaction.create({
       userId,
       topicId,
       type,
     })
 
-    res.send(reactions)
+    res.send(reaction)
   } catch (err) {
     console.error(err)
     res.status(500).send('Unexpected error occurred on server!')
