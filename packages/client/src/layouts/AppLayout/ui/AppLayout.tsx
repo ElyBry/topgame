@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { PageInitArgs } from '../../../utils/router'
 import { usePage } from '../../../hooks/usePage'
 import { useEffect } from 'react'
+import { Loader } from '../../../components/Loader'
 
 export const AppLayout = () => {
   usePage({ initPage: initPages })
@@ -20,7 +21,7 @@ export const AppLayout = () => {
   // }, [dispatch])
 
   if (status === 'loading') {
-    return <div>Loading...</div>
+    return <Loader />
   }
 
   return <Outlet />
