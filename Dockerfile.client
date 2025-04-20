@@ -24,7 +24,7 @@ COPY --from=builder /app/packages/client/server/ /app/server/
 COPY --from=builder /app/packages/client/public/ /app/public/
 COPY --from=builder /app/packages/client/index.html /app/public/index.html
 COPY --from=builder /app/packages/client/package.json /app/package.json
-RUN yarn install --production=true
+RUN yarn install
 
 EXPOSE $CLIENT_PORT
 CMD [ "yarn", "preview" ]
