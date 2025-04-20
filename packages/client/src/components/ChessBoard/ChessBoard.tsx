@@ -80,9 +80,17 @@ const ChessBoard = () => {
     }
 
     if (winner) {
-      leaderboardNewLeaderRequest({data: { username: userState.user!.login, countMoves: notation.filter((move) => move.figure.color === activeColor).length * -1}, ratingFieldName: "countMoves"})
+      if (userState?.user?.login) {
+        leaderboardNewLeaderRequest({data: { username: userState.user.login, countMoves: notation.filter((move) => move.figure.color === activeColor).length * -1}, ratingFieldName: "countMoves"})
+      }
       navigate(ROUTES.END_GAME)
     }
+    return () => {
+      if (gameEngineRef.current) {
+        gameEngineRef.current.stop();
+        gameEngineRef.current = null;
+      }
+    };
   }, [canvasSize, winner, navigate])
 
   return (

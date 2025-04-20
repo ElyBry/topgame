@@ -7,7 +7,6 @@ import {
   ProfilePage,
   SigninPage,
   SignupPage,
-  TestCore,
   TopicPage,
 	ServerErrorPage,
   TopicNewPage,
@@ -17,11 +16,11 @@ import {
 import { ROUTES } from './routes'
 import { OpenLayout } from '../layouts/OpenLayout'
 import { PrivateLayout } from '../layouts/PrivateLayout'
-import {ErrorBoundary} from "../components/ErrorBoundary";
 import { AppDispatch, RootState } from '../store/config/store'
 import { AppLayout } from '../layouts/AppLayout'
 import { initPages } from '../layouts/AppLayout/ui/AppLayout'
 import { initNotFoundPage } from '../pages/NotFound/ui/NotFoundPage'
+import { ErrorBoundary } from '../components/ErrorBoundary'
 
 export type PageInitContext = {
   uuid?: string | undefined
@@ -37,17 +36,17 @@ export type PageInitArgs = {
 export const router = [
   {
     fetchData: initPages,
-    element: <AppLayout />,
+    element: <ErrorBoundary><AppLayout /></ErrorBoundary>,
     children: [
       {
-        element: <OpenLayout />,
+        element: <ErrorBoundary><OpenLayout /></ErrorBoundary>,
         children: [
           {
-            element: <SigninPage />,
+            element: <ErrorBoundary><SigninPage /></ErrorBoundary>,
             path: ROUTES.SIGN_IN,
           },
           {
-            element: <SignupPage />,
+            element: <ErrorBoundary><SignupPage /></ErrorBoundary>,
             path: ROUTES.SIGN_UP,
           },
         ],
@@ -56,46 +55,42 @@ export const router = [
         element: <PrivateLayout />,
         children: [
           {
-            element: <MainPage />,
+            element: <ErrorBoundary><MainPage /></ErrorBoundary>,
             path: ROUTES.MAIN,
           },
           {
-            element: <ProfilePage />,
+            element: <ErrorBoundary><ProfilePage /></ErrorBoundary>,
             path: ROUTES.PROFILE,
           },
           {
-            element: <GamePage />,
+            element: <ErrorBoundary><GamePage /></ErrorBoundary>,
             path: ROUTES.GAME,
           },
           {
-            element: <LeaderboardPage />,
+            element: <ErrorBoundary><LeaderboardPage /></ErrorBoundary>,
             path: ROUTES.LEADERBOARD,
           },
           {
-            element: <StartGame />,
+            element: <ErrorBoundary><StartGame /></ErrorBoundary>,
             path: ROUTES.START_GAME,
           },
           {
-            element: <EndGame />,
+            element: <ErrorBoundary><EndGame /></ErrorBoundary>,
             path: ROUTES.END_GAME,
           },
           {
-            element: <ForumPage />,
+            element: <ErrorBoundary><ForumPage /></ErrorBoundary>,
             path: ROUTES.FORUM,
           },
           {
-            element: <TopicPage />,
+            element: <ErrorBoundary><TopicPage /></ErrorBoundary>,
             path: ROUTES.FORUM_MESSAGE,
           },
           {
-            element: <TopicNewPage />,
+            element: <ErrorBoundary><TopicNewPage /></ErrorBoundary>,
             path: ROUTES.FORUM_NEW,
           },
         ],
-      },
-      {
-        element: <ErrorBoundary><TestCore /></ErrorBoundary>,
-        path: ROUTES.TEST_CORE,
       },
       {
         element: <ServerErrorPage />,

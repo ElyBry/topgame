@@ -1,9 +1,10 @@
 import styles from "./LoaderFull.module.css";
+import { Loader } from '../Loader'
 
 const LoaderFull = () => {
   return (
     <div className={styles.loader_wrapper}>
-      <div className={styles.loader}></div>
+      <Loader />
     </div>
   )
 };
