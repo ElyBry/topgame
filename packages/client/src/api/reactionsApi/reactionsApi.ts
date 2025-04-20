@@ -14,6 +14,7 @@ export type ICreateReactionResponse = IReaction
 export interface ICreateReactionPayload {
 	userId: number, topicId: number, type: string
 }
+export type IDeleteReactionResponse = IReaction
 
 export const getReactions = async (topicId: number) => {
 	const result = await axiosRequest.get(`${ENDPOINTS.TOPICS_LIST}/${topicId}${ENDPOINTS.REACTIONS}`)
@@ -42,5 +43,5 @@ export const deleteReaction = async (topicId: number, id: number) => {
 		throw new Error(result.statusText)
 	}
 
-	return result.data as string
+	return result.data as IDeleteReactionResponse
 }

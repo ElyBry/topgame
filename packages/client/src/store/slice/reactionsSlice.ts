@@ -18,7 +18,7 @@ export interface IReactionsInterface {
 
 export type TReactionsSlice = {
 	reactions: IReactionsInterface,
-	newReaction: IReaction | null
+	newReaction: IReaction | null,
 }
 
 export const fetchReactions = createAsyncThunk('topics/:id/reactions/get', async (topicId: number) => {
@@ -31,10 +31,9 @@ export const fetchReactions = createAsyncThunk('topics/:id/reactions/get', async
 })
 
 export const createNewReaction = createAsyncThunk(
-	'topics/:topicId/reactions/:id',
+	'topics/:topicId/reactions/:id/post',
 	async (payload: ICreateNewReaction) => {
 		const {topicId, data } = payload
-		console.log(1, payload)
 		try {
 			const res = await addReaction(topicId, data)
 			return res
@@ -45,7 +44,7 @@ export const createNewReaction = createAsyncThunk(
 )
 
 export const deleteReactionFromTopic = createAsyncThunk(
-	'topics/:topicId/reactions/:id',
+	'topics/:topicId/reactions/:id/delete',
 	async (payload: {topicId: number, id: number}) => {
 		const {topicId, id} = payload
 		try {
@@ -62,7 +61,7 @@ const initialState: TReactionsSlice = {
 		data: [],
 		loading: false,
 	},
-	newReaction: null
+	newReaction: null,
 }
 
 const reactionsSlice = createSlice({

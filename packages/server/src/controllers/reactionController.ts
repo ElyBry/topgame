@@ -38,7 +38,7 @@ export const addReaction = async (req: any, res: any) => {
 
 export const deleteReaction = async (req: any, res: any) => {
   try {
-    const { id } = req.body
+    const { id } = req.params
     await Reaction.destroy({
       where: {
         id
