@@ -23,7 +23,7 @@ WORKDIR /app
 
 COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/package.json /app/package.json
-RUN yarn install --production=true
+RUN yarn install
 
 EXPOSE $SERVER_PORT
 CMD [ "node", "/app/index.js" ]
