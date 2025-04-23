@@ -1,3 +1,5 @@
+import { DANGEROUS_SYMBOLS } from './constants'
+
 export const checkFirstAndLastNames = (str: string, fieldName: string) => {
   const rules =
     /(?!.*[0-9])(?=^[A-Z][a-z0-9_-]{0,19}|^[А-Я][а-я0-9_-]{0,19})(?=^\S)(?=[^!<>?=+@{}_$%])/
@@ -40,3 +42,37 @@ export const checkPhone = (str: string) => {
   if (rules.test(str)) return ''
   return `Новерный формат номера`
 }
+
+export const validateInput = (value: string): { isValid: boolean; error?: string } => {
+  if (DANGEROUS_SYMBOLS.test(value)) {
+    return {
+      isValid: false,
+      error: 'Содержит запрещённые символы (&, <, >, ", \')'
+    };
+  }
+  return { isValid: true };
+};
+
+export const validateFormFields = (fields: any) => {
+  const errors: Record<string, string> = {};
+  let isValid = true;
+
+  for (const [key, value] of Object.entries(fields)) {
+    if (value) {
+      if (typeof value === 'string' ) {
+        const validation = validateInput(value);
+        if (!validation.isValid) {
+          errors[key] = validation.error!;
+          isValid = false;
+        }
+      }
+    }
+  }
+  let errorMessage = ''
+  if (!isValid) {
+    errorMessage = 'Содержит запрещённые символы (&, <, >, ", \')'
+  }
+
+  return { isValid, errors, errorMessage };
+};
+

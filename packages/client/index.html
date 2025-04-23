@@ -8,13 +8,21 @@
     <!--ssr-helmet-->
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600" rel="stylesheet" />
-    <link href="/src/utils/reset.css" rel="stylesheet" />
-    <link href="/src/utils/vars.css" rel="stylesheet" />
-    <link href="/src/utils/layout.css" rel="stylesheet" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self';
+     script-src 'self' 'unsafe-inline';
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https://ya-praktikum.tech;
+       font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;
+        connect-src 'self' ws://localhost:24678 https://ya-praktikum.tech http://localhost:3001;
+         frame-src 'none'; object-src 'none'"
+    >
+    <link href="./src/utils/reset.css" rel="stylesheet" />
+    <link href="./src/utils/vars.css" rel="stylesheet" />
+    <link href="./src/utils/layout.css" rel="stylesheet" />
   </head>
   <body>
     <!--ssr-initial-state-->
     <div id="root" class="h-wrapper"><!--ssr-outlet--></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/Main.tsx"></script>
   </body>
 </html>

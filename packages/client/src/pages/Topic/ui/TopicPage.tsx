@@ -21,6 +21,7 @@ import {
 } from '../../../store/slice/reactionsSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
+import { validateInput } from '../../../utils/rules'
 
 export const TopicPage = () => {
   useEffect(() => {
@@ -69,6 +70,11 @@ export const TopicPage = () => {
     const data = {
       author: userState.user?.login || 'Неизвестный автор',
       text: commentText,
+    }
+    const validation = validateInput(commentText)
+    if (!validation.isValid) {
+      alert(validation.error)
+      return;
     }
 
     await dispatch(addCommentToTopic({ id: topicId, data }))

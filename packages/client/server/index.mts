@@ -73,7 +73,6 @@ async function createServer() {
       }
 
       const { html: appHtml, initialState, helmet, styleTags } = await render(req)
-
       const html = template
         .replace('<!--ssr-styles-->', styleTags)
         .replace(`<!--ssr-helmet-->`, `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`)
