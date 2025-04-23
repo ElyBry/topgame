@@ -16,7 +16,7 @@ const PageMainWrapper: React.FC<PageMainWrapperProps> = ({ children, showNav, li
         {children}
         <div className={styles.footer}>
           <div className={styles.footer_fixed}>
-            © 2025 Ваша команда. Все права защищены.
+            © 2025 mf_46. Все права защищены.
           </div>
         </div>
       </div>
