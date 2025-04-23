@@ -57,18 +57,19 @@ services:
         - pgadmin_data:/var/lib/pgadmin
       depends_on:
         - postgres
-    nginx:
-      image: nginx:alpine
-      ports:
-        - "80:80"
-        - "443:443"
-      volumes:
-        - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-        - ./nginx/certs:/etc/letsencrypt
-      restart: always
-      depends_on:
-        - client
-        - server
+#     TODO:
+#    nginx:
+#      image: nginx:alpine
+#      ports:
+#        - "80:80"
+#        - "443:443"
+#      volumes:
+#        - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+#        - ./nginx/certs:/etc/letsencrypt
+#      restart: always
+#      depends_on:
+#        - client
+#        - server
     certbot: #docker compose run --rm certbot certonly --webroot --webroot-path /etc/letsencrypt -d example.org создать сертификат; docker compose run --rm certbot renew - Обновить сертификат
       image: certbot/certbot:latest
       volumes:
