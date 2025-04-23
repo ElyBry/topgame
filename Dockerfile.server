@@ -12,10 +12,10 @@ FROM base AS builder
 COPY package.json yarn.lock lerna.json ./
 COPY packages/server/package.json ./packages/server/package.json
 
-RUN yarn install
+
 
 COPY . .
-
+RUN yarn install
 RUN yarn build --scope=server
 
 FROM node:$NODE_VERSION-alpine AS production

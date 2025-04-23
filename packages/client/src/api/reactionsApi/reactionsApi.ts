@@ -1,4 +1,4 @@
-import { axiosRequest } from '../lib/axiosBaseConfig'
+import { axiosRequest } from '../lib/axiosConfig'
 import { ENDPOINTS } from '../lib/endpoints'
 
 export interface IReaction {
