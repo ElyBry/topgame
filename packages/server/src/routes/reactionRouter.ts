@@ -3,8 +3,8 @@ import { addReaction, deleteReaction,  getReactions } from '../controllers/react
 
 const reactionRouter = express.Router({ mergeParams: true })
 
-reactionRouter.post('/add-reaction', addReaction)
-reactionRouter.get('/reactions-list', getReactions)
-reactionRouter.delete('/delete-reaction', deleteReaction)
+reactionRouter.post('/reactions', addReaction)
+reactionRouter.get('/reactions', getReactions)
+reactionRouter.delete('/reactions/:id', deleteReaction)
 
 export default reactionRouter

@@ -13,6 +13,14 @@ import {
   fetchTopic,
   selectTopicsSlice,
 } from '../../../store/slice/topicsSlice'
+import {
+  createNewReaction,
+  deleteReactionFromTopic,
+  fetchReactions,
+  selectReactionsSlice,
+} from '../../../store/slice/reactionsSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons'
 import { validateInput } from '../../../utils/rules'
 
 export const TopicPage = () => {
@@ -31,13 +39,14 @@ export const TopicPage = () => {
   const dispatch = useAppDispatch()
 
   const { id } = useParams()
+  const topicId = Number(id)
   const userState = useSelector(selectUser)
   const { topicObject } = useSelector(selectTopicsSlice)
 
   const [commentText, setCommentText] = useState<string>('')
 
   useEffect(() => {
-    dispatch(fetchTopic(Number(id)))
+    dispatch(fetchTopic(topicId))
   }, [dispatch])
 
   const comments =
@@ -68,9 +77,72 @@ export const TopicPage = () => {
       return;
     }
 
-    await dispatch(addCommentToTopic({ id: Number(id), data }))
-    await dispatch(fetchTopic(Number(id)))
+    await dispatch(addCommentToTopic({ id: topicId, data }))
+    await dispatch(fetchTopic(topicId))
     setCommentText('')
+  }
+
+  const { reactions } =
+    useSelector(selectReactionsSlice)
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchReactions(topicId))
+    }
+  }, [dispatch])
+
+  const likes = reactions.data.filter(item => item.type === 'like')
+  const dislikes = reactions.data.filter(item => item.type === 'dislike')
+  const userId = userState.user?.id
+
+  const isCurrentUserLikes = () => likes.some(like => like.userId === userId)
+  const isCurrentUserDisLikes = () =>
+    dislikes.some(like => like.userId === userId)
+
+  const handleAddLike = async () => {
+    if (!userId) return
+
+    const payload = {
+      topicId: topicId,
+      data: {
+        userId,
+        topicId: topicId,
+        type: 'like',
+      },
+    }
+
+    const reactionId = likes.find(like => like.userId === userId)?.id
+
+    if (reactionId) {
+      await dispatch(deleteReactionFromTopic({ topicId, id: reactionId }))
+      await dispatch(fetchReactions(topicId))
+    } else {
+      await dispatch(createNewReaction(payload))
+      await dispatch(fetchReactions(topicId))
+    }
+  }
+
+  const handleAddDisLike = async () => {
+    if (!userId) return
+
+    const payload = {
+      topicId: topicId,
+      data: {
+        userId,
+        topicId: topicId,
+        type: 'dislike',
+      },
+    }
+
+    const reactionId = dislikes.find(like => like.userId === userId)?.id
+
+    if (reactionId) {
+      await dispatch(deleteReactionFromTopic({ topicId, id: reactionId }))
+      await dispatch(fetchReactions(topicId))
+    } else {
+      await dispatch(createNewReaction(payload))
+      await dispatch(fetchReactions(topicId))
+    }
   }
 
   return (
@@ -88,7 +160,41 @@ export const TopicPage = () => {
           </p>
         </div>
         <div className={styles.topic_view_block_content}>
-          <p className={styles.topic_view_block_text}>{topic?.text}</p>
+          <div className={styles.topic_view_block_content_inner}>
+            <p className={styles.topic_view_block_text}>{topic?.text}</p>
+          </div>
+          <div className={styles.topic_view_block_reactions}>
+            <div
+              className={[
+                styles.topic_view_block_reactions_item,
+                isCurrentUserLikes()
+                  ? styles.topic_view_block_reactions_item_active
+                  : '',
+              ].join(' ')}>
+              <FontAwesomeIcon icon={faThumbsUp} onClick={handleAddLike} />
+
+              {likes.length > 0 && (
+                <span className={styles.topic_view_block_reactions_item_count}>
+                  {likes.length}
+                </span>
+              )}
+            </div>
+            <div
+              className={[
+                styles.topic_view_block_reactions_item,
+                isCurrentUserDisLikes()
+                  ? styles.topic_view_block_reactions_item_active
+                  : '',
+              ].join(' ')}>
+              <FontAwesomeIcon icon={faThumbsDown} onClick={handleAddDisLike} />
+
+              {dislikes.length > 0 && (
+                <span className={styles.topic_view_block_reactions_item_count}>
+                  {dislikes.length}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
         <div className={styles.topic_view_block_comments}>
           <div className={styles.topic_view_block_comments_count}>

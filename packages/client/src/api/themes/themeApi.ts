@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios'
 
 export const DEFAULT_THEME = "light";
 export const UNKNOWN_THEME = "unknown";
-
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class ThemeService {
   static async getUserTheme(userId: number): Promise<string> {
     try {

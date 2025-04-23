@@ -13,4 +13,5 @@ export const ENDPOINTS = {
   THEME: '/theme',
   ERROR: 'error',
   TOPICS_LIST: '/topics',
+  REACTIONS: '/reactions',
 } as const
