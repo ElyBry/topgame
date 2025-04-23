@@ -60,6 +60,6 @@ export const SETTING_GAME_SELECT = {
   ]
 }
 
-export const OAUTH_REDIRECT_URI = 'http://localhost:3000/oauth';
+export const OAUTH_REDIRECT_URI = process.env.URL_FRONT + '/oauth';
 
 export const DANGEROUS_SYMBOLS = /[&<>"']/;

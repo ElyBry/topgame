@@ -10,7 +10,7 @@ export const axiosRequest = axios.create({
   withCredentials: true,
 })
 
-const API_LOCAL_URL = 'http://localhost:3001'
+const API_LOCAL_URL = process.env.URL_BACK
 
 export const axiosRequestLocal = axios.create({
   headers: {

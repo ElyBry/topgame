@@ -23,11 +23,13 @@ async function createServer() {
         app.use(vite.middlewares);
     }
     else {
-        app.use(express.static(path.join(clientPath, 'public'), { index: false }));
+        console.log("NOT DEV");
         app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
+        app.use(express.static(path.join(clientPath, 'public'), { index: false }));
     }
     app.get('*', async (req, res, next) => {
         const url = req.originalUrl;
+        console.log("app.get('*'", req.originalUrl);
         try {
             let render;
             let template;
@@ -47,6 +49,7 @@ async function createServer() {
                 .replace('<!--ssr-styles-->', styleTags)
                 .replace(`<!--ssr-helmet-->`, `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`)
                 .replace(`<!--ssr-outlet-->`, appHtml)
+                .replace(`<!--ssr-url-server-->`, process.env.URL_BACK || 'http://localhost:3001')
                 .replace(`<!--ssr-initial-state-->`, `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
                 isJSON: true,
             })}</script>`);
